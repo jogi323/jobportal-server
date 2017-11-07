@@ -29,7 +29,7 @@ router.post('/query', auth.required, function(req, res, next) {
         else{
             if(typeof  req.body.Date !== 'undefined' && typeof req.body.Hours_Guaranteed == 'undefined'){
                 Availabilities.find({Date:req.body.Date})
-                    .where('Hired').eq('NotHired')
+                    // .where('Hired').eq('NotHired')
                     .populate({
                         path: 'JS_id',
                         // match: { Position: { $eq: 'Dental Assistant' }, Hourly_Pay: { $eq: 5 }},
@@ -43,7 +43,7 @@ router.post('/query', auth.required, function(req, res, next) {
                     })
             }else if( typeof req.body.Hours_Guaranteed !== 'undefined'){
                 Availabilities.find({Date:req.body.Date})
-                    .where('Hired').eq('NotHired')
+                    // .where('Hired').eq('NotHired')
                     .where('Hours_Guaranteed').eq(req.body.Hours_Guaranteed)
                 // .populate('JS_id')
                 .populate({
@@ -59,7 +59,7 @@ router.post('/query', auth.required, function(req, res, next) {
             }
             else if(req.body.Position != 'undefined'){
                 Availabilities.find({Date:req.body.Date})
-                    .where('Hired').eq('NotHired')
+                    // .where('Hired').eq('NotHired')
                     .where('Hours_Guaranteed').eq(req.body.Hours_Guaranteed)
                 // .populate('JS_id')
                 .populate({
@@ -76,7 +76,7 @@ router.post('/query', auth.required, function(req, res, next) {
             }
             else if(req.body.Hourly_Pay != 'undefined'){
                 Availabilities.find({Date:req.body.Date})
-                    .where('Hired').eq('NotHired')
+                    // .where('Hired').eq('NotHired')
                     .where('Hours_Guaranteed').eq(req.body.Hours_Guaranteed)
                 // .populate('JS_id')
                 .populate({
