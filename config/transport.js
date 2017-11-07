@@ -1,11 +1,11 @@
 const nodemailer = require('nodemailer');
 const Promise = require('bluebird');
-const config = require('./config');
+const config = require('./mailConfig');
 
 
-var MailService = function (data) {
+var MailService = function(data) {
 
-    return new Promise(function (resolve, reject) {
+    return new Promise(function(resolve, reject) {
         let transporter = nodemailer.createTransport({
             host: config.host,
             port: config.port,
@@ -25,6 +25,7 @@ var MailService = function (data) {
         };
         transporter.sendMail(mailOptions, (error, info) => {
             if (error) {
+                console.log(error);
                 reject({
                     success: false,
                     error: error,
