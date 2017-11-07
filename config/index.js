@@ -1,4 +1,4 @@
 module.exports = {
-    secret: process.env.NODE_ENV === 'production' ? process.env.SECRET : 'SilverSmiles'
+    secret: process.env.NODE_ENV === 'production' ? 'SilverSmiles' : 'SilverSmiles'
   };
   
