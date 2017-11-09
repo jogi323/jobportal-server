@@ -134,7 +134,7 @@ router.post('/save', function(req, res, next) {
                         pass: 'F!ghtClub'
                     }
                 });
-                var mailOptions = { from: 'ashokona@gmail.com', to: result.Email_Address, subject: 'Account Verification Token', text: 'Hello,\n\n' + 'Please verify your account by clicking the link: \nhttp:\/\/' + req.headers.host + '\/user' + '\/confirmation\/' + token.token + '.\n' };
+                var mailOptions = { from: 'ashokona@gmail.com', to: result.Email_Address, subject: 'Account Verification Token', text: 'Hello,\n\n' + 'Please verify your account by clicking the link: \nhttp:\/\/' + "jobportal5.herokuapp.com"+ token.token + '.\n' };
                 transporter.sendMail(mailOptions, function(err) {
                     if (err) {
                         return res.status(500).json({
@@ -162,7 +162,8 @@ router.get('/confirmation/:id', function(req, res, next) {
             if (user.Email_Verified) return res.status(400).send({ type: 'already-verified', msg: 'This user has already been verified.' });
 
             // Verify and save the user
-            user.setPassword(req.body.Password);
+            user.Email_Verified = true;
+            //user.setPassword(req.body.Password);
             user.save(function(err) {
                 if (err) { return res.status(500).send({ msg: err.message }); }
                 res.status(200).send("Password changed Sucessfully. Please log in.");
@@ -371,7 +372,7 @@ router.post('/resetpasswordlink', function(req, res, next) {
                 });
 
                 console.log(req.headers);
-                var mailOptions = { from: 'ashokona@gmail.com', to: result.Email_Address, subject: 'Reset Password Link', text: 'Hello,\n\n' + 'Please reset your account password by following the link: \nhttp:\/\/' + req.headers.host + '\/user' + '\/confirmation\/' + token.token + '.\n' };
+                var mailOptions = { from: 'ashokona@gmail.com', to: result.Email_Address, subject: 'Reset Password Link', text: 'Hello,\n\n' + 'Please reset your account password by following the link: \nhttp:\/\/' + 'jobportal5.herokuapp.com/forgotpassword/' + token.token + '.\n' };
                 transporter.sendMail(mailOptions, function(err) {
                     if (err) {
                         return res.status(500).json({
@@ -380,7 +381,7 @@ router.post('/resetpasswordlink', function(req, res, next) {
                         });
                     }
                     res.status(200).json({
-                        message: 'A rest link has been sent to' + result.Email_Address + '.',
+                        message: 'A rest link has been sent to ' + result.Email_Address + '.',
                     });
                 });
             });
@@ -400,10 +401,11 @@ router.post('/resetpassword', function(req, res, next) {
             // if (user.Email_Verified) return res.status(400).send({ type: 'already-verified', msg: 'This user has already been verified.' });
 
             // Verify and save the user
-            user.Email_Verified = true;
+            
+            user.setPassword(req.body.newPassword);
             user.save(function(err) {
                 if (err) { return res.status(500).send({ msg: err.message }); }
-                res.status(200).send("The account has been verified. Please log in.");
+                res.status(200).send("Your password has been changed successfully");
             });
         });
     });

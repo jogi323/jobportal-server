@@ -40,7 +40,7 @@ router.post('/pay', auth.required, function(req, res, next) {
             payment.City = req.body.City;
             payment.State = req.body.State;
             payment.Zip_Code = req.body.Zip_Code;
-            payment.Date_Submitted = req.body.Date_Submitted;
+            //payment.Date_Submitted = req.body.Date_Submitted;
             payment.Amount = req.body.Amount;
             payment.Employer_id = user._id;
             if(typeof req.body.Position_id !== 'undefined'){

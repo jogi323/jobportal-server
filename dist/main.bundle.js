@@ -40,10 +40,11 @@ module.exports = webpackAsyncContext;
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__angular_router__ = __webpack_require__("../../../router/@angular/router.es5.js");
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__home_home_component__ = __webpack_require__("../../../../../src/app/home/home.component.ts");
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_3__shared_components_change_password_change_password_component__ = __webpack_require__("../../../../../src/app/shared/components/change-password/change-password.component.ts");
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_4__shared_components_contact_us_contact_us_component__ = __webpack_require__("../../../../../src/app/shared/components/contact-us/contact-us.component.ts");
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_5__register_register_component__ = __webpack_require__("../../../../../src/app/register/register.component.ts");
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_6__shared_services_auth_guard_service__ = __webpack_require__("../../../../../src/app/shared/services/auth-guard.service.ts");
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_7__shared_services_no_auth_guard_service__ = __webpack_require__("../../../../../src/app/shared/services/no-auth-guard.service.ts");
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_4__shared_components_forgot_password_forgot_password_component__ = __webpack_require__("../../../../../src/app/shared/components/forgot-password/forgot-password.component.ts");
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_5__shared_components_contact_us_contact_us_component__ = __webpack_require__("../../../../../src/app/shared/components/contact-us/contact-us.component.ts");
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_6__register_register_component__ = __webpack_require__("../../../../../src/app/register/register.component.ts");
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_7__shared_services_auth_guard_service__ = __webpack_require__("../../../../../src/app/shared/services/auth-guard.service.ts");
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_8__shared_services_no_auth_guard_service__ = __webpack_require__("../../../../../src/app/shared/services/no-auth-guard.service.ts");
 var __decorate = (this && this.__decorate) || function (decorators, target, key, desc) {
     var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
     if (typeof Reflect === "object" && typeof Reflect.decorate === "function") r = Reflect.decorate(decorators, target, key, desc);
@@ -58,19 +59,18 @@ var __decorate = (this && this.__decorate) || function (decorators, target, key,
 
 
 
+
 var routes = [
-    { path: '', component: __WEBPACK_IMPORTED_MODULE_2__home_home_component__["a" /* HomeComponent */], canActivate: [__WEBPACK_IMPORTED_MODULE_7__shared_services_no_auth_guard_service__["a" /* NoAuthGuardService */]] },
+    { path: '', component: __WEBPACK_IMPORTED_MODULE_2__home_home_component__["a" /* HomeComponent */], canActivate: [__WEBPACK_IMPORTED_MODULE_8__shared_services_no_auth_guard_service__["a" /* NoAuthGuardService */]] },
     { path: 'employer',
         loadChildren: './employer/employer.module#EmployerModule',
-        canActivate: [__WEBPACK_IMPORTED_MODULE_6__shared_services_auth_guard_service__["a" /* AuthGuardService */]]
+        canActivate: [__WEBPACK_IMPORTED_MODULE_7__shared_services_auth_guard_service__["a" /* AuthGuardService */]]
     },
-    { path: 'jobseeker', loadChildren: './job-seeker/job-seeker.module#JobSeekerModule', canActivate: [__WEBPACK_IMPORTED_MODULE_6__shared_services_auth_guard_service__["a" /* AuthGuardService */]] },
-    { path: 'changepassword', component: __WEBPACK_IMPORTED_MODULE_3__shared_components_change_password_change_password_component__["a" /* ChangePasswordComponent */], canActivate: [__WEBPACK_IMPORTED_MODULE_7__shared_services_no_auth_guard_service__["a" /* NoAuthGuardService */]] },
-    { path: 'register',
-        component: __WEBPACK_IMPORTED_MODULE_5__register_register_component__["a" /* RegisterComponent */],
-        canActivate: [__WEBPACK_IMPORTED_MODULE_7__shared_services_no_auth_guard_service__["a" /* NoAuthGuardService */]]
-    },
-    { path: 'contactus', component: __WEBPACK_IMPORTED_MODULE_4__shared_components_contact_us_contact_us_component__["a" /* ContactUsComponent */], canActivate: [__WEBPACK_IMPORTED_MODULE_7__shared_services_no_auth_guard_service__["a" /* NoAuthGuardService */]] },
+    { path: 'jobseeker', loadChildren: './job-seeker/job-seeker.module#JobSeekerModule', canActivate: [__WEBPACK_IMPORTED_MODULE_7__shared_services_auth_guard_service__["a" /* AuthGuardService */]] },
+    { path: 'changepassword', component: __WEBPACK_IMPORTED_MODULE_3__shared_components_change_password_change_password_component__["a" /* ChangePasswordComponent */], canActivate: [__WEBPACK_IMPORTED_MODULE_7__shared_services_auth_guard_service__["a" /* AuthGuardService */]] },
+    { path: 'forgotpassword/:id', component: __WEBPACK_IMPORTED_MODULE_4__shared_components_forgot_password_forgot_password_component__["a" /* ForgotPasswordComponent */], canActivate: [__WEBPACK_IMPORTED_MODULE_8__shared_services_no_auth_guard_service__["a" /* NoAuthGuardService */]] },
+    { path: 'register', component: __WEBPACK_IMPORTED_MODULE_6__register_register_component__["a" /* RegisterComponent */], canActivate: [__WEBPACK_IMPORTED_MODULE_8__shared_services_no_auth_guard_service__["a" /* NoAuthGuardService */]] },
+    { path: 'contactus', component: __WEBPACK_IMPORTED_MODULE_5__shared_components_contact_us_contact_us_component__["a" /* ContactUsComponent */], canActivate: [__WEBPACK_IMPORTED_MODULE_8__shared_services_no_auth_guard_service__["a" /* NoAuthGuardService */]] },
     { path: '**', redirectTo: '' },
 ];
 var AppRoutingModule = (function () {
@@ -371,7 +371,7 @@ module.exports = module.exports.toString();
 /***/ "../../../../../src/app/login/login.component.html":
 /***/ (function(module, exports) {
 
-module.exports = "\r\n\r\n<div class=\"modal-dialog\">\r\n  <div class=\"modal-content\">\r\n     <div class=\"modal-header\">\r\n       <button type=\"button\" class=\"close\" (click)=\"close()\" >&times;</button>\r\n       <h4 class=\"modal-title\" *ngIf=\"isLogin\">LOGIN</h4>\r\n       <h4 class=\"modal-title\" *ngIf=\"!isLogin\">Reset Password</h4>\r\n     </div>\r\n     <!-- <div class=\"modal-body\"> -->\r\n      <div *ngIf=\"isLogin\" class=\"form-box-pad\">\r\n        <p>If you have an account, sign in with your e-mail address.</p>\r\n        <form name=\"loginForm\" #loginForm = 'ngForm' novalidate>\r\n          <div class=\"form-group\">\r\n            <label for=\"username\">Username</label>\r\n            <input name=\"Email_Address\" type=\"email\" placeholder=\"Enter your username\" class=\"form-control\" [(ngModel)]=\"user.Email_Address\" #Email_Address=\"ngModel\" pattern=\"^[a-z0-9._%+-]+@[a-z0-9.-]+\\.[a-z]{2,3}$\" required>\r\n            <div  *ngIf=\"Email_Address.errors && (Email_Address.dirty || Email_Address.touched)\" class=\"error\">\r\n              <div [hidden]=\"!Email_Address.errors.required\">Please Enter username</div>\r\n              <div [hidden]=\"!Email_Address.errors.pattern\">Please Enter proper username correctly</div>\r\n            </div>\r\n          </div>\r\n    \r\n    \r\n          <div class=\"form-group\">\r\n            <label for=\"pwd\">Password:</label>\r\n            <input name=\"password\" type=\"password\" placeholder=\"Password \" class=\"form-control\"  [(ngModel)]=\"user.Password\" #password=\"ngModel\" minlength=\"8\" required>\r\n            <div  *ngIf=\"password.errors && (password.dirty || password.touched)\" class=\"error\">\r\n              <div [hidden]=\"!password.errors.required\">Please Enter password</div>\r\n              <div [hidden]=\"!password.errors.minlength\">Password length should be more than 8 </div>\r\n            </div>\r\n          </div>\r\n    \r\n          <div class=\"checkbox\">\r\n            <input type=\"checkbox\" class=\"input-checkbox\" name=\"checkbox\" id=\"checkbox2\" value=\"2\">\r\n            <span class=\"remember\">Remember Me</span>\r\n          </div>\r\n          \r\n          <div class=\"container-fluid\">\r\n            <div class=\"row\">\r\n              <button  class=\"btn btn-md btn-dark pull-left\" [disabled]=\"!loginForm.form.valid\" (click)=\"login()\"><span>Login</span></button>\r\n              <button class=\"btn btn-inv btn-md btn-stroke pull-right\" (click)=\"forgotPassword()\"><span>Forgot Password?</span></button>\r\n            </div>\r\n            \r\n          </div>\r\n          <span class=\"register\">Not yet registered?<a (click)=\"navigateToRegister()\">Click to register.</a></span>\r\n          \r\n        </form>\r\n    \r\n      </div>\r\n\r\n      <!-- <div class=\"modal-body\"> -->\r\n      <div *ngIf=\"!isLogin\" class=\"form-box-pad\">\r\n        <p>Enter your registered e-mail address.</p>\r\n        <form name=\"forgotPasswordForm\" #forgotPasswordForm = 'ngForm' novalidate>\r\n          <div class=\"form-group\">\r\n            <label for=\"Email\">Email</label>\r\n            <input type=\"email\" placeholder=\"Registered Email\" name=\"email\" required #email=\"ngModel\" [(ngModel)]=\"forgotPasswordData.Email_Address\" pattern=\"^[a-z0-9._%+-]+@[a-z0-9.-]+\\.[a-z]{2,3}$\">\r\n            <div  *ngIf=\"email.errors && (email.dirty || email.touched)\" class=\"error\">\r\n              <div [hidden]=\"!email.errors.required\">Please Enter registered email-Id</div>\r\n              <div [hidden]=\"!email.errors.pattern\">Please Enter proper email-Id</div>\r\n            </div>\r\n          </div>\r\n          <div class=\"container-fluid\">\r\n            <div class=\"row\">\r\n                <button class=\"btn btn-inv btn-md btn-stroke pull-right\" [disabled]=\"!forgotPasswordForm.form.valid\" (click)='reset()'><span>Reset Password</span></button>\r\n            </div>\r\n          </div>\r\n    \r\n        </form>\r\n    \r\n      </div>\r\n     <!-- </div> -->\r\n     <!-- <div class=\"modal-footer\">\r\n       <button type=\"button\" class=\"btn btn-primary\" (click)=\"confirm()\">OK</button>\r\n       <button type=\"button\" class=\"btn btn-default\" (click)=\"close()\" >Cancel</button>\r\n     </div> -->\r\n   </div>\r\n</div>"
+module.exports = "\r\n\r\n<div class=\"modal-dialog\">\r\n  <div class=\"modal-content\">\r\n     <div class=\"modal-header\">\r\n       <button type=\"button\" class=\"close\" (click)=\"close()\" >&times;</button>\r\n       <h4 class=\"modal-title\" *ngIf=\"isLogin\">LOGIN</h4>\r\n       <h4 class=\"modal-title\" *ngIf=\"!isLogin\">Reset Password</h4>\r\n     </div>\r\n     <!-- <div class=\"modal-body\"> -->\r\n      <div *ngIf=\"isLogin\" class=\"form-box-pad\">\r\n        <p>If you have an account, sign in with your e-mail address.</p>\r\n        <form name=\"loginForm\" #loginForm = 'ngForm' novalidate>\r\n          <div class=\"form-group\">\r\n            <label for=\"username\">Username</label>\r\n            <input name=\"Email_Address\" type=\"email\" placeholder=\"Enter your username\" class=\"form-control\" [(ngModel)]=\"user.Email_Address\" #Email_Address=\"ngModel\" pattern=\"^[a-z0-9._%+-]+@[a-z0-9.-]+\\.[a-z]{2,3}$\" required>\r\n            <div  *ngIf=\"Email_Address.errors && (Email_Address.dirty || Email_Address.touched)\" class=\"error\">\r\n              <div [hidden]=\"!Email_Address.errors.required\">Please Enter username</div>\r\n              <div [hidden]=\"!Email_Address.errors.pattern\">Please Enter proper username correctly</div>\r\n            </div>\r\n          </div>\r\n    \r\n    \r\n          <div class=\"form-group\">\r\n            <label for=\"pwd\">Password:</label>\r\n            <input name=\"password\" type=\"password\" placeholder=\"Password \" class=\"form-control\"  [(ngModel)]=\"user.Password\">\r\n            <!--<div  *ngIf=\"password.errors && (password.dirty || password.touched)\" class=\"error\">\r\n              <div [hidden]=\"!password.errors.required\">Please Enter password</div>\r\n              <div [hidden]=\"!password.errors.minlength\">Password length should be more than 8 </div>\r\n            </div>-->\r\n          </div>\r\n    \r\n          <div class=\"checkbox\">\r\n            <input type=\"checkbox\" class=\"input-checkbox\" name=\"checkbox\" id=\"checkbox2\" value=\"2\">\r\n            <span class=\"remember\">Remember Me</span>\r\n          </div>\r\n          \r\n          <div class=\"container-fluid\">\r\n            <div class=\"row\">\r\n              <button  class=\"btn btn-md btn-dark pull-left\" [disabled]=\"!loginForm.form.valid\" (click)=\"login()\"><span>Login</span></button>\r\n              <button class=\"btn btn-inv btn-md btn-stroke pull-right\" (click)=\"forgotPassword()\"><span>Forgot Password?</span></button>\r\n            </div>\r\n            \r\n          </div>\r\n          <span class=\"register\">Not yet registered?<a (click)=\"navigateToRegister()\">Click to register.</a></span>\r\n          \r\n        </form>\r\n    \r\n      </div>\r\n\r\n      <!-- <div class=\"modal-body\"> -->\r\n      <div *ngIf=\"!isLogin\" class=\"form-box-pad\">\r\n        <p>Enter your registered e-mail address.</p>\r\n        <form name=\"forgotPasswordForm\" #forgotPasswordForm = 'ngForm' novalidate>\r\n          <div class=\"form-group\">\r\n            <label for=\"Email\">Email</label>\r\n            <input type=\"email\" placeholder=\"Registered Email\" name=\"email\" required #email=\"ngModel\" [(ngModel)]=\"forgotPasswordData.Email_Address\" pattern=\"^[a-z0-9._%+-]+@[a-z0-9.-]+\\.[a-z]{2,3}$\">\r\n            <div  *ngIf=\"email.errors && (email.dirty || email.touched)\" class=\"error\">\r\n              <div [hidden]=\"!email.errors.required\">Please Enter registered email-Id</div>\r\n              <div [hidden]=\"!email.errors.pattern\">Please Enter proper email-Id</div>\r\n            </div>\r\n          </div>\r\n          <div class=\"container-fluid\">\r\n            <div class=\"row\">\r\n                <button class=\"btn btn-inv btn-md btn-stroke pull-right\" [disabled]=\"!forgotPasswordForm.form.valid\" (click)='reset()'><span>Reset Password</span></button>\r\n            </div>\r\n          </div>\r\n    \r\n        </form>\r\n    \r\n      </div>\r\n     <!-- </div> -->\r\n     <!-- <div class=\"modal-footer\">\r\n       <button type=\"button\" class=\"btn btn-primary\" (click)=\"confirm()\">OK</button>\r\n       <button type=\"button\" class=\"btn btn-default\" (click)=\"close()\" >Cancel</button>\r\n     </div> -->\r\n   </div>\r\n</div>"
 
 /***/ }),
 
@@ -451,12 +451,11 @@ var LoginComponent = (function (_super) {
             _this.close();
         }, function (err) {
             _this.close();
-            _this.notificationsService.error(err.title, err.error.message, _this.options);
+            _this.notificationsService.error(err.title, 'err.error.message', _this.options);
         });
     };
     LoginComponent.prototype.reset = function () {
         var _this = this;
-        console.log(this.forgotPasswordData.Email_Address);
         this.userService.resetPassword(this.forgotPasswordData).subscribe(function (res) {
             _this.close();
             _this.notificationsService.success('Success', res.message, _this.options);
@@ -798,6 +797,122 @@ FooterComponent = __decorate([
 
 var _a;
 //# sourceMappingURL=footer.component.js.map
+
+/***/ }),
+
+/***/ "../../../../../src/app/shared/components/forgot-password/forgot-password.component.css":
+/***/ (function(module, exports, __webpack_require__) {
+
+exports = module.exports = __webpack_require__("../../../../css-loader/lib/css-base.js")(false);
+// imports
+
+
+// module
+exports.push([module.i, "", ""]);
+
+// exports
+
+
+/*** EXPORTS FROM exports-loader ***/
+module.exports = module.exports.toString();
+
+/***/ }),
+
+/***/ "../../../../../src/app/shared/components/forgot-password/forgot-password.component.html":
+/***/ (function(module, exports) {
+
+module.exports = "\t\t\t<!-- 404 -->\n<section class=\"section-wrap\">\n  <div class=\"container\">\n    <div class=\"row\">\n      <div class=\"container-fluid \">\n\n        <div class=\"col-sm-6 col-sm-offset-3 forms-container\">\n\n          <h3>Change Password</h3>\n          <div class=\"form-box-pad\">\n            <form name=\"forgotPasswordForm\" #forgotPasswordForm = 'ngForm' novalidate>\n              <label for=\"pwd\">New Password:</label>\n              <input name=\"newPassword\" type=\"password\" placeholder=\"New Password\" [(ngModel)]='resetPassword.newPassword' minlength=\"8\" #newPassword = 'ngModel' required>\n              <div  *ngIf=\"newPassword.errors && (newPassword.dirty || newPassword.touched)\" class=\"error\">\n                <div [hidden]=\"!newPassword.errors.required\">Please Enter password</div>\n                <div [hidden]=\"!newPassword.errors.minlength\">Password length should be more than 8 </div>\n              </div>\n\n              <label for=\"pwd\">Confirm Password:</label>\n              <input name=\"confirmPassword\" type=\"password\" placeholder=\"Confirm Password \" [(ngModel)]='resetPassword.confirmPassword' #confirmPassword = 'ngModel' validateEqual=\"password\" (ngModelChange)=\"onChange($event)\" [ngClass]=\"{'mismatchError': mismatched}\" minlength=\"8\" maxlength=\"resetPassword.newPassword.length\" required>\n              <div *ngIf = \"mismatched\" class=\"error\">Password mismatched</div>\n              <div class=\"container-fluid\">\n                <div class=\"row\">\n                  <button class=\"btn btn-md btn-stroke pull-right\" [disabled] = \"(!forgotPasswordForm.valid) || mismatched\" (click)=\"submit()\"><span>Change Password?</span></button>\n                </div>\n              </div>\n            </form>\n          </div>\n        </div>\n      </div>\n    </div>\n  </div>\n</section>\n        <!-- end 404 -->"
+
+/***/ }),
+
+/***/ "../../../../../src/app/shared/components/forgot-password/forgot-password.component.ts":
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "a", function() { return ForgotPasswordComponent; });
+/* unused harmony export ForgotPasswordData */
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__angular_core__ = __webpack_require__("../../../core/@angular/core.es5.js");
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__angular_router__ = __webpack_require__("../../../router/@angular/router.es5.js");
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__services_user_service__ = __webpack_require__("../../../../../src/app/shared/services/user.service.ts");
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_3_angular2_notifications__ = __webpack_require__("../../../../angular2-notifications/dist/index.js");
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_3_angular2_notifications___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_3_angular2_notifications__);
+var __decorate = (this && this.__decorate) || function (decorators, target, key, desc) {
+    var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
+    if (typeof Reflect === "object" && typeof Reflect.decorate === "function") r = Reflect.decorate(decorators, target, key, desc);
+    else for (var i = decorators.length - 1; i >= 0; i--) if (d = decorators[i]) r = (c < 3 ? d(r) : c > 3 ? d(target, key, r) : d(target, key)) || r;
+    return c > 3 && r && Object.defineProperty(target, key, r), r;
+};
+var __metadata = (this && this.__metadata) || function (k, v) {
+    if (typeof Reflect === "object" && typeof Reflect.metadata === "function") return Reflect.metadata(k, v);
+};
+
+
+
+
+var ForgotPasswordComponent = (function () {
+    function ForgotPasswordComponent(userService, activatedRoute, notificationsService, router) {
+        this.userService = userService;
+        this.activatedRoute = activatedRoute;
+        this.notificationsService = notificationsService;
+        this.router = router;
+        this.mismatched = false;
+        this.options = {
+            timeOut: 5000,
+            showProgressBar: true,
+            pauseOnHover: false,
+            clickToClose: false,
+            maxLength: 50
+        };
+        this.resetPassword = {
+            newPassword: '',
+            confirmPassword: '',
+            id: ''
+        };
+    }
+    ForgotPasswordComponent.prototype.ngOnInit = function () {
+        var _this = this;
+        this.activatedRoute.params.subscribe(function (params) {
+            _this.resetPassword.id = params['id'];
+        });
+    };
+    ForgotPasswordComponent.prototype.onChange = function ($event) {
+        if (this.resetPassword.confirmPassword !== this.resetPassword.newPassword) {
+            this.mismatched = true;
+        }
+        else {
+            this.mismatched = false;
+        }
+    };
+    ForgotPasswordComponent.prototype.submit = function () {
+        var _this = this;
+        this.userService.changePassword(this.resetPassword).subscribe(function (res) {
+            console.log(res);
+            _this.notificationsService.success('Success', res.message, _this.options);
+            _this.router.navigate(['']);
+        }, function (err) {
+            console.log(err);
+            _this.notificationsService.error(err.title, err.error.message, _this.options);
+        });
+    };
+    return ForgotPasswordComponent;
+}());
+ForgotPasswordComponent = __decorate([
+    Object(__WEBPACK_IMPORTED_MODULE_0__angular_core__["Component"])({
+        selector: 'app-forgot-password',
+        template: __webpack_require__("../../../../../src/app/shared/components/forgot-password/forgot-password.component.html"),
+        styles: [__webpack_require__("../../../../../src/app/shared/components/forgot-password/forgot-password.component.css")]
+    }),
+    __metadata("design:paramtypes", [typeof (_a = typeof __WEBPACK_IMPORTED_MODULE_2__services_user_service__["a" /* UserService */] !== "undefined" && __WEBPACK_IMPORTED_MODULE_2__services_user_service__["a" /* UserService */]) === "function" && _a || Object, typeof (_b = typeof __WEBPACK_IMPORTED_MODULE_1__angular_router__["ActivatedRoute"] !== "undefined" && __WEBPACK_IMPORTED_MODULE_1__angular_router__["ActivatedRoute"]) === "function" && _b || Object, typeof (_c = typeof __WEBPACK_IMPORTED_MODULE_3_angular2_notifications__["NotificationsService"] !== "undefined" && __WEBPACK_IMPORTED_MODULE_3_angular2_notifications__["NotificationsService"]) === "function" && _c || Object, typeof (_d = typeof __WEBPACK_IMPORTED_MODULE_1__angular_router__["Router"] !== "undefined" && __WEBPACK_IMPORTED_MODULE_1__angular_router__["Router"]) === "function" && _d || Object])
+], ForgotPasswordComponent);
+
+var ForgotPasswordData = (function () {
+    function ForgotPasswordData() {
+    }
+    return ForgotPasswordData;
+}());
+
+var _a, _b, _c, _d;
+//# sourceMappingURL=forgot-password.component.js.map
 
 /***/ }),
 
@@ -1383,6 +1498,8 @@ var UserService = (function () {
             .map(function (data) {
             _this.setAuth(data);
             return data.user;
+        }, function (err) {
+            return err;
         });
     };
     UserService.prototype.registerUser = function (details) {
@@ -1423,6 +1540,16 @@ var UserService = (function () {
             return data;
         });
     };
+    UserService.prototype.changePassword = function (data) {
+        var path = 'user/resetpassword';
+        return this.apiService.post(path, data).
+            map(function (data) {
+            console.log(data);
+            return data;
+        }, function (err) {
+            return err;
+        });
+    };
     return UserService;
 }());
 UserService = __decorate([
@@ -1449,12 +1576,14 @@ var _a, _b, _c;
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_6__components_page_not_found_page_not_found_component__ = __webpack_require__("../../../../../src/app/shared/components/page-not-found/page-not-found.component.ts");
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_7__components_change_password_change_password_component__ = __webpack_require__("../../../../../src/app/shared/components/change-password/change-password.component.ts");
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_8__components_contact_us_contact_us_component__ = __webpack_require__("../../../../../src/app/shared/components/contact-us/contact-us.component.ts");
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_9__components_forgot_password_forgot_password_component__ = __webpack_require__("../../../../../src/app/shared/components/forgot-password/forgot-password.component.ts");
 var __decorate = (this && this.__decorate) || function (decorators, target, key, desc) {
     var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
     if (typeof Reflect === "object" && typeof Reflect.decorate === "function") r = Reflect.decorate(decorators, target, key, desc);
     else for (var i = decorators.length - 1; i >= 0; i--) if (d = decorators[i]) r = (c < 3 ? d(r) : c > 3 ? d(target, key, r) : d(target, key)) || r;
     return c > 3 && r && Object.defineProperty(target, key, r), r;
 };
+
 
 
 
@@ -1481,14 +1610,15 @@ SharedModule = __decorate([
             __WEBPACK_IMPORTED_MODULE_5__components_footer_footer_component__["a" /* FooterComponent */],
             __WEBPACK_IMPORTED_MODULE_6__components_page_not_found_page_not_found_component__["a" /* PageNotFoundComponent */],
             __WEBPACK_IMPORTED_MODULE_7__components_change_password_change_password_component__["a" /* ChangePasswordComponent */],
-            __WEBPACK_IMPORTED_MODULE_8__components_contact_us_contact_us_component__["a" /* ContactUsComponent */]
+            __WEBPACK_IMPORTED_MODULE_8__components_contact_us_contact_us_component__["a" /* ContactUsComponent */],
         ],
         declarations: [
             __WEBPACK_IMPORTED_MODULE_4__components_top_nav_top_nav_component__["a" /* TopNavComponent */],
             __WEBPACK_IMPORTED_MODULE_5__components_footer_footer_component__["a" /* FooterComponent */],
             __WEBPACK_IMPORTED_MODULE_6__components_page_not_found_page_not_found_component__["a" /* PageNotFoundComponent */],
             __WEBPACK_IMPORTED_MODULE_7__components_change_password_change_password_component__["a" /* ChangePasswordComponent */],
-            __WEBPACK_IMPORTED_MODULE_8__components_contact_us_contact_us_component__["a" /* ContactUsComponent */]
+            __WEBPACK_IMPORTED_MODULE_8__components_contact_us_contact_us_component__["a" /* ContactUsComponent */],
+            __WEBPACK_IMPORTED_MODULE_9__components_forgot_password_forgot_password_component__["a" /* ForgotPasswordComponent */],
         ]
     })
 ], SharedModule);
