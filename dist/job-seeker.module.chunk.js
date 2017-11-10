@@ -158,6 +158,7 @@ module.exports = "<section class=\"section-wrap\">\r\n  <div class=\"container\"
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_3__shared_services_user_service__ = __webpack_require__("../../../../../src/app/shared/services/user.service.ts");
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_4_angular2_notifications__ = __webpack_require__("../../../../angular2-notifications/dist/index.js");
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_4_angular2_notifications___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_4_angular2_notifications__);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_5__environments_environment__ = __webpack_require__("../../../../../src/environments/environment.ts");
 var __decorate = (this && this.__decorate) || function (decorators, target, key, desc) {
     var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
     if (typeof Reflect === "object" && typeof Reflect.decorate === "function") r = Reflect.decorate(decorators, target, key, desc);
@@ -172,7 +173,7 @@ var __metadata = (this && this.__metadata) || function (k, v) {
 
 
 
-var URL = 'https://evening-anchorage-3159.herokuapp.com/api/';
+
 var ProfileComponent = (function () {
     function ProfileComponent(jsonLoaderService, router, userService, notificationsService, ngzone) {
         var _this = this;
@@ -184,13 +185,6 @@ var ProfileComponent = (function () {
         this.isUserDataEdit = false;
         this.isWorkDataEdit = false;
         this.options = { types: ['address'], componentRestrictions: { country: 'US' } };
-        this.alertOptions = {
-            timeOut: 5000,
-            showProgressBar: true,
-            pauseOnHover: false,
-            clickToClose: false,
-            maxLength: 50
-        };
         this.licenseRequired = false;
         this.newImageUploaded = false;
         this.specialityList = [
@@ -259,11 +253,11 @@ var ProfileComponent = (function () {
     };
     ProfileComponent.prototype.initUserData = function (user) {
         var _this = this;
-        if (user) {
+        if (user.userType !== undefined) {
             this.userService.getData(user.Email_Address).subscribe(function (res) {
-                console.log(res);
                 _this.user = res.data;
             }, function (err) {
+                _this.notificationsService.error(err.title, err.error.message, __WEBPACK_IMPORTED_MODULE_5__environments_environment__["a" /* environment */].options);
             });
         }
     };
@@ -285,10 +279,10 @@ var ProfileComponent = (function () {
         var _this = this;
         this.userService.updatePersonal(this.user).subscribe(function (res) {
             console.log(res);
-            _this.notificationsService.success('Success', res.message, _this.alertOptions);
+            _this.notificationsService.success('Success', res.message, __WEBPACK_IMPORTED_MODULE_5__environments_environment__["a" /* environment */].options);
             _this.isUserDataEdit = !_this.isUserDataEdit;
         }, function (err) {
-            _this.notificationsService.error(err.title, err.error.message, _this.alertOptions);
+            _this.notificationsService.error(err.title, err.error.message, __WEBPACK_IMPORTED_MODULE_5__environments_environment__["a" /* environment */].options);
         });
     };
     ProfileComponent.prototype.editWorkData = function () {
@@ -301,10 +295,10 @@ var ProfileComponent = (function () {
         var _this = this;
         this.userService.updateWork(this.user).subscribe(function (res) {
             console.log(res);
-            _this.notificationsService.success('Success', res.message, _this.alertOptions);
+            _this.notificationsService.success('Success', res.message, __WEBPACK_IMPORTED_MODULE_5__environments_environment__["a" /* environment */].options);
             _this.isWorkDataEdit = !_this.isWorkDataEdit;
         }, function (err) {
-            _this.notificationsService.error(err.title, err.error.message, _this.alertOptions);
+            _this.notificationsService.error(err.title, err.error.message, __WEBPACK_IMPORTED_MODULE_5__environments_environment__["a" /* environment */].options);
         });
     };
     ProfileComponent.prototype.ngOnInit = function () {
@@ -333,7 +327,6 @@ var ProfileComponent = (function () {
         this.jsonLoaderService.getPositions()
             .subscribe(function (data) {
             _this.positionList = data;
-            console.log(data);
         }, function (error) {
             console.log(error);
         });
@@ -454,6 +447,9 @@ module.exports = "<div class=\"col-md-8 col-md-offset-2 calendar\" ><p-schedule 
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__shared_services_jobseeker_service__ = __webpack_require__("../../../../../src/app/shared/services/jobseeker.service.ts");
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_3_moment__ = __webpack_require__("../../../../moment/moment.js");
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_3_moment___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_3_moment__);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_4_angular2_notifications__ = __webpack_require__("../../../../angular2-notifications/dist/index.js");
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_4_angular2_notifications___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_4_angular2_notifications__);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_5__environments_environment__ = __webpack_require__("../../../../../src/environments/environment.ts");
 var __decorate = (this && this.__decorate) || function (decorators, target, key, desc) {
     var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
     if (typeof Reflect === "object" && typeof Reflect.decorate === "function") r = Reflect.decorate(decorators, target, key, desc);
@@ -467,11 +463,14 @@ var __metadata = (this && this.__metadata) || function (k, v) {
 
 
 
+
+
 var WorkScheduleComponent = (function () {
-    function WorkScheduleComponent(cd, apiservice, jobseekerservice) {
+    function WorkScheduleComponent(cd, apiservice, jobseekerservice, notificationsService) {
         this.cd = cd;
         this.apiservice = apiservice;
         this.jobseekerservice = jobseekerservice;
+        this.notificationsService = notificationsService;
         this.dialogVisible = false;
         this.idGen = 100;
         this.minDate = new Date();
@@ -505,7 +504,7 @@ var WorkScheduleComponent = (function () {
                 _this.events.push(eventToshow);
             }
         }, function (err) {
-            console.log(err);
+            _this.notificationsService.error(err.title, err.error.message, __WEBPACK_IMPORTED_MODULE_5__environments_environment__["a" /* environment */].options);
         });
     };
     WorkScheduleComponent.prototype.ngOnInit = function () {
@@ -529,13 +528,11 @@ var WorkScheduleComponent = (function () {
         return [year, month, day].join('-');
     };
     WorkScheduleComponent.prototype.handleDayClick = function (event) {
-        console.log(event);
         if (event.date.format() < this.minDate) {
             alert('please select from today onwards');
         }
         else {
             this.start = event.date._d;
-            //console.log(new Date(t.getFullYear(), t.getMonth() + 1, 0, 23, 59, 59));
             this.event = new MyEvent();
             this.event.start = event.date.format();
             switch (this.start.getDay()) {
@@ -567,7 +564,6 @@ var WorkScheduleComponent = (function () {
         }
     };
     WorkScheduleComponent.prototype.handleEventClick = function (e) {
-        console.log("handle event click");
         if (e.calEvent.start.format() < this.minDate) {
             alert('outdated event');
         }
@@ -595,19 +591,16 @@ var WorkScheduleComponent = (function () {
             data.splice(0, 1);
         }
         this.jobseekerservice.postJobSchedules(data).subscribe(function (res) {
-            console.log(res);
             if (res) {
-                // this.events.push(data);
-                console.log(res);
+                _this.notificationsService.success('Success', res.message, __WEBPACK_IMPORTED_MODULE_5__environments_environment__["a" /* environment */].options);
                 _this.JobSchedules();
             }
         }, function (err) {
-            console.log(err);
+            _this.notificationsService.error(err.title, err.error.message, __WEBPACK_IMPORTED_MODULE_5__environments_environment__["a" /* environment */].options);
         });
         this.event = null;
     };
     WorkScheduleComponent.prototype.saveEvent = function () {
-        console.log("hai");
         var startDate = new Date(this.event.start);
         var startDay = startDate.getDate();
         if (this.event.allMonth) {
@@ -683,7 +676,6 @@ var WorkScheduleComponent = (function () {
     };
     WorkScheduleComponent.prototype.deleteEvent = function (id) {
         this.jobseekerservice.deleteScheduledJob(id).subscribe(function (res) {
-            console.log(res);
         });
     };
     WorkScheduleComponent.prototype.findEventIndexById = function (id) {
@@ -704,7 +696,7 @@ WorkScheduleComponent = __decorate([
         template: __webpack_require__("../../../../../src/app/job-seeker/components/work-schedule/work-schedule.component.html"),
         styles: [__webpack_require__("../../../../../src/app/job-seeker/components/work-schedule/work-schedule.component.css")]
     }),
-    __metadata("design:paramtypes", [typeof (_a = typeof __WEBPACK_IMPORTED_MODULE_0__angular_core__["ChangeDetectorRef"] !== "undefined" && __WEBPACK_IMPORTED_MODULE_0__angular_core__["ChangeDetectorRef"]) === "function" && _a || Object, typeof (_b = typeof __WEBPACK_IMPORTED_MODULE_1__shared_services_api_service__["a" /* ApiService */] !== "undefined" && __WEBPACK_IMPORTED_MODULE_1__shared_services_api_service__["a" /* ApiService */]) === "function" && _b || Object, typeof (_c = typeof __WEBPACK_IMPORTED_MODULE_2__shared_services_jobseeker_service__["a" /* JobseekerService */] !== "undefined" && __WEBPACK_IMPORTED_MODULE_2__shared_services_jobseeker_service__["a" /* JobseekerService */]) === "function" && _c || Object])
+    __metadata("design:paramtypes", [typeof (_a = typeof __WEBPACK_IMPORTED_MODULE_0__angular_core__["ChangeDetectorRef"] !== "undefined" && __WEBPACK_IMPORTED_MODULE_0__angular_core__["ChangeDetectorRef"]) === "function" && _a || Object, typeof (_b = typeof __WEBPACK_IMPORTED_MODULE_1__shared_services_api_service__["a" /* ApiService */] !== "undefined" && __WEBPACK_IMPORTED_MODULE_1__shared_services_api_service__["a" /* ApiService */]) === "function" && _b || Object, typeof (_c = typeof __WEBPACK_IMPORTED_MODULE_2__shared_services_jobseeker_service__["a" /* JobseekerService */] !== "undefined" && __WEBPACK_IMPORTED_MODULE_2__shared_services_jobseeker_service__["a" /* JobseekerService */]) === "function" && _c || Object, typeof (_e = typeof __WEBPACK_IMPORTED_MODULE_4_angular2_notifications__["NotificationsService"] !== "undefined" && __WEBPACK_IMPORTED_MODULE_4_angular2_notifications__["NotificationsService"]) === "function" && _e || Object])
 ], WorkScheduleComponent);
 
 var MyEvent = (function () {
@@ -713,7 +705,7 @@ var MyEvent = (function () {
     return MyEvent;
 }());
 
-var _a, _b, _c;
+var _a, _b, _c, _e;
 //# sourceMappingURL=work-schedule.component.js.map
 
 /***/ }),

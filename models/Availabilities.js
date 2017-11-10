@@ -19,6 +19,6 @@ var AvailabilitiesSchema = new Schema({
     Date_Submitted: { type: Date, required: false, default: Date.now }
 });
 
-AvailabilitiesSchema.plugin(mongooseUniqueValidator, { message: 'is already taken.' });
+// AvailabilitiesSchema.plugin(mongooseUniqueValidator, { message: 'is already taken.' });
 
 mongoose.model('Availabilities', AvailabilitiesSchema);

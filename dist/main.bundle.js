@@ -31,6 +31,97 @@ module.exports = webpackAsyncContext;
 
 /***/ }),
 
+/***/ "../../../../../src/app/activate-user/activate-user.component.css":
+/***/ (function(module, exports, __webpack_require__) {
+
+exports = module.exports = __webpack_require__("../../../../css-loader/lib/css-base.js")(false);
+// imports
+
+
+// module
+exports.push([module.i, "", ""]);
+
+// exports
+
+
+/*** EXPORTS FROM exports-loader ***/
+module.exports = module.exports.toString();
+
+/***/ }),
+
+/***/ "../../../../../src/app/activate-user/activate-user.component.html":
+/***/ (function(module, exports) {
+
+module.exports = "<p>\n  activate-user works!\n</p>\n"
+
+/***/ }),
+
+/***/ "../../../../../src/app/activate-user/activate-user.component.ts":
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "a", function() { return ActivateUserComponent; });
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__angular_core__ = __webpack_require__("../../../core/@angular/core.es5.js");
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__angular_router__ = __webpack_require__("../../../router/@angular/router.es5.js");
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__shared_services_user_service__ = __webpack_require__("../../../../../src/app/shared/services/user.service.ts");
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_3__environments_environment__ = __webpack_require__("../../../../../src/environments/environment.ts");
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_4_angular2_notifications__ = __webpack_require__("../../../../angular2-notifications/dist/index.js");
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_4_angular2_notifications___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_4_angular2_notifications__);
+var __decorate = (this && this.__decorate) || function (decorators, target, key, desc) {
+    var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
+    if (typeof Reflect === "object" && typeof Reflect.decorate === "function") r = Reflect.decorate(decorators, target, key, desc);
+    else for (var i = decorators.length - 1; i >= 0; i--) if (d = decorators[i]) r = (c < 3 ? d(r) : c > 3 ? d(target, key, r) : d(target, key)) || r;
+    return c > 3 && r && Object.defineProperty(target, key, r), r;
+};
+var __metadata = (this && this.__metadata) || function (k, v) {
+    if (typeof Reflect === "object" && typeof Reflect.metadata === "function") return Reflect.metadata(k, v);
+};
+
+
+
+
+
+var ActivateUserComponent = (function () {
+    function ActivateUserComponent(userService, notificationsService, activatedRoute, router) {
+        this.userService = userService;
+        this.notificationsService = notificationsService;
+        this.activatedRoute = activatedRoute;
+        this.router = router;
+    }
+    ActivateUserComponent.prototype.ngOnInit = function () {
+        var _this = this;
+        this.activatedRoute.params.subscribe(function (params) {
+            console.log(_this.id);
+            _this.id = params['id'];
+        });
+        console.log(this.id);
+        if (this.id) {
+            console.log(this.id);
+            this.userService.activateUser(this.id).subscribe(function (res) {
+                _this.notificationsService.success('Success', res.message, __WEBPACK_IMPORTED_MODULE_3__environments_environment__["a" /* environment */].options);
+                _this.router.navigate(['']);
+            }, function (err) {
+                _this.notificationsService.error(err.title, err.error.message, __WEBPACK_IMPORTED_MODULE_3__environments_environment__["a" /* environment */].options);
+                _this.router.navigate(['']);
+            });
+        }
+    };
+    return ActivateUserComponent;
+}());
+ActivateUserComponent = __decorate([
+    Object(__WEBPACK_IMPORTED_MODULE_0__angular_core__["Component"])({
+        selector: 'app-activate-user',
+        template: __webpack_require__("../../../../../src/app/activate-user/activate-user.component.html"),
+        styles: [__webpack_require__("../../../../../src/app/activate-user/activate-user.component.css")]
+    }),
+    __metadata("design:paramtypes", [typeof (_a = typeof __WEBPACK_IMPORTED_MODULE_2__shared_services_user_service__["a" /* UserService */] !== "undefined" && __WEBPACK_IMPORTED_MODULE_2__shared_services_user_service__["a" /* UserService */]) === "function" && _a || Object, typeof (_b = typeof __WEBPACK_IMPORTED_MODULE_4_angular2_notifications__["NotificationsService"] !== "undefined" && __WEBPACK_IMPORTED_MODULE_4_angular2_notifications__["NotificationsService"]) === "function" && _b || Object, typeof (_c = typeof __WEBPACK_IMPORTED_MODULE_1__angular_router__["ActivatedRoute"] !== "undefined" && __WEBPACK_IMPORTED_MODULE_1__angular_router__["ActivatedRoute"]) === "function" && _c || Object, typeof (_d = typeof __WEBPACK_IMPORTED_MODULE_1__angular_router__["Router"] !== "undefined" && __WEBPACK_IMPORTED_MODULE_1__angular_router__["Router"]) === "function" && _d || Object])
+], ActivateUserComponent);
+
+var _a, _b, _c, _d;
+//# sourceMappingURL=activate-user.component.js.map
+
+/***/ }),
+
 /***/ "../../../../../src/app/app-routing.ts":
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
@@ -43,8 +134,9 @@ module.exports = webpackAsyncContext;
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_4__shared_components_forgot_password_forgot_password_component__ = __webpack_require__("../../../../../src/app/shared/components/forgot-password/forgot-password.component.ts");
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_5__shared_components_contact_us_contact_us_component__ = __webpack_require__("../../../../../src/app/shared/components/contact-us/contact-us.component.ts");
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_6__register_register_component__ = __webpack_require__("../../../../../src/app/register/register.component.ts");
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_7__shared_services_auth_guard_service__ = __webpack_require__("../../../../../src/app/shared/services/auth-guard.service.ts");
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_8__shared_services_no_auth_guard_service__ = __webpack_require__("../../../../../src/app/shared/services/no-auth-guard.service.ts");
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_7__activate_user_activate_user_component__ = __webpack_require__("../../../../../src/app/activate-user/activate-user.component.ts");
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_8__shared_services_auth_guard_service__ = __webpack_require__("../../../../../src/app/shared/services/auth-guard.service.ts");
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_9__shared_services_no_auth_guard_service__ = __webpack_require__("../../../../../src/app/shared/services/no-auth-guard.service.ts");
 var __decorate = (this && this.__decorate) || function (decorators, target, key, desc) {
     var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
     if (typeof Reflect === "object" && typeof Reflect.decorate === "function") r = Reflect.decorate(decorators, target, key, desc);
@@ -60,17 +152,19 @@ var __decorate = (this && this.__decorate) || function (decorators, target, key,
 
 
 
+
 var routes = [
-    { path: '', component: __WEBPACK_IMPORTED_MODULE_2__home_home_component__["a" /* HomeComponent */], canActivate: [__WEBPACK_IMPORTED_MODULE_8__shared_services_no_auth_guard_service__["a" /* NoAuthGuardService */]] },
+    { path: '', component: __WEBPACK_IMPORTED_MODULE_2__home_home_component__["a" /* HomeComponent */], canActivate: [__WEBPACK_IMPORTED_MODULE_9__shared_services_no_auth_guard_service__["a" /* NoAuthGuardService */]] },
+    { path: 'confirm/:id', component: __WEBPACK_IMPORTED_MODULE_7__activate_user_activate_user_component__["a" /* ActivateUserComponent */], canActivate: [__WEBPACK_IMPORTED_MODULE_9__shared_services_no_auth_guard_service__["a" /* NoAuthGuardService */]] },
     { path: 'employer',
         loadChildren: './employer/employer.module#EmployerModule',
-        canActivate: [__WEBPACK_IMPORTED_MODULE_7__shared_services_auth_guard_service__["a" /* AuthGuardService */]]
+        canActivate: [__WEBPACK_IMPORTED_MODULE_8__shared_services_auth_guard_service__["a" /* AuthGuardService */]]
     },
-    { path: 'jobseeker', loadChildren: './job-seeker/job-seeker.module#JobSeekerModule', canActivate: [__WEBPACK_IMPORTED_MODULE_7__shared_services_auth_guard_service__["a" /* AuthGuardService */]] },
-    { path: 'changepassword', component: __WEBPACK_IMPORTED_MODULE_3__shared_components_change_password_change_password_component__["a" /* ChangePasswordComponent */], canActivate: [__WEBPACK_IMPORTED_MODULE_7__shared_services_auth_guard_service__["a" /* AuthGuardService */]] },
-    { path: 'forgotpassword/:id', component: __WEBPACK_IMPORTED_MODULE_4__shared_components_forgot_password_forgot_password_component__["a" /* ForgotPasswordComponent */], canActivate: [__WEBPACK_IMPORTED_MODULE_8__shared_services_no_auth_guard_service__["a" /* NoAuthGuardService */]] },
-    { path: 'register', component: __WEBPACK_IMPORTED_MODULE_6__register_register_component__["a" /* RegisterComponent */], canActivate: [__WEBPACK_IMPORTED_MODULE_8__shared_services_no_auth_guard_service__["a" /* NoAuthGuardService */]] },
-    { path: 'contactus', component: __WEBPACK_IMPORTED_MODULE_5__shared_components_contact_us_contact_us_component__["a" /* ContactUsComponent */], canActivate: [__WEBPACK_IMPORTED_MODULE_8__shared_services_no_auth_guard_service__["a" /* NoAuthGuardService */]] },
+    { path: 'jobseeker', loadChildren: './job-seeker/job-seeker.module#JobSeekerModule', canActivate: [__WEBPACK_IMPORTED_MODULE_8__shared_services_auth_guard_service__["a" /* AuthGuardService */]] },
+    { path: 'changepassword', component: __WEBPACK_IMPORTED_MODULE_3__shared_components_change_password_change_password_component__["a" /* ChangePasswordComponent */], canActivate: [__WEBPACK_IMPORTED_MODULE_8__shared_services_auth_guard_service__["a" /* AuthGuardService */]] },
+    { path: 'forgotpassword/:id', component: __WEBPACK_IMPORTED_MODULE_4__shared_components_forgot_password_forgot_password_component__["a" /* ForgotPasswordComponent */], canActivate: [__WEBPACK_IMPORTED_MODULE_9__shared_services_no_auth_guard_service__["a" /* NoAuthGuardService */]] },
+    { path: 'register', component: __WEBPACK_IMPORTED_MODULE_6__register_register_component__["a" /* RegisterComponent */], canActivate: [__WEBPACK_IMPORTED_MODULE_9__shared_services_no_auth_guard_service__["a" /* NoAuthGuardService */]] },
+    { path: 'contactus', component: __WEBPACK_IMPORTED_MODULE_5__shared_components_contact_us_contact_us_component__["a" /* ContactUsComponent */], canActivate: [__WEBPACK_IMPORTED_MODULE_9__shared_services_no_auth_guard_service__["a" /* NoAuthGuardService */]] },
     { path: '**', redirectTo: '' },
 ];
 var AppRoutingModule = (function () {
@@ -190,6 +284,7 @@ var _a;
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_19__shared_services_user_service__ = __webpack_require__("../../../../../src/app/shared/services/user.service.ts");
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_20__shared_services_auth_guard_service__ = __webpack_require__("../../../../../src/app/shared/services/auth-guard.service.ts");
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_21__shared_services_no_auth_guard_service__ = __webpack_require__("../../../../../src/app/shared/services/no-auth-guard.service.ts");
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_22__activate_user_activate_user_component__ = __webpack_require__("../../../../../src/app/activate-user/activate-user.component.ts");
 var __decorate = (this && this.__decorate) || function (decorators, target, key, desc) {
     var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
     if (typeof Reflect === "object" && typeof Reflect.decorate === "function") r = Reflect.decorate(decorators, target, key, desc);
@@ -221,6 +316,7 @@ var __decorate = (this && this.__decorate) || function (decorators, target, key,
 
 
 
+
 // import { SearchPipe } from './shared/pipes/search.pipe';
 var AppModule = (function () {
     function AppModule() {
@@ -233,7 +329,8 @@ AppModule = __decorate([
             __WEBPACK_IMPORTED_MODULE_12__app_component__["a" /* AppComponent */],
             __WEBPACK_IMPORTED_MODULE_13__login_login_component__["a" /* LoginComponent */],
             __WEBPACK_IMPORTED_MODULE_14__home_home_component__["a" /* HomeComponent */],
-            __WEBPACK_IMPORTED_MODULE_15__register_register_component__["a" /* RegisterComponent */]
+            __WEBPACK_IMPORTED_MODULE_15__register_register_component__["a" /* RegisterComponent */],
+            __WEBPACK_IMPORTED_MODULE_22__activate_user_activate_user_component__["a" /* ActivateUserComponent */]
             // SearchPipe
         ],
         imports: [
@@ -387,6 +484,7 @@ module.exports = "\r\n\r\n<div class=\"modal-dialog\">\r\n  <div class=\"modal-c
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_3_angular2_notifications__ = __webpack_require__("../../../../angular2-notifications/dist/index.js");
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_3_angular2_notifications___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_3_angular2_notifications__);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_4__shared_services_user_service__ = __webpack_require__("../../../../../src/app/shared/services/user.service.ts");
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_5__environments_environment__ = __webpack_require__("../../../../../src/environments/environment.ts");
 var __extends = (this && this.__extends) || (function () {
     var extendStatics = Object.setPrototypeOf ||
         ({ __proto__: [] } instanceof Array && function (d, b) { d.__proto__ = b; }) ||
@@ -411,6 +509,7 @@ var __metadata = (this && this.__metadata) || function (k, v) {
 
 
 
+
 var LoginComponent = (function (_super) {
     __extends(LoginComponent, _super);
     function LoginComponent(dialogService, router, userService, notificationsService) {
@@ -419,13 +518,6 @@ var LoginComponent = (function (_super) {
         _this.userService = userService;
         _this.notificationsService = notificationsService;
         _this.isLogin = true;
-        _this.options = {
-            timeOut: 5000,
-            showProgressBar: true,
-            pauseOnHover: false,
-            clickToClose: false,
-            maxLength: 50
-        };
         _this.user = {
             Email_Address: '',
             Password: ''
@@ -451,19 +543,17 @@ var LoginComponent = (function (_super) {
             _this.close();
         }, function (err) {
             _this.close();
-            _this.notificationsService.error(err.title, 'err.error.message', _this.options);
+            _this.notificationsService.error(err.title, err.error.message, __WEBPACK_IMPORTED_MODULE_5__environments_environment__["a" /* environment */].options);
         });
     };
     LoginComponent.prototype.reset = function () {
         var _this = this;
         this.userService.resetPassword(this.forgotPasswordData).subscribe(function (res) {
             _this.close();
-            _this.notificationsService.success('Success', res.message, _this.options);
-            console.log(res);
+            _this.notificationsService.success('Success', res.message, __WEBPACK_IMPORTED_MODULE_5__environments_environment__["a" /* environment */].options);
         }, function (err) {
             _this.close();
-            _this.notificationsService.error(err.title, err.message, _this.options);
-            console.log(err);
+            _this.notificationsService.error(err.title, err.message, __WEBPACK_IMPORTED_MODULE_5__environments_environment__["a" /* environment */].options);
         });
     };
     LoginComponent.prototype.navigateToRegister = function () {
@@ -523,6 +613,7 @@ module.exports = "<section class=\"section-wrap promo-banners pb-30 slider-secti
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__shared_services_user_service__ = __webpack_require__("../../../../../src/app/shared/services/user.service.ts");
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_3_angular2_notifications__ = __webpack_require__("../../../../angular2-notifications/dist/index.js");
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_3_angular2_notifications___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_3_angular2_notifications__);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_4__environments_environment__ = __webpack_require__("../../../../../src/environments/environment.ts");
 var __decorate = (this && this.__decorate) || function (decorators, target, key, desc) {
     var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
     if (typeof Reflect === "object" && typeof Reflect.decorate === "function") r = Reflect.decorate(decorators, target, key, desc);
@@ -532,6 +623,7 @@ var __decorate = (this && this.__decorate) || function (decorators, target, key,
 var __metadata = (this && this.__metadata) || function (k, v) {
     if (typeof Reflect === "object" && typeof Reflect.metadata === "function") return Reflect.metadata(k, v);
 };
+
 
 
 
@@ -568,15 +660,9 @@ var RegisterComponent = (function () {
         this.employee.userType = this.userType;
         this.userService.registerUser(this.employee).subscribe(function (res) {
             _this.router.navigate(['']);
-            _this.notificationsService.success('Success', res.message, {
-                timeOut: 5000,
-                showProgressBar: true,
-                pauseOnHover: false,
-                clickToClose: false,
-                maxLength: 100
-            });
+            _this.notificationsService.success('Success', res.message, __WEBPACK_IMPORTED_MODULE_4__environments_environment__["a" /* environment */].options);
         }, function (err) {
-            console.log(err);
+            _this.notificationsService.error(err.title, err.error.message, __WEBPACK_IMPORTED_MODULE_4__environments_environment__["a" /* environment */].options);
         });
     };
     return RegisterComponent;
@@ -709,7 +795,6 @@ var ContactUsComponent = (function () {
     ContactUsComponent.prototype.ngOnInit = function () {
     };
     ContactUsComponent.prototype.submit = function () {
-        console.log(this.data);
     };
     return ContactUsComponent;
 }());
@@ -776,7 +861,6 @@ var FooterComponent = (function () {
         this.userType = '';
         this.isLoggedIn = false;
         this.subscription = userService.currentUser.subscribe(function (user) {
-            console.log(user);
             _this.isLoggedIn = true;
             _this.userType = user.userType;
             _this.currentUser = user;
@@ -836,6 +920,7 @@ module.exports = "\t\t\t<!-- 404 -->\n<section class=\"section-wrap\">\n  <div c
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__services_user_service__ = __webpack_require__("../../../../../src/app/shared/services/user.service.ts");
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_3_angular2_notifications__ = __webpack_require__("../../../../angular2-notifications/dist/index.js");
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_3_angular2_notifications___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_3_angular2_notifications__);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_4__environments_environment__ = __webpack_require__("../../../../../src/environments/environment.ts");
 var __decorate = (this && this.__decorate) || function (decorators, target, key, desc) {
     var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
     if (typeof Reflect === "object" && typeof Reflect.decorate === "function") r = Reflect.decorate(decorators, target, key, desc);
@@ -849,6 +934,7 @@ var __metadata = (this && this.__metadata) || function (k, v) {
 
 
 
+
 var ForgotPasswordComponent = (function () {
     function ForgotPasswordComponent(userService, activatedRoute, notificationsService, router) {
         this.userService = userService;
@@ -856,13 +942,6 @@ var ForgotPasswordComponent = (function () {
         this.notificationsService = notificationsService;
         this.router = router;
         this.mismatched = false;
-        this.options = {
-            timeOut: 5000,
-            showProgressBar: true,
-            pauseOnHover: false,
-            clickToClose: false,
-            maxLength: 50
-        };
         this.resetPassword = {
             newPassword: '',
             confirmPassword: '',
@@ -886,12 +965,10 @@ var ForgotPasswordComponent = (function () {
     ForgotPasswordComponent.prototype.submit = function () {
         var _this = this;
         this.userService.changePassword(this.resetPassword).subscribe(function (res) {
-            console.log(res);
-            _this.notificationsService.success('Success', res.message, _this.options);
+            _this.notificationsService.success('Success', res.message, __WEBPACK_IMPORTED_MODULE_4__environments_environment__["a" /* environment */].options);
             _this.router.navigate(['']);
         }, function (err) {
-            console.log(err);
-            _this.notificationsService.error(err.title, err.error.message, _this.options);
+            _this.notificationsService.error(err.title, err.error.message, __WEBPACK_IMPORTED_MODULE_4__environments_environment__["a" /* environment */].options);
         });
     };
     return ForgotPasswordComponent;
@@ -985,7 +1062,7 @@ exports = module.exports = __webpack_require__("../../../../css-loader/lib/css-b
 
 
 // module
-exports.push([module.i, ".logo{\r\n    min-height: 60px;\r\n}", ""]);
+exports.push([module.i, ".logo{\r\n    min-height: 60px;\r\n}\r\n.profile-status {\r\n    height: 18px;\r\n    font-size: 13px;\r\n    text-align: center;\r\n    color: red;\r\n    background: #2db5e2;\r\n}\r\n.profile-status span {\r\n    margin-right: 1%;\r\n}", ""]);
 
 // exports
 
@@ -998,7 +1075,7 @@ module.exports = module.exports.toString();
 /***/ "../../../../../src/app/shared/components/top-nav/top-nav.component.html":
 /***/ (function(module, exports) {
 
-module.exports = "<header class=\"nav-type-1\">\r\n  <!-- Top Bar -->\r\n  <div class=\"top-bar hidden-xs\">\r\n    <div class=\"container\">\r\n      <div class=\"top-bar-links flex-parent\">\r\n        <ul class=\"top-bar-currency-language\">\r\n\r\n        </ul>\r\n\r\n        <ul class=\"top-bar-acc pull-right\" *ngIf = '!isLoggedIn'>\r\n          <!-- <li class=\"top-bar-link\"><a >My Wishlist</a></li> -->\r\n          <li class=\"top-bar-link\" [routerLink]=\"['contactus']\" routerLinkActive=\"active\"><a >Contact Us</a></li>\r\n          <li class=\"top-bar-link\" ><a (click)=showConfirm()>Login</a></li>\r\n          <li class=\"top-bar-link\" ><a (click)=navigateToRegister()>Register</a></li>                 \r\n        </ul>\r\n\r\n      </div>\r\n    </div>\r\n  </div> <!-- end top bar -->\r\n          \r\n  <nav class=\"navbar navbar-static-top\">\r\n    <div class=\"navigation\" id=\"sticky-nav\">\r\n      <div class=\"container relative\">\r\n\r\n        <div class=\"row flex-parent\">\r\n\r\n          <div class=\"navbar-header flex-child\">\r\n            <!-- Logo -->\r\n            <div class=\"logo-container\">\r\n              <div class=\"logo-wrap\">\r\n                <a routerLink='/'>\r\n                  <img class=\"logo\" src=\"assets/img/Photos/logo-1.png\" alt=\"logo\">\r\n                </a>\r\n              </div>\r\n            </div>\r\n            <button type=\"button\" class=\"navbar-toggle\" data-toggle=\"collapse\" data-target=\"#navbar-collapse\">\r\n              <span class=\"sr-only\">Toggle navigation</span>\r\n              <span class=\"icon-bar\"></span>\r\n              <span class=\"icon-bar\"></span>\r\n              <span class=\"icon-bar\"></span>\r\n            </button>\r\n             <!-- Mobile cart -->\r\n             \r\n          </div> <!-- end navbar-header -->\r\n\r\n          <div class=\"nav-wrap flex-child\">\r\n            <div class=\"collapse navbar-collapse text-center\" id=\"navbar-collapse\">\r\n              \r\n              <!-- <ul class=\"nav navbar-nav\" *ngIf=\"userType == 'jobseeker'\"> -->\r\n              <ul class=\"nav navbar-nav\" *ngIf=\"userType == 'jobseeker'\">\r\n                <li>\r\n                  <a [routerLink]=\"['jobseeker/schedule']\" routerLinkActive=\"active\">Schedule Work</a>\r\n                </li>\r\n                <li>\r\n                  <a [routerLink]=\"['jobseeker/joboffers']\" routerLinkActive=\"active\">My Job Offers</a>\r\n                </li>\r\n                \r\n                <li class=\"mobile-links hidden-lg hidden-md\">\r\n                  <a  [routerLink]=\"['jobseeker/schedule']\" routerLinkActive=\"active\">Change Password</a>\r\n                </li>\r\n                <li class=\"mobile-links hidden-lg hidden-md\">\r\n                  <a >Log Out</a>\r\n                </li>\r\n\r\n              </ul> <!-- end menu -->\r\n              <ul class=\"nav navbar-nav\" *ngIf=\"userType == 'employer'\">\r\n                <li>\r\n                  <a [routerLink]=\"['employer/search']\" routerLinkActive=\"active\">Search</a>\r\n                </li>\r\n                <li>\r\n                  <a [routerLink]=\"['employer/joboffers']\" routerLinkActive=\"active\">Job Offers</a>\r\n                </li>\r\n                <li>\r\n                  <a [routerLink]=\"['employer/payment']\" routerLinkActive=\"active\">Payment</a>\r\n                </li>\r\n                <li>\r\n                  <a [routerLink]=\"['employer/transactionhistory']\" routerLinkActive=\"active\">Transaction History</a>\r\n                </li>\r\n\r\n                <li class=\"mobile-links hidden-lg hidden-md\">\r\n                  <a >Log Out</a>\r\n                </li>\r\n              </ul> <!-- end menu -->\r\n            </div> <!-- end collapse -->\r\n          </div> <!-- end col -->\r\n\r\n          <div *ngIf='isLoggedIn' class=\"flex-child flex-right nav-right hidden-sm hidden-xs\">\r\n              <ul>\r\n                <li class=\"nav-cart\">\r\n                  \r\n                    <div class=\"nav-cart-outer\">\r\n                      <div class=\"nav-cart-inner\">\r\n                        <a>\r\n                          My Account\r\n                        </a>\r\n                      </div>\r\n                    </div>\r\n                    <div class=\"nav-cart-container\">\r\n                      <div class=\"nav-cart-items\">\r\n                      </div>\r\n                      <!-- end cart items -->\r\n\r\n                      <div class=\"nav-cart-summary\">\r\n                        <span>Welcome</span>\r\n                        <span class=\"total-price\">{{currentUser.Firstname}} {{currentUser.Lastname}}</span>\r\n                      </div>\r\n\r\n                      <div class=\"nav-cart-actions mt-20\">\r\n                        <a  class=\"btn btn-md btn-dark\" (click)=\"userProfile()\"><span>View Profile</span></a>\r\n                        <a class=\"btn btn-md btn-dark mt-10\" [routerLink]=\"['changepassword']\" routerLinkActive=\"active\"><span>Change Password</span></a>\r\n                        <a class=\"btn btn-md btn-color mt-10\" (click)='logoutUser()'><span>Log Out</span></a>\r\n                      </div>\r\n                    </div>\r\n                  </li>\r\n              </ul>\r\n            </div>\r\n          <!-- <div class=\"flex-child flex-right nav-right hidden-sm hidden-xs\">\r\n            <ul>\r\n              <li class=\"nav-register\" *ngIf=\"!isLoggedIn\">\r\n                <a >Log Out</a>\r\n              </li>\r\n            </ul>\r\n          </div> -->\r\n      \r\n        </div> <!-- end row -->\r\n      </div> <!-- end container -->\r\n    </div> <!-- end navigation -->\r\n  </nav> <!-- end navbar -->\r\n</header>"
+module.exports = "<header class=\"nav-type-1\">\r\n  <!-- Top Bar -->\r\n  <div class=\"top-bar\">\r\n    <div class=\"container\">\r\n      <div class=\"top-bar-links flex-parent\">\r\n        <ul class=\"top-bar-currency-language\">\r\n\r\n        </ul>\r\n\r\n        <ul class=\"top-bar-acc pull-right\" *ngIf = '!isLoggedIn'>\r\n          <!-- <li class=\"top-bar-link\"><a >My Wishlist</a></li> -->\r\n          <li class=\"top-bar-link\" [routerLink]=\"['contactus']\" routerLinkActive=\"active\"><a >Contact Us</a></li>\r\n          <li class=\"top-bar-link\" ><a (click)=showConfirm()>Login</a></li>\r\n          <li class=\"top-bar-link\" ><a (click)=navigateToRegister()>Register</a></li>                 \r\n        </ul>\r\n\r\n      </div>\r\n    </div>\r\n  </div> <!-- end top bar -->\r\n   <div class=\"profile-status\" *ngIf = \"showProfileStatus\">\r\n     Profile not updated\r\n     <span class=\"pull-right\" (click)=\"closeProfileStatus()\"><i class=\"fa fa-times\" aria-hidden=\"true\"></i></span>\r\n   </div>       \r\n  <nav class=\"navbar navbar-static-top\">\r\n    <div class=\"navigation\" id=\"sticky-nav\">\r\n      <div class=\"container relative\">\r\n\r\n        <div class=\"row flex-parent\">\r\n\r\n          <div class=\"navbar-header flex-child\">\r\n            <!-- Logo -->\r\n            <div class=\"logo-container\">\r\n              <div class=\"logo-wrap\">\r\n                <a routerLink='/'>\r\n                  <img class=\"logo\" src=\"assets/img/Photos/logo-1.png\" alt=\"logo\">\r\n                </a>\r\n              </div>\r\n            </div>\r\n            <button type=\"button\" class=\"navbar-toggle\" data-toggle=\"collapse\" data-target=\"#navbar-collapse\">\r\n              <span class=\"sr-only\">Toggle navigation</span>\r\n              <span class=\"icon-bar\"></span>\r\n              <span class=\"icon-bar\"></span>\r\n              <span class=\"icon-bar\"></span>\r\n            </button>\r\n             <!-- Mobile cart -->\r\n             \r\n          </div> <!-- end navbar-header -->\r\n\r\n          <div class=\"nav-wrap flex-child\">\r\n            <div class=\"collapse navbar-collapse text-center\" id=\"navbar-collapse\">\r\n              \r\n              <!-- <ul class=\"nav navbar-nav\" *ngIf=\"userType == 'jobseeker'\"> -->\r\n              <ul class=\"nav navbar-nav\" *ngIf=\"userType == 'jobseeker'\">\r\n                <li>\r\n                  <a [routerLink]=\"['jobseeker/schedule']\" routerLinkActive=\"active\">Schedule Work</a>\r\n                </li>\r\n                <li>\r\n                  <a [routerLink]=\"['jobseeker/joboffers']\" routerLinkActive=\"active\">My Job Offers</a>\r\n                </li>\r\n                \r\n                <li class=\"mobile-links hidden-lg hidden-md\">\r\n                  <a  [routerLink]=\"['jobseeker/schedule']\" routerLinkActive=\"active\">Change Password</a>\r\n                </li>\r\n                <li class=\"mobile-links hidden-lg hidden-md\">\r\n                  <a >Log Out</a>\r\n                </li>\r\n\r\n              </ul> <!-- end menu -->\r\n              <ul class=\"nav navbar-nav\" *ngIf=\"userType == 'employer'\">\r\n                <li>\r\n                  <a [routerLink]=\"['employer/search']\" routerLinkActive=\"active\">Search</a>\r\n                </li>\r\n                <li>\r\n                  <a [routerLink]=\"['employer/joboffers']\" routerLinkActive=\"active\">Job Offers</a>\r\n                </li>\r\n                <li>\r\n                  <a [routerLink]=\"['employer/payment']\" routerLinkActive=\"active\">Payment</a>\r\n                </li>\r\n                <li>\r\n                  <a [routerLink]=\"['employer/transactionhistory']\" routerLinkActive=\"active\">Transaction History</a>\r\n                </li>\r\n\r\n                <li class=\"mobile-links hidden-lg hidden-md\">\r\n                  <a >Log Out</a>\r\n                </li>\r\n              </ul> <!-- end menu -->\r\n            </div> <!-- end collapse -->\r\n          </div> <!-- end col -->\r\n\r\n          <div *ngIf='isLoggedIn' class=\"flex-child flex-right nav-right hidden-sm hidden-xs\">\r\n              <ul>\r\n                <li class=\"nav-cart\">\r\n                  \r\n                    <div class=\"nav-cart-outer\">\r\n                      <div class=\"nav-cart-inner\">\r\n                        <a>\r\n                          My Account\r\n                        </a>\r\n                      </div>\r\n                    </div>\r\n                    <div class=\"nav-cart-container\">\r\n                      <div class=\"nav-cart-items\">\r\n                      </div>\r\n                      <!-- end cart items -->\r\n\r\n                      <div class=\"nav-cart-summary\">\r\n                        <span>Welcome</span>\r\n                        <span class=\"total-price\">{{currentUser.Firstname}} {{currentUser.Lastname}}</span>\r\n                      </div>\r\n\r\n                      <div class=\"nav-cart-actions mt-20\">\r\n                        <a  class=\"btn btn-md btn-dark\" (click)=\"userProfile()\"><span>View Profile</span></a>\r\n                        <a class=\"btn btn-md btn-dark mt-10\" [routerLink]=\"['changepassword']\" routerLinkActive=\"active\"><span>Change Password</span></a>\r\n                        <a class=\"btn btn-md btn-color mt-10\" (click)='logoutUser()'><span>Log Out</span></a>\r\n                      </div>\r\n                    </div>\r\n                  </li>\r\n              </ul>\r\n            </div>\r\n          <!-- <div class=\"flex-child flex-right nav-right hidden-sm hidden-xs\">\r\n            <ul>\r\n              <li class=\"nav-register\" *ngIf=\"!isLoggedIn\">\r\n                <a >Log Out</a>\r\n              </li>\r\n            </ul>\r\n          </div> -->\r\n      \r\n        </div> <!-- end row -->\r\n      </div> <!-- end container -->\r\n    </div> <!-- end navigation -->\r\n  </nav> <!-- end navbar -->\r\n</header>"
 
 /***/ }),
 
@@ -1036,6 +1113,7 @@ var TopNavComponent = (function () {
         this.userService = userService;
         this.userType = '';
         this.isLoggedIn = false;
+        this.showProfileStatus = false;
         this.subscription = userService.currentUser.subscribe(function (user) {
             if (user.userType !== undefined) {
                 _this.isLoggedIn = true;
@@ -1048,6 +1126,13 @@ var TopNavComponent = (function () {
         });
     }
     TopNavComponent.prototype.ngOnInit = function () {
+        this.currentUrl = this.router.url;
+        if (this.currentUrl === '/') {
+            this.showProfileStatus = false;
+        }
+        else {
+            this.showProfileStatus = true;
+        }
     };
     TopNavComponent.prototype.userProfile = function () {
         this.router.navigate([this.userType + '/profile']);
@@ -1072,6 +1157,9 @@ var TopNavComponent = (function () {
         this.userService.purgeAuth();
         this.router.navigate(['']);
         this.isLoggedIn = false;
+    };
+    TopNavComponent.prototype.closeProfileStatus = function () {
+        console.log('clicked');
     };
     return TopNavComponent;
 }());
@@ -1172,9 +1260,10 @@ var ApiService = (function () {
     ApiService.prototype.post = function (path, body) {
         if (body === void 0) { body = {}; }
         return this.http.post("" + __WEBPACK_IMPORTED_MODULE_1__environments_environment__["a" /* environment */].api_url + path, JSON.stringify(body), { headers: this.setHeaders() })
-            .map(function (res) { return res.json(); })
+            .map(function (res) {
+            return res.json();
+        })
             .catch(function (error) {
-            console.log(error);
             return __WEBPACK_IMPORTED_MODULE_3_rxjs_Rx__["Observable"].throw(error.json());
         });
         //.catch(this.formatErrors)
@@ -1544,7 +1633,16 @@ var UserService = (function () {
         var path = 'user/resetpassword';
         return this.apiService.post(path, data).
             map(function (data) {
-            console.log(data);
+            return data;
+        }, function (err) {
+            return err;
+        });
+    };
+    UserService.prototype.activateUser = function (id) {
+        console.log(id);
+        var path = 'user/confirmation/' + id;
+        return this.apiService.get(path).
+            map(function (data) {
             return data;
         }, function (err) {
             return err;
@@ -1639,7 +1737,14 @@ SharedModule = __decorate([
 // The file contents for the current environment will overwrite these during build.
 var environment = {
     production: false,
-    api_url: '/'
+    api_url: 'http://localhost:3000/',
+    options: {
+        timeOut: 5000,
+        showProgressBar: true,
+        pauseOnHover: false,
+        clickToClose: false,
+        maxLength: 100
+    }
 };
 //# sourceMappingURL=environment.js.map
 

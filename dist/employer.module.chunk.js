@@ -98,6 +98,9 @@ module.exports = "<div class=\"container-fluid\">\r\n\t<div class=\"col-lg-3\">\
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_4__shared_services_employer_service__ = __webpack_require__("../../../../../src/app/shared/services/employer.service.ts");
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_5_ng2_haversine__ = __webpack_require__("../../../../ng2-haversine/index.js");
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_5_ng2_haversine___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_5_ng2_haversine__);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_6_angular2_notifications__ = __webpack_require__("../../../../angular2-notifications/dist/index.js");
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_6_angular2_notifications___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_6_angular2_notifications__);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_7__environments_environment__ = __webpack_require__("../../../../../src/environments/environment.ts");
 var __decorate = (this && this.__decorate) || function (decorators, target, key, desc) {
     var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
     if (typeof Reflect === "object" && typeof Reflect.decorate === "function") r = Reflect.decorate(decorators, target, key, desc);
@@ -113,14 +116,17 @@ var __metadata = (this && this.__metadata) || function (k, v) {
 
 
 
+
+
 var JobSeekerSearchComponent = (function () {
-    function JobSeekerSearchComponent(jsonLoaderService, router, userService, employerService, _haversineService) {
+    function JobSeekerSearchComponent(jsonLoaderService, router, userService, employerService, _haversineService, notificationsService) {
         var _this = this;
         this.jsonLoaderService = jsonLoaderService;
         this.router = router;
         this.userService = userService;
         this.employerService = employerService;
         this._haversineService = _haversineService;
+        this.notificationsService = notificationsService;
         this.value = new Date();
         this.itemsToHire = [];
         var newDate = new Date();
@@ -147,11 +153,12 @@ var JobSeekerSearchComponent = (function () {
     // initialise employer data to use location lattitude and longitude
     JobSeekerSearchComponent.prototype.initUserData = function (user) {
         var _this = this;
-        if (user) {
+        if (user.userType !== undefined) {
             this.userService.getData(user.Email_Address).subscribe(function (res) {
                 _this.employerLocation.lat = res.data.locationLat;
                 _this.employerLocation.lng = res.data.locationLng;
             }, function (err) {
+                _this.notificationsService.error(err.title, err.error.message, __WEBPACK_IMPORTED_MODULE_7__environments_environment__["a" /* environment */].options);
             });
         }
     };
@@ -174,7 +181,6 @@ var JobSeekerSearchComponent = (function () {
             .subscribe(function (data) {
             _this.positionList = data;
         }, function (error) {
-            console.log(error);
         });
     };
     JobSeekerSearchComponent.prototype.onDateChange = function (event) {
@@ -186,7 +192,6 @@ var JobSeekerSearchComponent = (function () {
         this.getJobseekers(this.filterJobseekers);
     };
     JobSeekerSearchComponent.prototype.onHoursChange = function () {
-        console.log(this.filterJobseekers);
         this.getJobseekers(this.filterJobseekers);
     };
     JobSeekerSearchComponent.prototype.filterData = function () {
@@ -199,13 +204,11 @@ var JobSeekerSearchComponent = (function () {
     // get the initial list of job seekers with todays date as input
     JobSeekerSearchComponent.prototype.getJobseekers = function (data) {
         var _this = this;
-        console.log(data);
         this.employerService.queryJobseekers(data).subscribe(function (res) {
-            console.log(res);
             _this.jobseekers = res.data;
             _this.calculateDistance(_this.jobseekers);
         }, function (err) {
-            console.log(err);
+            _this.notificationsService.error(err.title, err.error.message, __WEBPACK_IMPORTED_MODULE_7__environments_environment__["a" /* environment */].options);
         });
     };
     // calculating Distance based on the lat and lng of employer and job seeker
@@ -246,10 +249,10 @@ JobSeekerSearchComponent = __decorate([
         template: __webpack_require__("../../../../../src/app/employer/components/job-seeker-search/job-seeker-search.component.html"),
         styles: [__webpack_require__("../../../../../src/app/employer/components/job-seeker-search/job-seeker-search.component.css")]
     }),
-    __metadata("design:paramtypes", [typeof (_a = typeof __WEBPACK_IMPORTED_MODULE_2__shared_services_json_loader_service__["a" /* JsonLoaderService */] !== "undefined" && __WEBPACK_IMPORTED_MODULE_2__shared_services_json_loader_service__["a" /* JsonLoaderService */]) === "function" && _a || Object, typeof (_b = typeof __WEBPACK_IMPORTED_MODULE_1__angular_router__["Router"] !== "undefined" && __WEBPACK_IMPORTED_MODULE_1__angular_router__["Router"]) === "function" && _b || Object, typeof (_c = typeof __WEBPACK_IMPORTED_MODULE_3__shared_services_user_service__["a" /* UserService */] !== "undefined" && __WEBPACK_IMPORTED_MODULE_3__shared_services_user_service__["a" /* UserService */]) === "function" && _c || Object, typeof (_d = typeof __WEBPACK_IMPORTED_MODULE_4__shared_services_employer_service__["a" /* EmployerService */] !== "undefined" && __WEBPACK_IMPORTED_MODULE_4__shared_services_employer_service__["a" /* EmployerService */]) === "function" && _d || Object, typeof (_e = typeof __WEBPACK_IMPORTED_MODULE_5_ng2_haversine__["HaversineService"] !== "undefined" && __WEBPACK_IMPORTED_MODULE_5_ng2_haversine__["HaversineService"]) === "function" && _e || Object])
+    __metadata("design:paramtypes", [typeof (_a = typeof __WEBPACK_IMPORTED_MODULE_2__shared_services_json_loader_service__["a" /* JsonLoaderService */] !== "undefined" && __WEBPACK_IMPORTED_MODULE_2__shared_services_json_loader_service__["a" /* JsonLoaderService */]) === "function" && _a || Object, typeof (_b = typeof __WEBPACK_IMPORTED_MODULE_1__angular_router__["Router"] !== "undefined" && __WEBPACK_IMPORTED_MODULE_1__angular_router__["Router"]) === "function" && _b || Object, typeof (_c = typeof __WEBPACK_IMPORTED_MODULE_3__shared_services_user_service__["a" /* UserService */] !== "undefined" && __WEBPACK_IMPORTED_MODULE_3__shared_services_user_service__["a" /* UserService */]) === "function" && _c || Object, typeof (_d = typeof __WEBPACK_IMPORTED_MODULE_4__shared_services_employer_service__["a" /* EmployerService */] !== "undefined" && __WEBPACK_IMPORTED_MODULE_4__shared_services_employer_service__["a" /* EmployerService */]) === "function" && _d || Object, typeof (_e = typeof __WEBPACK_IMPORTED_MODULE_5_ng2_haversine__["HaversineService"] !== "undefined" && __WEBPACK_IMPORTED_MODULE_5_ng2_haversine__["HaversineService"]) === "function" && _e || Object, typeof (_f = typeof __WEBPACK_IMPORTED_MODULE_6_angular2_notifications__["NotificationsService"] !== "undefined" && __WEBPACK_IMPORTED_MODULE_6_angular2_notifications__["NotificationsService"]) === "function" && _f || Object])
 ], JobSeekerSearchComponent);
 
-var _a, _b, _c, _d, _e;
+var _a, _b, _c, _d, _e, _f;
 //# sourceMappingURL=job-seeker-search.component.js.map
 
 /***/ }),
@@ -326,7 +329,6 @@ var PaymentComponent = (function () {
             .subscribe(function (data) {
             _this.statesList = data;
         }, function (error) {
-            console.log(error);
         });
     };
     PaymentComponent.prototype.GetCardType = function (number) {
@@ -370,7 +372,6 @@ var PaymentComponent = (function () {
     PaymentComponent.prototype.makePayment = function () {
         var _this = this;
         this.employerservice.makePayment(this.payment).subscribe(function (res) {
-            console.log(res);
             if (res.message == 'Payment Sucessfull') {
                 _this.initializePayment();
             }
@@ -488,6 +489,7 @@ module.exports = "<section class=\"section-wrap\">\r\n  <div class=\"container\"
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__shared_services_user_service__ = __webpack_require__("../../../../../src/app/shared/services/user.service.ts");
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_3_angular2_notifications__ = __webpack_require__("../../../../angular2-notifications/dist/index.js");
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_3_angular2_notifications___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_3_angular2_notifications__);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_4__environments_environment__ = __webpack_require__("../../../../../src/environments/environment.ts");
 var __decorate = (this && this.__decorate) || function (decorators, target, key, desc) {
     var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
     if (typeof Reflect === "object" && typeof Reflect.decorate === "function") r = Reflect.decorate(decorators, target, key, desc);
@@ -501,21 +503,16 @@ var __metadata = (this && this.__metadata) || function (k, v) {
 
 
 
+
 var ProfileComponent = (function () {
-    function ProfileComponent(jsonLoaderService, userService, notificationsService) {
+    function ProfileComponent(jsonLoaderService, userService, notificationsService, ngzone) {
         var _this = this;
         this.jsonLoaderService = jsonLoaderService;
         this.userService = userService;
         this.notificationsService = notificationsService;
+        this.ngzone = ngzone;
         this.isUserDataEdit = false;
         this.isWorkDataEdit = false;
-        this.alertOptions = {
-            timeOut: 5000,
-            showProgressBar: true,
-            pauseOnHover: false,
-            clickToClose: false,
-            maxLength: 50
-        };
         this.newImageUploaded = false;
         this.options = { types: ['address'], componentRestrictions: { country: 'US' } };
         this.specialityList = [
@@ -557,7 +554,7 @@ var ProfileComponent = (function () {
         });
     }
     ProfileComponent.prototype.getAddress = function (event) {
-        console.log(event);
+        var _this = this;
         this.geoLocation = this.shuffleGoogleMapsAddress(event);
         var streetNumber = (this.geoLocation.addr_num) ? this.geoLocation.addr_num : '';
         var streetName = (this.geoLocation.addr) ? this.geoLocation.addr : '';
@@ -566,22 +563,23 @@ var ProfileComponent = (function () {
         var city = (this.geoLocation.city) ? this.geoLocation.city : '';
         var state = (this.geoLocation.state) ? this.geoLocation.state : '';
         var zip = (this.geoLocation.zip) ? this.geoLocation.zip : '';
-        this.user.Address_street = streetNumber + ', ' + streetName;
-        this.user.Address_Unit = location + ', ' + neighborhood;
-        this.user.City = this.geoLocation.city;
-        this.user.State = this.geoLocation.state;
-        this.user.Zip_Code = this.geoLocation.zip;
-        this.user.locationLat = this.geoLocation.lat;
-        this.user.locationLng = this.geoLocation.lng;
-        console.log(this.user);
+        this.ngzone.run(function () {
+            _this.user.Address_street = streetNumber + ', ' + streetName;
+            _this.user.Address_Unit = location + ', ' + neighborhood;
+            _this.user.City = _this.geoLocation.city;
+            _this.user.State = _this.geoLocation.state;
+            _this.user.Zip_Code = _this.geoLocation.zip;
+            _this.user.locationLat = _this.geoLocation.lat;
+            _this.user.locationLng = _this.geoLocation.lng;
+        });
     };
     ProfileComponent.prototype.initUserData = function (user) {
         var _this = this;
         if (user.userType !== undefined) {
             this.userService.getData(user.Email_Address).subscribe(function (res) {
-                console.log(res);
                 _this.user = res.data;
             }, function (err) {
+                _this.notificationsService.error(err.title, err.error.message, __WEBPACK_IMPORTED_MODULE_4__environments_environment__["a" /* environment */].options);
             });
         }
     };
@@ -594,12 +592,10 @@ var ProfileComponent = (function () {
     ProfileComponent.prototype.updateUserData = function () {
         var _this = this;
         this.userService.updatePersonal(this.user).subscribe(function (res) {
-            console.log(res);
-            _this.notificationsService.success('Success', res.message, _this.alertOptions);
+            _this.notificationsService.success('Success', res.message, __WEBPACK_IMPORTED_MODULE_4__environments_environment__["a" /* environment */].options);
             _this.isUserDataEdit = !_this.isUserDataEdit;
         }, function (err) {
-            console.log(err);
-            _this.notificationsService.error(err.title, err.error.message, _this.alertOptions);
+            _this.notificationsService.error(err.title, err.error.message, __WEBPACK_IMPORTED_MODULE_4__environments_environment__["a" /* environment */].options);
         });
     };
     ProfileComponent.prototype.editWorkData = function () {
@@ -611,12 +607,10 @@ var ProfileComponent = (function () {
     ProfileComponent.prototype.updateWorkData = function (user) {
         var _this = this;
         this.userService.updateWork(this.user).subscribe(function (res) {
-            console.log(res);
-            _this.notificationsService.success('Success', res.message, _this.alertOptions);
+            _this.notificationsService.success('Success', res.message, __WEBPACK_IMPORTED_MODULE_4__environments_environment__["a" /* environment */].options);
             _this.isWorkDataEdit = !_this.isWorkDataEdit;
         }, function (err) {
-            console.log(err);
-            _this.notificationsService.error(err.title, err.error.message, _this.alertOptions);
+            _this.notificationsService.error(err.title, err.error.message, __WEBPACK_IMPORTED_MODULE_4__environments_environment__["a" /* environment */].options);
         });
     };
     ProfileComponent.prototype.ngOnInit = function () {
@@ -712,10 +706,10 @@ ProfileComponent = __decorate([
         template: __webpack_require__("../../../../../src/app/employer/components/profile/profile.component.html"),
         styles: [__webpack_require__("../../../../../src/app/employer/components/profile/profile.component.css")]
     }),
-    __metadata("design:paramtypes", [typeof (_a = typeof __WEBPACK_IMPORTED_MODULE_1__shared_services_json_loader_service__["a" /* JsonLoaderService */] !== "undefined" && __WEBPACK_IMPORTED_MODULE_1__shared_services_json_loader_service__["a" /* JsonLoaderService */]) === "function" && _a || Object, typeof (_b = typeof __WEBPACK_IMPORTED_MODULE_2__shared_services_user_service__["a" /* UserService */] !== "undefined" && __WEBPACK_IMPORTED_MODULE_2__shared_services_user_service__["a" /* UserService */]) === "function" && _b || Object, typeof (_c = typeof __WEBPACK_IMPORTED_MODULE_3_angular2_notifications__["NotificationsService"] !== "undefined" && __WEBPACK_IMPORTED_MODULE_3_angular2_notifications__["NotificationsService"]) === "function" && _c || Object])
+    __metadata("design:paramtypes", [typeof (_a = typeof __WEBPACK_IMPORTED_MODULE_1__shared_services_json_loader_service__["a" /* JsonLoaderService */] !== "undefined" && __WEBPACK_IMPORTED_MODULE_1__shared_services_json_loader_service__["a" /* JsonLoaderService */]) === "function" && _a || Object, typeof (_b = typeof __WEBPACK_IMPORTED_MODULE_2__shared_services_user_service__["a" /* UserService */] !== "undefined" && __WEBPACK_IMPORTED_MODULE_2__shared_services_user_service__["a" /* UserService */]) === "function" && _b || Object, typeof (_c = typeof __WEBPACK_IMPORTED_MODULE_3_angular2_notifications__["NotificationsService"] !== "undefined" && __WEBPACK_IMPORTED_MODULE_3_angular2_notifications__["NotificationsService"]) === "function" && _c || Object, typeof (_d = typeof __WEBPACK_IMPORTED_MODULE_0__angular_core__["NgZone"] !== "undefined" && __WEBPACK_IMPORTED_MODULE_0__angular_core__["NgZone"]) === "function" && _d || Object])
 ], ProfileComponent);
 
-var _a, _b, _c;
+var _a, _b, _c, _d;
 //# sourceMappingURL=profile.component.js.map
 
 /***/ }),
@@ -752,6 +746,9 @@ module.exports = "\t\t\t<!-- Cart -->\r\n\t\t\t<section class=\"section-wrap sho
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "a", function() { return TransactionHistoryComponent; });
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__angular_core__ = __webpack_require__("../../../core/@angular/core.es5.js");
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__shared_services_employer_service__ = __webpack_require__("../../../../../src/app/shared/services/employer.service.ts");
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2_angular2_notifications__ = __webpack_require__("../../../../angular2-notifications/dist/index.js");
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2_angular2_notifications___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_2_angular2_notifications__);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_3__environments_environment__ = __webpack_require__("../../../../../src/environments/environment.ts");
 var __decorate = (this && this.__decorate) || function (decorators, target, key, desc) {
     var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
     if (typeof Reflect === "object" && typeof Reflect.decorate === "function") r = Reflect.decorate(decorators, target, key, desc);
@@ -763,13 +760,17 @@ var __metadata = (this && this.__metadata) || function (k, v) {
 };
 
 
+
+
 var TransactionHistoryComponent = (function () {
-    function TransactionHistoryComponent(employerService) {
+    function TransactionHistoryComponent(employerService, notificationsService) {
         var _this = this;
         this.employerService = employerService;
+        this.notificationsService = notificationsService;
         this.employerService.getTransactions().subscribe(function (res) {
             _this.transactions = res.data;
-            console.log(res.data);
+        }, function (err) {
+            _this.notificationsService.error(err.title, err.error.message, __WEBPACK_IMPORTED_MODULE_3__environments_environment__["a" /* environment */].options);
         });
     }
     TransactionHistoryComponent.prototype.ngOnInit = function () {
@@ -782,10 +783,10 @@ TransactionHistoryComponent = __decorate([
         template: __webpack_require__("../../../../../src/app/employer/components/transaction-history/transaction-history.component.html"),
         styles: [__webpack_require__("../../../../../src/app/employer/components/transaction-history/transaction-history.component.css")]
     }),
-    __metadata("design:paramtypes", [typeof (_a = typeof __WEBPACK_IMPORTED_MODULE_1__shared_services_employer_service__["a" /* EmployerService */] !== "undefined" && __WEBPACK_IMPORTED_MODULE_1__shared_services_employer_service__["a" /* EmployerService */]) === "function" && _a || Object])
+    __metadata("design:paramtypes", [typeof (_a = typeof __WEBPACK_IMPORTED_MODULE_1__shared_services_employer_service__["a" /* EmployerService */] !== "undefined" && __WEBPACK_IMPORTED_MODULE_1__shared_services_employer_service__["a" /* EmployerService */]) === "function" && _a || Object, typeof (_b = typeof __WEBPACK_IMPORTED_MODULE_2_angular2_notifications__["NotificationsService"] !== "undefined" && __WEBPACK_IMPORTED_MODULE_2_angular2_notifications__["NotificationsService"]) === "function" && _b || Object])
 ], TransactionHistoryComponent);
 
-var _a;
+var _a, _b;
 //# sourceMappingURL=transaction-history.component.js.map
 
 /***/ }),

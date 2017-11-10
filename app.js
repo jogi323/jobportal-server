@@ -9,12 +9,14 @@ var cors = require('cors');
 var nodemailer = require("nodemailer");
 
 var isProduction = process.env.NODE_ENV === 'production';
+var mongodbUrl = require('./config').mongodbUrl;
 
 require('./models/User');
 require('./models/VerifyToken');
 require('./models/Availabilities');
 require('./models/Payments');
 require('./models/Offers');
+require('./models/Contactus');
 
 var index = require('./routes/index');
 var users = require('./routes/users');
@@ -26,7 +28,7 @@ var app = express();
 
 app.use(cors());
 
-mongoose.connect('mongodb://ashokona:FightClub@ds155325.mlab.com:55325/jobportal');
+mongoose.connect(mongodbUrl);
 
 // view engine setup
 app.set('views', path.join(__dirname, 'views'));
@@ -38,7 +40,7 @@ app.use(logger('dev'));
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: false }));
 app.use(cookieParser());
-app.use(express.static(path.join(__dirname, 'dist')));
+app.use(express.static(path.join(__dirname, 'public')));
 
 
 
@@ -54,9 +56,7 @@ app.use('/user', users);
 app.use('/availability', availabilities);
 app.use('/payments', payments);
 app.use('/offers', offers);
-app.get('/*',function(req,res){
-    res.sendFile(__dirname+ '/dist/index.html')
-})
+
 // catch 404 and forward to error handler
 app.use(function(req, res, next) {
     var err = new Error('Not Found');

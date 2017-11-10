@@ -104,14 +104,16 @@ router.post('/save', auth.required, function(req, res, next) {
         if (err) { return res.status(500).json({ title: 'An error occurred', error: err }); }
         if (!user) { return res.status(401).json({ title: 'Not Authorised', error: { message: 'Login Again' } }) } else {
             AvailabilitiesList.forEach(function(availabilities) {
-                Availabilities.find({ 'Date': availabilities.Date, 'JS_id': user._id })
-                    // .where('JS_id').eq(user._id)
+                Availabilities.find({ 'Date': availabilities.Date })
+                    .where('JS_id').eq(user._id)
                     .exec(function(err, avail) {
+                        console.log(avail);
                         if (err) {
                             console.log(err)
                         }
                         if (avail.length != 0) {
-                            console.log(avail);
+                            console.log(avail)
+                            console.log("availabilities already there");
                             if (typeof availabilities.Time_Start !== 'undefined') {
                                 avail[0].Time_Start = availabilities.Time_Start
                             }
@@ -125,16 +127,17 @@ router.post('/save', auth.required, function(req, res, next) {
                                 avail[0].Date_Submitted = availabilities.Date_Submitted
                             }
                             avail[0].save(function(err, result) {
-                                if (err) { return res.status(500).json({ title: 'Work Information Not Updaed', error: err }); } else {
+                                if (err) { return res.status(500).json({ title: 'Information Not Updaed', error: err }); } else {
                                     AvailabilitiesList.splice(0, 1);
                                     if (AvailabilitiesList.length === 0) {
                                         res.status(200).json({
-                                            message: 'Saved successfully',
+                                            message: 'Updated successfully',
                                         });
                                     }
                                 }
                             });
                         } else {
+                            console.log(avail)
                             var availability = new Availabilities();
                             availability.JS_id = user;
                             availability.Date = availabilities.Date;
@@ -142,7 +145,7 @@ router.post('/save', auth.required, function(req, res, next) {
                             availability.Time_Finish = availabilities.Time_Finish;
                             availability.Hours_Guaranteed = availabilities.Hours_Guaranteed;
                             availability.Date_Submitted = availabilities.Date_Submitted;
-
+                            console.log(availability)
                             availability.save(function(err, result) {
                                 if (err) { return res.status(500).json({ title: 'There was problem inserting Data', error: err }); } else {
                                     AvailabilitiesList.splice(0, 1);

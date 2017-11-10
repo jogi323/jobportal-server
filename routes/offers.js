@@ -9,7 +9,7 @@ var VerifyToken = mongoose.model('VerifyToken');
 var auth = require('./auth');
 
 var accountSid = 'ACe59061ce19c17d5d22f24f4030077216';
-var authToken = 'your_auth_token';
+var authToken = 'c72ecbf92ae0157e39b97ace69aef668';
 
 //require the Twilio module and create a REST client 
 var client = require('twilio')(accountSid, authToken);
@@ -35,40 +35,65 @@ router.post('/save', auth.required, function(req, res, next) {
         if (err) { return res.status(500).json({ title: 'An error occurred', error: err }); }
         if (!user) { return res.status(401).json({ title: 'Not Authorised', error: { message: 'Login Again' } }) } else {
             var offerList = req.body;
-
+            console.log(req.body)
             offerList.forEach(function(offer) {
-                var offers = new Offers();
-                offers.Employer_id = user._id;
-                offers.Availability_id = offer.Availability_id;
-                offers.JS_id = offer.JS_id;
-                offer.Date_Submitted = offer.Date_Submitted;
-                // User.findById(offers.JS_id, function(err, user) {
-                //         if (err) {
+                User.findById(offer.JS_id, function(err, result) {
+                    if (err) {
+                        return res.status(500).json({ title: 'Unable To create offer', error: err });
+                    } else {
+                        client.messages.create({
+                            to: "+91" + result.Phone1,
+                            from: "+16364892045",
+                            body: user.Firstname + user.Lastname + "has a job offer for you, send 'ACCEPT' to '+16364892045' to accept the offer",
+                        }, function(err, message) {
+                            if (err) {
+                                return res.status(500).json({ title: 'Unable To create offer', error: err });
+                            } else {
+                                console.log(message.sid);
+                                var offers = new Offers();
+                                offers.Employer_id = user._id;
+                                offers.Availability_id = offer.Availability_id;
+                                offers.JS_id = offer.JS_id;
+                                offer.Date_Submitted = offer.Date_Submitted;
+                                offer.messageSid = message.sid;
+                                Offers.find({ 'Availability_id': offer.Availability_id, 'Employer_id': user._id }, function(err, result) {
+                                    if (err) { return res.status(500).json({ title: 'Unable To create offer', error: err }) }
+                                    if (result) {
+                                        offerList.splice(0, 1);
+                                    } else {
+                                        offers.save(function(err, result) {
+                                            if (err) { return res.status(500).json({ title: 'Unable To create offer', error: err }); } else {
+                                                user.Offers_id.push(result);
 
-                //         } else {
-                //             console.log(user);
-                //         }
-                //     })
-                offers.save(function(err, result) {
-                    if (err) { return res.status(500).json({ title: 'Unable To create offer', error: err }); } else {
-                        user.Offers_id.push(result);
+                                                offerList.splice(0, 1);
+                                                if (offerList.length === 0) {
+                                                    user.save();
+                                                    res.status(200).json({
+                                                        message: 'Offer Created and Request was sent',
+                                                    });
+                                                }
+                                            }
+                                        })
+                                    }
+                                })
 
-                        offerList.splice(0, 1);
-                        if (offerList.length === 0) {
-                            user.save();
-                            res.status(200).json({
+                            }
 
-                                message: 'Offer Created and Request was sent',
-                            });
-                        }
+                        });
                     }
                 })
             });
-
-
-
         }
     })
+});
+
+
+router.post('/sms', function(req, res) {
+    var twilio = require('twilio');
+    var twiml = new twilio.TwimlResponse();
+    twiml.message('.!..');
+    res.writeHead(200, { 'Content-Type': 'text/xml' });
+    res.end(twiml.toString());
 });
 
 

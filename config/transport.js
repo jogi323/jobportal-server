@@ -4,7 +4,6 @@ const config = require('./mailConfig');
 
 
 var MailService = function(data) {
-
     return new Promise(function(resolve, reject) {
         let transporter = nodemailer.createTransport({
             host: config.host,

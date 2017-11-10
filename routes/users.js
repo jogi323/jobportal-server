@@ -2,10 +2,14 @@ var express = require('express');
 var router = express.Router();
 var mongoose = require('mongoose');
 var User = mongoose.model('User');
+var Contactus = mongoose.model('Contactus');
 var VerifyToken = mongoose.model('VerifyToken');
 var crypto = require('crypto');
 var auth = require('./auth');
 var nodemailer = require("nodemailer");
+
+var MailService = require('../config/transport')
+var serverUrl = require('../config').serverUrl;
 
 /* GET users listing. */
 router.get('/auth', auth.required, function(req, res, next) {
@@ -36,7 +40,7 @@ router.get('/auth', auth.required, function(req, res, next) {
 router.post('/auth', function(req, res, next) {
     User.findOne({ Email_Address: req.body.Email_Address }, function(err, user) {
         if (err) {
-            console.log(err);
+            console.log('err');
             return res.status(500).json({
                 title: 'An error occurred',
                 error: err
@@ -60,31 +64,45 @@ router.post('/auth', function(req, res, next) {
             token.token = crypto.randomBytes(16).toString('hex')
             token.save(function(err) {
                 if (err) {
+            console.log('err1');
+                    
                     return res.status(500).json({
                         title: 'An error occurred',
                         error: err
                     });
                 }
-                var transporter = nodemailer.createTransport({
-                    service: 'Gmail',
-                    auth: {
-                        user: 'ashokona@gmail.com',
-                        pass: 'F!ghtClub'
-                    }
-                });
+                
+                var confirmationLink = serverUrl + token.token;
+                var mailOptions = {
+                    from: 'ashokona@gmail.com',
+                    to: user.Email_Address,
+                    subject: 'Congratulations ' + user.Firstname + ', Welcome to Employment - Dental Connections',
+                    // text: 'eaders.host + '\/user' + '\/confirmation\/' + token.token + '.\n'
+                    html: '<b>Welcome <strong>' + user.Firstname + '</strong>,</b><br>' +
+                        ' <p>Congratulation on Signing up with Employment – Dental Connections. Your next step is to complete your profile and then you are ready to join the growing community of Dental Professionals ready to Get Help or Get Hired, Right Now, Today, AnyDay you want….</p>' +
+                        ' <p>What exactly does that mean? We are a real-time portal using Text/Email messaging to allow connections between Dental Office Employers and the Immediate Staff or Specialists they need. If an employee calls in sick, has an emergency, is on vacation or away from the office for any reason, the Dental Office can login and immediately search for individuals who have indicated in their work schedule they are available to work Right Now, Today. Text/Email connections are made privately through the Communication System. As a Job Seeker, your name and contact information is kept secure until you accept the job offer from the dental office. It’s fast, simple, easy and FREE!  As an employer, it is FREE to search for available team members before posting your job offer to them in real time, Right Now, Today, AnyDay.</p>' +
+                        ' <p>Click the link below to Login with your Email and Password and Complete your Profile Information. As a Job Seeker, enter your availability on the scheduling calendar with one day a week, one day a month, or AnyDay you like………..Employers are looking for you.</p>' +
+                        ' <p>Login here and Complete your Profile:</p>' +
+                        ' <a href="' + confirmationLink + '">click here</a>' +
+                        ' <p>Thank you, now you’re on your way to Get Help or Get Hired to Work AnyDay you want.</p>' +
+                        ' <p><b>The Community is adding new members everyday however the growth depends COMPLETELY on your involvement to help everyone be productive. Tell your friends, co-workers, office managers, dental specialists and dental employers about this service. Please keep your contact information updated as well as you work schedule. The Community is Building and if you do not get a job or find a team member with your initial attempts, as more offices and team members join, you will. Keep Checking as we grow.</b></p><br>' +
+                        ' <p>Thank you Again and Welcome,</p>' +
+                        ' <p>Administrator</p>' +
+                        ' <p>At Employment</p>'
+                };
 
-                var mailOptions = { from: 'ashokona@gmail.com', to: user.Email_Address, subject: 'Account Verification Token', text: 'Hello,\n\n' + 'Please verify your account by clicking the link: \nhttp:\/\/' + req.headers.host + '\/user' + '\/confirmation\/' + token.token + '.\n' };
-                transporter.sendMail(mailOptions, function(err) {
-                    if (err) {
+                MailService(mailOptions)
+                    .then(result => {
+                        res.status(200).json({
+                            message: 'A verification email has been sent to ' + user.Email_Address + '.',
+                        });
+                    })
+                    .catch(err => {
                         return res.status(500).json({
                             title: 'An error occurred',
                             error: err
                         });
-                    }
-                    res.status(200).json({
-                        message: 'Verify email to login ' + user.Email_Address + '.',
-                    });
-                });
+                    })
             });
         } else {
             var token = user.generateJWT();
@@ -127,25 +145,38 @@ router.post('/save', function(req, res, next) {
                         error: err
                     });
                 }
-                var transporter = nodemailer.createTransport({
-                    service: 'Gmail',
-                    auth: {
-                        user: 'ashokona@gmail.com',
-                        pass: 'F!ghtClub'
-                    }
-                });
-                var mailOptions = { from: 'ashokona@gmail.com', to: result.Email_Address, subject: 'Account Verification Token', text: 'Hello,\n\n' + 'Please verify your account by clicking the link: \nhttp:\/\/' + "jobportal5.herokuapp.com"+ token.token + '.\n' };
-                transporter.sendMail(mailOptions, function(err) {
-                    if (err) {
+                var confirmationLink = serverUrl+ 'confirm/' + token.token;
+                var mailOptions = {
+                    from: 'ashokona@gmail.com',
+                    to: result.Email_Address,
+                    subject: 'Congratulations ' + result.Firstname + ', Welcome to Employment - Dental Connections',
+                    // text: 'eaders.host + '\/user' + '\/confirmation\/' + token.token + '.\n'
+                    html: '<b>Welcome <strong>' + result.Firstname + '</strong>,</b><br>' +
+                        ' <p>Congratulation on Signing up with Employment – Dental Connections. Your next step is to complete your profile and then you are ready to join the growing community of Dental Professionals ready to Get Help or Get Hired, Right Now, Today, AnyDay you want….</p>' +
+                        ' <p>What exactly does that mean? We are a real-time portal using Text/Email messaging to allow connections between Dental Office Employers and the Immediate Staff or Specialists they need. If an employee calls in sick, has an emergency, is on vacation or away from the office for any reason, the Dental Office can login and immediately search for individuals who have indicated in their work schedule they are available to work Right Now, Today. Text/Email connections are made privately through the Communication System. As a Job Seeker, your name and contact information is kept secure until you accept the job offer from the dental office. It’s fast, simple, easy and FREE!  As an employer, it is FREE to search for available team members before posting your job offer to them in real time, Right Now, Today, AnyDay.</p>' +
+                        ' <p>Click the link below to Login with your Email and Password and Complete your Profile Information. As a Job Seeker, enter your availability on the scheduling calendar with one day a week, one day a month, or AnyDay you like………..Employers are looking for you.</p>' +
+                        ' <p>Login here and Complete your Profile:</p>' +
+                        ' <a href="' + confirmationLink + '">click here</a>' +
+                        ' <p>Thank you, now you’re on your way to Get Help or Get Hired to Work AnyDay you want.</p>' +
+                        ' <p><b>The Community is adding new members everyday however the growth depends COMPLETELY on your involvement to help everyone be productive. Tell your friends, co-workers, office managers, dental specialists and dental employers about this service. Please keep your contact information updated as well as you work schedule. The Community is Building and if you do not get a job or find a team member with your initial attempts, as more offices and team members join, you will. Keep Checking as we grow.</b></p><br>' +
+                        ' <p>Thank you Again and Welcome,</p>' +
+                        ' <p>Administrator</p>' +
+                        ' <p>At Employment</p>'
+                };
+
+                MailService(mailOptions)
+                    .then(result => {
+                        res.status(200).json({
+                            message: 'A verification email has been sent to ' + result.Email_Address + '.',
+                        });
+                    })
+                    .catch(err => {
                         return res.status(500).json({
                             title: 'An error occurred',
                             error: err
                         });
-                    }
-                    res.status(200).json({
-                        message: 'A verification email has been sent to ' + result.Email_Address + '.',
-                    });
-                });
+                    })
+
             });
         }
     });
@@ -153,6 +184,7 @@ router.post('/save', function(req, res, next) {
 
 router.get('/confirmation/:id', function(req, res, next) {
     // Find a matching token
+    console.log(req.params.id);
     VerifyToken.findOne({ token: req.params.id }, function(err, token) {
         if (!token) return res.status(400).send({ type: 'not-verified', msg: 'We were unable to find a valid token. Your token my have expired.' });
 
@@ -166,7 +198,7 @@ router.get('/confirmation/:id', function(req, res, next) {
             //user.setPassword(req.body.Password);
             user.save(function(err) {
                 if (err) { return res.status(500).send({ msg: err.message }); }
-                res.status(200).send("Password changed Sucessfully. Please log in.");
+                res.status(200).send({message:"Account has been verified. Please login."});
             });
         });
     });
@@ -256,7 +288,7 @@ router.put('/update/personal', auth.required, function(req, res, next) {
             user.personalInfo = false;
             user.save(function(err) {
                 if (err) { return res.status(500).json({ title: 'Personal Information Not Updated', error: err }); }
-                res.status(200).json({ message: 'Personal information updated sucessfully', flag: 1 });
+                res.status(200).json({ message: 'Personal information updated sucessfully'});
             });
         }
 
@@ -332,7 +364,7 @@ router.put('/update/work', auth.required, function(req, res, next) {
             user.workInfo = false;
             user.save(function(err) {
                 if (err) { return res.status(500).json({ title: 'Work Information Not Updaed', error: err }); }
-                res.status(200).json({ message: 'Work information updated sucessfully', flag: 1 });
+                res.status(200).json({ message: 'Work information updated sucessfully' });
             });
         }
 
@@ -363,27 +395,31 @@ router.post('/resetpasswordlink', function(req, res, next) {
                         error: err
                     });
                 }
-                var transporter = nodemailer.createTransport({
-                    service: 'Gmail',
-                    auth: {
-                        user: 'ashokona@gmail.com',
-                        pass: 'F!ghtClub'
-                    }
-                });
 
-                console.log(req.headers);
-                var mailOptions = { from: 'ashokona@gmail.com', to: result.Email_Address, subject: 'Reset Password Link', text: 'Hello,\n\n' + 'Please reset your account password by following the link: \nhttp:\/\/' + 'jobportal5.herokuapp.com/forgotpassword/' + token.token + '.\n' };
-                transporter.sendMail(mailOptions, function(err) {
-                    if (err) {
+                var resetpasswordLink = serverUrl + 'forgotpassword/' + token.token;
+                var mailOptions = {
+                    from: 'noreply@yourcompany.com',
+                    to: result.Email_Address,
+                    subject: 'Reset Password Link',
+                    html: '<b>Hello <strong>' + result.Firstname + '</strong>,</b><br>' +
+                        ' <p>Forgot your paswword, Were are always here  to help. Please click on below link to get a new password:</p>' +
+                        ' <a href="' + resetpasswordLink + '">click here</a>' +
+                        ' <p>Thank you,</p>' +
+                        ' <p>Administrator</p>' +
+                        ' <p>At Employment</p>'
+                };
+                MailService(mailOptions)
+                    .then(response => {
+                        res.status(200).json({
+                            message: 'A rest link has been sent to ' + result.Email_Address + '.',
+                        });
+                    })
+                    .catch(err => {
                         return res.status(500).json({
                             title: 'An error occurred',
                             error: err
                         });
-                    }
-                    res.status(200).json({
-                        message: 'A rest link has been sent to ' + result.Email_Address + '.',
-                    });
-                });
+                    })
             });
         }
     });
@@ -401,13 +437,28 @@ router.post('/resetpassword', function(req, res, next) {
             // if (user.Email_Verified) return res.status(400).send({ type: 'already-verified', msg: 'This user has already been verified.' });
 
             // Verify and save the user
-            
+
             user.setPassword(req.body.newPassword);
             user.save(function(err) {
                 if (err) { return res.status(500).send({ msg: err.message }); }
-                res.status(200).send("Your password has been changed successfully");
+                res.status(200).send({message:"Your password has been changed successfully"});
             });
         });
+    });
+});
+
+router.post('/contactus', function(req, res, next) {
+    contactus = new Contactus()
+
+    contactus.Firstname = req.body.FirstName;
+    contactus.Lastname = req.body.Lastname;
+    contactus.Email_Address = req.body.Email_Address;
+    contactus.Comments = req.body.Comments;
+    contactus.Date_Submitted = req.body.Date_Submitted;
+
+    contactus.save(function(err) {
+        if (err) { return res.status(500).json({ title: 'unable to save details', error: err }) }
+        res.status(200).send({ message: "We received your details, will soon get back to you" });
     });
 });
 
