@@ -82,7 +82,7 @@ module.exports = module.exports.toString();
 /***/ "../../../../../src/app/employer/components/job-seeker-search/job-seeker-search.component.html":
 /***/ (function(module, exports) {
 
-module.exports = "<div class=\"container-fluid\">\r\n\t<div class=\"col-lg-3\">\r\n\t\t<section class=\"page-title text-center bg-light searchjobseeker-section\">\r\n\t\t\t<h2 class=\"heading relative uppercase bottom-line full-grey mb-30\">Search Job Seekers</h2>\r\n\t\t\t<div class=\"row\">\r\n\t\t\t\t<div class=\"col-sm-10 col-sm-offset-1\">\r\n\t\t\t\t\t<label for=\"billing_address_1\" class=\"pull-left\">Date\r\n\t\t\t\t\t\t<abbr class=\"required\" title=\"required\">*</abbr>\r\n\t\t\t\t\t</label>\r\n\t\t\t\t\t<p class=\"form-row form-row-wide \">\r\n\t\t\t\t\t\t<p-calendar [(ngModel)]=\"filterJobseekers.Date\" dataType=\"Date\" (onSelect)=\"onDateChange($event)\"></p-calendar>\r\n\t\t\t\t\t</p>\r\n\t\t\t\t</div>\r\n\t\t\t\t<div class=\"col-sm-10 col-sm-offset-1\">\r\n\t\t\t\t\t<label for=\"billing_address_1\" class=\"pull-left\">Position\r\n\t\t\t\t\t\t<abbr class=\"required\" title=\"required\">*</abbr>\r\n\t\t\t\t\t</label>\r\n\t\t\t\t\t<p class=\"form-row form-row-wide \">\r\n\t\t\t\t\t\t<select name=\"calc_shipping_country\" id=\"calc_shipping_country\" class=\"country_to_state\" rel=\"calc_shipping_state\" [(ngModel)]=\"filterJobseekers.Position\">\r\n\t\t\t\t\t\t\t<option *ngFor=\"let position of positionList\">{{position.name}}</option>\r\n\t\t\t\t\t\t</select>\r\n\t\t\t\t\t</p>\r\n\t\t\t\t</div>\r\n\t\t\t\t<div class=\"col-sm-10 col-sm-offset-1\">\r\n\t\t\t\t\t<label for=\"billing_address_1\" class=\"pull-left\">Hours Guaranteed\r\n\t\t\t\t\t</label>\r\n\t\t\t\t\t<p class=\"form-row form-row-wide\">\r\n\t\t\t\t\t\t<input type=\"number\" class=\"input-text\" value placeholder=\"No. of hours\" [(ngModel)]=\"filterJobseekers.Hours_Guaranteed\" name=\"Hours_Guarnteed\" id=\"Hours_Guarnteed\" (ngModelChange)=\"onHoursChange()\">\r\n\t\t\t\t\t</p>\r\n\t\t\t\t</div>\r\n\t\t\t\t<div class=\"col-sm-10 col-sm-offset-1\">\r\n\t\t\t\t\t<label for=\"billing_address_1\" class=\"pull-left\">Pay Requested\r\n\t\t\t\t\t</label>\r\n\t\t\t\t\t<p class=\"form-row form-row-wide\">\r\n\t\t\t\t\t\t<input type=\"text\" class=\"input-text\" value placeholder=\"Pay Requested\" name=\"calc_shipping_postcode\" id=\"calc_shipping_postcode\" [(ngModel)]=\"filterJobseekers.pay_request\">\r\n\t\t\t\t\t</p>\r\n\t\t\t\t</div>\r\n\t\t\t\t<div class=\"col-sm-10 col-sm-offset-1\">\r\n\t\t\t\t\t<label for=\"billing_address_1\" class=\"pull-left\">Distance (in miles)\r\n\t\t\t\t\t</label>\r\n\t\t\t\t\t<p class=\"form-row form-row-wide \">\r\n\t\t\t\t\t\t<select name=\"calc_shipping_country\" id=\"calc_shipping_country\" class=\"country_to_state\" rel=\"calc_shipping_state\" [(ngModel)]=\"filterJobseekers.distance\">\r\n\t\t\t\t\t\t\t<option value=\"\">Select distance</option>\r\n\t\t\t\t\t\t\t<option value=\"VI\">10</option>\r\n\t\t\t\t\t\t\t<option value=\"WF\">20</option>\r\n\t\t\t\t\t\t\t<option value=\"EH\">30</option>\r\n\t\t\t\t\t\t\t<option value=\"YE\">40</option>\r\n\t\t\t\t\t\t\t<option value=\"ZM\">50</option>\r\n\t\t\t\t\t\t\t<option value=\"ZW\">60</option>\r\n\t\t\t\t\t\t</select>\r\n\t\t\t\t\t</p>\r\n\t\t\t\t</div>\r\n\t\t\t</div>\r\n\t\t</section>\r\n\t</div>\r\n\t<div class=\"col-lg-9 jobseeeker-section\">\r\n\t\t\t<h2 class=\"heading relative uppercase bottom-line full-grey mb-30\">Job Seekers</h2>\r\n\t\t\t<div class=\"row\">\r\n\t\t\t\t<div class=\"col-md-12\">\r\n\t\t\t\t\t<div class=\"table-wrap mb-30\">\r\n\t\t\t\t\t\t<table class=\"shop_table cart table\">\r\n\t\t\t\t\t\t\t<thead>\r\n\t\t\t\t\t\t\t\t<tr>\r\n\t\t\t\t\t\t\t\t\t<th class=\"product-name\">Image</th>\r\n\t\t\t\t\t\t\t\t\t<th class=\"product-name\" >Position</th>\r\n\t\t\t\t\t\t\t\t\t<th class=\"product-price\">Hourly Rate</th>\r\n\t\t\t\t\t\t\t\t\t<th class=\"product-quantity\">Experience (yrs)</th>\r\n\t\t\t\t\t\t\t\t\t<th class=\"product-subtotal\">Zip Code</th>\r\n\t\t\t\t\t\t\t\t\t<th class=\"product-Hire\"><button class=\"btn btn-success\" routerLink=\"/employer/payment\" [disabled]=\"!itemsToHire.length\">Hire</button></th>\r\n\t\t\t\t\t\t\t\t\t\r\n\t\t\t\t\t\t\t\t</tr>\r\n\t\t\t\t\t\t\t</thead>\r\n\t\t\t\t\t\t\t<tbody>\r\n\t\t\t\t\t\t\t\t<tr class=\"cart_item\" *ngFor=\"let jobseeker of jobseekers | search:filterJobseekers\">\r\n\t\t\t\t\t\t\t\t\t<td class=\"product-thumbnail\">\r\n\t\t\t\t\t\t\t\t\t\t<a >\r\n\t\t\t\t\t\t\t\t\t\t\t<img src=\"assets/img/Photos/user.png\" alt=\"\">\r\n\t\t\t\t\t\t\t\t\t\t</a>\r\n\t\t\t\t\t\t\t\t\t</td>\r\n\t\t\t\t\t\t\t\t\t<td class=\"product-name\">\r\n\t\t\t\t\t\t\t\t\t\t<a ><b>{{jobseeker.JS_id.Position}}</b></a>\r\n\t\t\t\t\t\t\t\t\t\t<ul>\r\n\t\t\t\t\t\t\t\t\t\t\t<li>Available</li>\r\n\t\t\t\t\t\t\t\t\t\t\t<li><b>From:</b> {{jobseeker.Time_Start}}</li>\r\n\t\t\t\t\t\t\t\t\t\t\t<li><b>To:</b> {{jobseeker.Time_Finish}}</li>\r\n\t\t\t\t\t\t\t\t\t\t</ul>\r\n\t\t\t\t\t\t\t\t\t</td>\r\n\t\t\t\t\t\t\t\t\t<td class=\"product-price\">\r\n\t\t\t\t\t\t\t\t\t\t<span class=\"amount\">$1250</span>\r\n\t\t\t\t\t\t\t\t\t</td>\r\n\t\t\t\t\t\t\t\t\t<td class=\"product-quantity\">\r\n\t\t\t\t\t\t\t\t\t\t<div class=\"quantity buttons_added\">\r\n\t\t\t\t\t\t\t\t\t\t\t<input type=\"number\" disabled step=\"1\" min=\"0\" value=\"{{jobseeker.Hours_Guaranteed}}\" [(ngModel)]=\"jobseeker.Hours_Guaranteed\" title=\"Qty\" class=\"input-text qty text\">\r\n\t\t\t\t\t\t\t\t\t\t</div>\r\n\t\t\t\t\t\t\t\t\t</td>\r\n\t\t\t\t\t\t\t\t\t<td class=\"product-subtotal\">\r\n\t\t\t\t\t\t\t\t\t\t<span class=\"amount\">{{jobseeker.JS_id.Zip_Code}}</span>\r\n\t\t\t\t\t\t\t\t\t</td>\r\n\t\t\t\t\t\t\t\t\t<!-- <td class=\"product-remove\">\r\n\t\t\t\t\t\t\t\t\t\t<a class=\"remove\" title=\"Remove this item\">\r\n\t\t\t\t\t\t\t\t\t\t\t<i class=\"ui-close\"></i>\r\n\t\t\t\t\t\t\t\t\t\t</a>\r\n\t\t\t\t\t\t\t\t\t</td> -->\r\n\t\t\t\t\t\t\t\t\t<td class=\"product-hire\">\r\n\t\t\t\t\t\t\t\t\t\t<a class=\"Hire\" title=\"Hire this person\">\r\n\t\t\t\t\t\t\t\t\t\t\t<input type=\"checkbox\" name=\"Hire\" (change)=\"selectToHire(jobseeker._id,$event)\">\r\n\t\t\t\t\t\t\t\t\t\t</a>\r\n\t\t\t\t\t\t\t\t\t</td>\r\n\t\t\t\t\t\t\t\t</tr>\r\n\t\t\t\t\t\t\t</tbody>\r\n\t\t\t\t\t\t</table>\r\n\t\t\t\t\t</div>\r\n\t\t\t\t</div>\r\n\t\t\t</div>\r\n\t</div>\r\n</div>"
+module.exports = "<div class=\"container-fluid\">\r\n\t<div class=\"col-lg-3\">\r\n\t\t<section class=\"page-title text-center bg-light searchjobseeker-section\">\r\n\t\t\t<h2 class=\"heading relative uppercase bottom-line full-grey mb-30\">Search Job Seekers</h2>\r\n\t\t\t<div class=\"row\">\r\n\t\t\t\t<div class=\"col-sm-10 col-sm-offset-1\">\r\n\t\t\t\t\t<label for=\"billing_address_1\" class=\"pull-left\">Date\r\n\t\t\t\t\t\t<abbr class=\"required\" title=\"required\">*</abbr>\r\n\t\t\t\t\t</label>\r\n\t\t\t\t\t<p class=\"form-row form-row-wide \">\r\n\t\t\t\t\t\t<p-calendar [(ngModel)]=\"filterJobseekers.Date\" dataType=\"Date\" (onSelect)=\"onDateChange($event)\"></p-calendar>\r\n\t\t\t\t\t</p>\r\n\t\t\t\t</div>\r\n\t\t\t\t<div class=\"col-sm-10 col-sm-offset-1\">\r\n\t\t\t\t\t<label for=\"billing_address_1\" class=\"pull-left\">Position\r\n\t\t\t\t\t\t<abbr class=\"required\" title=\"required\">*</abbr>\r\n\t\t\t\t\t</label>\r\n\t\t\t\t\t<p class=\"form-row form-row-wide \">\r\n\t\t\t\t\t\t<select name=\"calc_shipping_country\" id=\"calc_shipping_country\" class=\"country_to_state\" rel=\"calc_shipping_state\" [(ngModel)]=\"filterJobseekers.Position\">\r\n\t\t\t\t\t\t\t<option *ngFor=\"let position of positionList\">{{position.name}}</option>\r\n\t\t\t\t\t\t</select>\r\n\t\t\t\t\t</p>\r\n\t\t\t\t</div>\r\n\t\t\t\t<div class=\"col-sm-10 col-sm-offset-1\">\r\n\t\t\t\t\t<label for=\"billing_address_1\" class=\"pull-left\">Hours Guaranteed\r\n\t\t\t\t\t</label>\r\n\t\t\t\t\t<p class=\"form-row form-row-wide\">\r\n\t\t\t\t\t\t<input type=\"number\" class=\"input-text\" value placeholder=\"No. of hours\" [(ngModel)]=\"filterJobseekers.Hours_Guaranteed\" name=\"Hours_Guarnteed\" id=\"Hours_Guarnteed\" (ngModelChange)=\"onHoursChange()\">\r\n\t\t\t\t\t</p>\r\n\t\t\t\t</div>\r\n\t\t\t\t<div class=\"col-sm-10 col-sm-offset-1\">\r\n\t\t\t\t\t<label for=\"billing_address_1\" class=\"pull-left\">Pay Requested\r\n\t\t\t\t\t</label>\r\n\t\t\t\t\t<p class=\"form-row form-row-wide\">\r\n\t\t\t\t\t\t<input type=\"text\" class=\"input-text\" value placeholder=\"Pay Requested\" name=\"calc_shipping_postcode\" id=\"calc_shipping_postcode\" [(ngModel)]=\"filterJobseekers.pay_request\">\r\n\t\t\t\t\t</p>\r\n\t\t\t\t</div>\r\n\t\t\t\t<div class=\"col-sm-10 col-sm-offset-1\">\r\n\t\t\t\t\t<label for=\"billing_address_1\" class=\"pull-left\">Distance (in miles)\r\n\t\t\t\t\t</label>\r\n\t\t\t\t\t<p class=\"form-row form-row-wide \">\r\n\t\t\t\t\t\t<select name=\"calc_shipping_country\" id=\"calc_shipping_country\" class=\"country_to_state\" rel=\"calc_shipping_state\" [(ngModel)]=\"filterJobseekers.distance\">\r\n\t\t\t\t\t\t\t<option value=\"\">Select distance</option>\r\n\t\t\t\t\t\t\t<option value=\"VI\">10</option>\r\n\t\t\t\t\t\t\t<option value=\"WF\">20</option>\r\n\t\t\t\t\t\t\t<option value=\"EH\">30</option>\r\n\t\t\t\t\t\t\t<option value=\"YE\">40</option>\r\n\t\t\t\t\t\t\t<option value=\"ZM\">50</option>\r\n\t\t\t\t\t\t\t<option value=\"ZW\">60</option>\r\n\t\t\t\t\t\t</select>\r\n\t\t\t\t\t</p>\r\n\t\t\t\t</div>\r\n\t\t\t</div>\r\n\t\t</section>\r\n\t</div>\r\n\t<div class=\"col-lg-9 jobseeeker-section\">\r\n\t\t\t<h2 class=\"heading relative uppercase bottom-line full-grey mb-30\">Job Seekers</h2>\r\n\t\t\t<div class=\"row\">\r\n\t\t\t\t<div class=\"col-md-12\">\r\n\t\t\t\t\t<div class=\"table-wrap mb-30\">\r\n\t\t\t\t\t\t<table class=\"shop_table cart table\">\r\n\t\t\t\t\t\t\t<thead>\r\n\t\t\t\t\t\t\t\t<tr>\r\n\t\t\t\t\t\t\t\t\t<th class=\"product-name\">Image</th>\r\n\t\t\t\t\t\t\t\t\t<th class=\"product-name\" >Position</th>\r\n\t\t\t\t\t\t\t\t\t<th class=\"product-price\">Hourly Rate</th>\r\n\t\t\t\t\t\t\t\t\t<th class=\"product-quantity\">Experience (yrs)</th>\r\n\t\t\t\t\t\t\t\t\t<th class=\"product-subtotal\">Zip Code</th>\r\n\t\t\t\t\t\t\t\t\t<th class=\"product-Hire\"><button class=\"btn btn-success\" routerLink=\"/employer/payment\" [disabled]=\"!itemsToHire.length\">Hire</button></th>\r\n\t\t\t\t\t\t\t\t\t\r\n\t\t\t\t\t\t\t\t</tr>\r\n\t\t\t\t\t\t\t</thead>\r\n\t\t\t\t\t\t\t<tbody>\r\n\t\t\t\t\t\t\t\t<tr class=\"cart_item\" *ngFor=\"let jobseeker of jobseekers | search:filterJobseekers\">\r\n\t\t\t\t\t\t\t\t\t<td class=\"product-thumbnail\">\r\n\t\t\t\t\t\t\t\t\t\t<a >\r\n\t\t\t\t\t\t\t\t\t\t\t<img src=\"assets/img/Photos/user.png\" alt=\"\">\r\n\t\t\t\t\t\t\t\t\t\t</a>\r\n\t\t\t\t\t\t\t\t\t</td>\r\n\t\t\t\t\t\t\t\t\t<td class=\"product-name\">\r\n\t\t\t\t\t\t\t\t\t\t<a ><b>{{jobseeker.JS_id.Position}}</b></a>\r\n\t\t\t\t\t\t\t\t\t\t<ul>\r\n\t\t\t\t\t\t\t\t\t\t\t<li>Available</li>\r\n\t\t\t\t\t\t\t\t\t\t\t<li><b>From:</b> {{jobseeker.Time_Start}}</li>\r\n\t\t\t\t\t\t\t\t\t\t\t<li><b>To:</b> {{jobseeker.Time_Finish}}</li>\r\n\t\t\t\t\t\t\t\t\t\t</ul>\r\n\t\t\t\t\t\t\t\t\t</td>\r\n\t\t\t\t\t\t\t\t\t<td class=\"product-price\">\r\n\t\t\t\t\t\t\t\t\t\t<span class=\"amount\">$1250</span>\r\n\t\t\t\t\t\t\t\t\t</td>\r\n\t\t\t\t\t\t\t\t\t<td class=\"product-quantity\">\r\n\t\t\t\t\t\t\t\t\t\t<div class=\"quantity buttons_added\">\r\n\t\t\t\t\t\t\t\t\t\t\t<input type=\"number\" disabled step=\"1\" min=\"0\" value=\"{{jobseeker.Hours_Guaranteed}}\" [(ngModel)]=\"jobseeker.Hours_Guaranteed\" title=\"Qty\" class=\"input-text qty text\">\r\n\t\t\t\t\t\t\t\t\t\t</div>\r\n\t\t\t\t\t\t\t\t\t</td>\r\n\t\t\t\t\t\t\t\t\t<td class=\"product-subtotal\">\r\n\t\t\t\t\t\t\t\t\t\t<span class=\"amount\">{{jobseeker.JS_id.Zip_Code}}</span>\r\n\t\t\t\t\t\t\t\t\t</td>\r\n\t\t\t\t\t\t\t\t\t<!-- <td class=\"product-remove\">\r\n\t\t\t\t\t\t\t\t\t\t<a class=\"remove\" title=\"Remove this item\">\r\n\t\t\t\t\t\t\t\t\t\t\t<i class=\"ui-close\"></i>\r\n\t\t\t\t\t\t\t\t\t\t</a>\r\n\t\t\t\t\t\t\t\t\t</td> -->\r\n\t\t\t\t\t\t\t\t\t<td class=\"product-hire\">\r\n\t\t\t\t\t\t\t\t\t\t<a class=\"Hire\" title=\"Hire this person\">\r\n\t\t\t\t\t\t\t\t\t\t\t<input type=\"checkbox\" name=\"Hire\" (change)=\"selectToHire(jobseeker,$event)\">\r\n\t\t\t\t\t\t\t\t\t\t</a>\r\n\t\t\t\t\t\t\t\t\t</td>\r\n\t\t\t\t\t\t\t\t</tr>\r\n\t\t\t\t\t\t\t</tbody>\r\n\t\t\t\t\t\t</table>\r\n\t\t\t\t\t</div>\r\n\t\t\t\t</div>\r\n\t\t\t</div>\r\n\t</div>\r\n</div>"
 
 /***/ }),
 
@@ -128,7 +128,6 @@ var JobSeekerSearchComponent = (function () {
         this._haversineService = _haversineService;
         this.notificationsService = notificationsService;
         this.value = new Date();
-        this.itemsToHire = [];
         var newDate = new Date();
         newDate.setUTCHours(0);
         newDate.setUTCMinutes(0);
@@ -149,6 +148,7 @@ var JobSeekerSearchComponent = (function () {
             _this.currentUser = user;
             _this.initUserData(user);
         });
+        this.itemsToHire = this.employerService.itemsToHire;
     }
     // initialise employer data to use location lattitude and longitude
     JobSeekerSearchComponent.prototype.initUserData = function (user) {
@@ -165,11 +165,28 @@ var JobSeekerSearchComponent = (function () {
     JobSeekerSearchComponent.prototype.selectToHire = function (id, event) {
         if (event.target.checked) {
             this.itemsToHire.push(id);
-            window.localStorage.setItem('itemsToHire', this.itemsToHire);
+            this.employerService.setItemsToHire(id);
+            //window.localStorage.setItem('itemsToHire',this.itemsToHire);
         }
         else if (!event.target.checked) {
             this.itemsToHire.splice(id);
-            window.localStorage.setItem('itemsToHire', this.itemsToHire);
+            this.employerService.removeItemToHire(id);
+            //window.localStorage.setItem('itemsToHire',this.itemsToHire);      
+        }
+    };
+    //sets checkbox value for selected candidates
+    JobSeekerSearchComponent.prototype.getCheckboxValue = function (id) {
+        var count = 0;
+        for (var i = 0; i < this.itemsToHire.length; i++) {
+            if (this.itemsToHire[i]._id == id) {
+                count++;
+            }
+        }
+        if (count > 0) {
+            return true;
+        }
+        else {
+            return false;
         }
     };
     JobSeekerSearchComponent.prototype.ngOnInit = function () {
@@ -278,7 +295,7 @@ module.exports = module.exports.toString();
 /***/ "../../../../../src/app/employer/components/payment/payment.component.html":
 /***/ (function(module, exports) {
 
-module.exports = "<!-- Cart -->\r\n<section class=\"section-wrap shopping-cart\">\r\n  <div class=\"container relative\">\r\n    <div class=\"row\">\r\n      <div class=\"col-md-6 shipping-calculator-form\">\r\n        <h2 class=\"heading relative uppercase bottom-line full-grey mb-30\">Billing Address</h2>\r\n        <div class=\"row\">\r\n            <div class=\"col-md-12\">\r\n              <input type=\"text\" class=\"input-text\" placeholder=\"Name On Card\" value name=\"billing_address_1\" id=\"billing_address_1\" [(ngModel)]=\"payment.Billing_Name\">\r\n            </div>\r\n          <div class=\"col-md-12\">\r\n            <input type=\"text\" class=\"input-text\" placeholder=\"Street address\" value name=\"billing_address_1\" id=\"billing_address_1\">\r\n            <input type=\"text\" class=\"input-text\" placeholder=\"Apartment, suite, unit etc. (optional)\" value name=\"billing_address_2\" id=\"billing_address_2\">\r\n          </div>\r\n          <div class=\"col-md-4\">\r\n            <input type=\"text\" class=\"input-text\" placeholder=\"Town / City\" value name=\"billing_city\" id=\"billing_city\" [(ngModel)]=\"payment.City\">\r\n            \r\n          </div>\r\n          <div class=\"col-md-4\">\r\n              <select name=\"User_State\"  id=\"User_State\" class=\"country_to_state country_select\" title=\"State *\" [(ngModel)]=\"payment.State\">\r\n                <option value=\"\" disabled selected>State</option>\r\n                <option *ngFor=\"let state of statesList\" [attr.value]=\"state.name\">{{state.name}}</option>\r\n              </select>\r\n          </div>\r\n          <div class=\"col-md-4\">\r\n            <input type=\"text\" class=\"input-text\" placeholder=\"Postcode\" value name=\"billing_postcode\" id=\"billing_postcode\" [(ngModel)]=\"payment.Zip_Code\">\r\n          </div>\r\n        </div>\r\n        <div class=\"checkbox\">\r\n          <input type=\"checkbox\" class=\"input-checkbox\" name=\"checkbox\" id=\"checkbox2\" value=\"2\">\r\n          <span>Use My Address</span>\r\n        </div>\r\n\r\n      </div>\r\n      <!-- end col shipping calculator -->\r\n      <div class=\"col-md-6 shipping-calculator-form\">\r\n          <h2 class=\"heading relative uppercase bottom-line full-grey mb-30\">Card Details</h2>\r\n\r\n          <div class=\"row\">\r\n              <div class=\"col-md-12\">\r\n                <input type=\"text\" class=\"input-text\" placeholder=\"Name On Card\" value name=\"billing_address_1\" id=\"billing_address_1\" [(ngModel)]=\"payment.Billing_Name\">\r\n              </div>\r\n              <div class=\"col-md-12\">\r\n                <div class=\"col-sm-6 col-xs-12 footer-payment-systems text-right sm-text-center mt-sml-10 pull-right\">\r\n                  <!--<i class=\"fa fa-cc-paypal\"></i>-->\r\n                  <i class=\"fa fa-cc-visa\" [ngClass]=\"{active: cardType=='Visa'}\"></i>\r\n                  <i class=\"fa fa-cc-mastercard\" [ngClass]=\"{active: cardType=='Mastercard'}\"></i>\r\n                  <i class=\"fa fa-cc-discover\" [ngClass]=\"{active: cardType=='Discover'}\"></i>\r\n                  <i class=\"fa fa-cc-amex\" [ngClass]=\"{active: cardType=='AMEX'}\"></i>\r\n                </div>\r\n              </div>\r\n              <div class=\"col-md-12\">\r\n                  <input type=\"number\" class=\"input-text\" placeholder=\"Card number\" value name=\"cardNumber\" id=\"cardNumber\" [(ngModel)]=\"payment.Card_Nr\"  (change)=\"GetCardType(payment.Card_Nr)\">\r\n                  {{cardType}}\r\n              </div>\r\n              <div class=\"col-md-3\">\r\n                Expiry Date\r\n              </div>\r\n              <div class=\"col-md-5\">\r\n                <div class=\"col-xs-6\">\r\n                    <select name=\"billing_country\" id=\"billing_country\" class=\"country_to_state country_select pull-left\" title=\"Country *\" [(ngModel)]=\"payment.Expiration_Month\">\r\n                        <option value=\"YE\">MM</option>\r\n                        <option value=1>01</option>\r\n                        <option value=2>02</option>\r\n                        <option value=3>03</option><option value=4>04</option><option value=5>05</option>\r\n                        <option value=6>06</option><option value=7>07</option><option value=8>08</option>\r\n                        <option value=9>09</option><option value=10>10</option><option value=11>11</option>\r\n                        <option value=12>12</option>\r\n                    </select>\r\n                </div>\r\n                <div class=\"col-xs-6\">\r\n                    <select name=\"billing_country\" placeholder=\"MM\" id=\"billing_country\" class=\"country_to_state country_select pll-right\" title=\"Country *\" [(ngModel)]=\"payment.Expiration_Year\">\r\n                        <option value=\"YE\">YY</option>\r\n                        <option value=17>17</option>\r\n                        <option value=18>18</option><option value=19>19</option><option value=20>20</option>\r\n                        <option value=21>21</option><option value=22>22</option><option value=23>23</option>\r\n                      </select>\r\n                  </div>\r\n\r\n              </div>\r\n              \r\n              <div class=\"col-md-2\">\r\n                  Cvv*\r\n              </div>\r\n              <div class=\"col-md-2\">\r\n                <input type=\"text\" class=\"input-text\" placeholder=\"Cvv\" value name=\"billing_postcode\" id=\"billing_postcode\">\r\n              </div>\r\n          </div>\r\n          <div class=\"col-md-6 col-md-offset-6\">\r\n              <div class=\"actions\">\r\n                <a class=\"btn btn-md btn-dark pull-right\" (click)=\"makePayment()\"><span>Proceed to Payment</span></a>\r\n              </div>\r\n            </div>\r\n        </div>\r\n\r\n      <!-- end col cart totals -->\r\n\r\n    </div>\r\n    <!-- end row -->\r\n\r\n\r\n  </div>\r\n  <!-- end container -->\r\n</section>\r\n<!-- end cart -->\r\n\r\n\r\n\r\n\r\n"
+module.exports = "<!-- Cart -->\r\n<section class=\"section-wrap shopping-cart\">\r\n  <div class=\"container relative\">\r\n    <div class=\"row\">\r\n      <div class=\"col-md-6 shipping-calculator-form\">\r\n        <h2 class=\"heading relative uppercase bottom-line full-grey mb-30\">Billing Address</h2>\r\n        <div class=\"row\">\r\n            <div class=\"col-md-12\">\r\n              <input type=\"text\" class=\"input-text\" placeholder=\"Name On Card\" value name=\"billing_address_1\" id=\"billing_address_1\" [(ngModel)]=\"payment.Billing_Name\">\r\n            </div>\r\n          <div class=\"col-md-12\">\r\n            <input type=\"text\" class=\"input-text\" placeholder=\"Street address\" value name=\"billing_address_1\" id=\"billing_address_1\" [(ngModel)]=\"payment.street\">\r\n            <input type=\"text\" class=\"input-text\" placeholder=\"Apartment, suite, unit etc. (optional)\" value name=\"billing_address_2\" id=\"billing_address_2\">\r\n          </div>\r\n          <div class=\"col-md-4\">\r\n            <input type=\"text\" class=\"input-text\" placeholder=\"Town / City\" value name=\"billing_city\" id=\"billing_city\" [(ngModel)]=\"payment.City\">\r\n            \r\n          </div>\r\n          <div class=\"col-md-4\">\r\n              <select name=\"User_State\"  id=\"User_State\" class=\"country_to_state country_select\" title=\"State *\" [(ngModel)]=\"payment.State\">\r\n                <option value=\"\" disabled selected>State</option>\r\n                <option *ngFor=\"let state of statesList\" [attr.value]=\"state.key\">{{state.name}}</option>\r\n              </select>\r\n          </div>\r\n          <div class=\"col-md-4\">\r\n            <input type=\"text\" class=\"input-text\" placeholder=\"Postcode\" value name=\"billing_postcode\" id=\"billing_postcode\" [(ngModel)]=\"payment.Zip_Code\">\r\n          </div>\r\n        </div>\r\n        <div class=\"checkbox\">\r\n          <input type=\"checkbox\" class=\"input-checkbox\" name=\"checkbox\" id=\"checkbox2\" value=\"2\" (change)=\"useMyAddress($event)\">\r\n          <span>Use My Address</span>\r\n        </div>\r\n\r\n      </div>\r\n      <!-- end col shipping calculator -->\r\n      <div class=\"col-md-6 shipping-calculator-form\">\r\n          <h2 class=\"heading relative uppercase bottom-line full-grey mb-30\">Card Details</h2>\r\n\r\n          <div class=\"row\">\r\n              <div class=\"col-md-12\">\r\n                <input type=\"text\" class=\"input-text\" placeholder=\"Name On Card\" value name=\"billing_address_1\" id=\"billing_address_1\" [(ngModel)]=\"payment.Billing_Name\">\r\n              </div>\r\n              <div class=\"col-md-12\">\r\n                <div class=\"col-sm-6 col-xs-12 footer-payment-systems text-right sm-text-center mt-sml-10 pull-right\">\r\n                  <!--<i class=\"fa fa-cc-paypal\"></i>-->\r\n                  <i class=\"fa fa-cc-visa\" [ngClass]=\"{active: cardType=='Visa'}\"></i>\r\n                  <i class=\"fa fa-cc-mastercard\" [ngClass]=\"{active: cardType=='Mastercard'}\"></i>\r\n                  <i class=\"fa fa-cc-discover\" [ngClass]=\"{active: cardType=='Discover'}\"></i>\r\n                  <i class=\"fa fa-cc-amex\" [ngClass]=\"{active: cardType=='AMEX'}\"></i>\r\n                </div>\r\n              </div>\r\n              <div class=\"col-md-12\">\r\n                  <input type=\"number\" class=\"input-text\" placeholder=\"Card number\" value name=\"cardNumber\" id=\"cardNumber\" [(ngModel)]=\"payment.Card_Nr\"  (change)=\"GetCardType(payment.Card_Nr)\">\r\n                  {{cardType}}\r\n              </div>\r\n              <div class=\"col-md-3\">\r\n                Expiry Date\r\n              </div>\r\n              <div class=\"col-md-5\">\r\n                <div class=\"col-xs-6\">\r\n                    <select name=\"billing_country\" id=\"billing_country\" class=\"country_to_state country_select pull-left\" title=\"Country *\" [(ngModel)]=\"payment.Expiration_Month\">\r\n                        <option value=\"YE\">MM</option>\r\n                        <option value=1>01</option>\r\n                        <option value=2>02</option>\r\n                        <option value=3>03</option><option value=4>04</option><option value=5>05</option>\r\n                        <option value=6>06</option><option value=7>07</option><option value=8>08</option>\r\n                        <option value=9>09</option><option value=10>10</option><option value=11>11</option>\r\n                        <option value=12>12</option>\r\n                    </select>\r\n                </div>\r\n                <div class=\"col-xs-6\">\r\n                    <select name=\"billing_country\" placeholder=\"MM\" id=\"billing_country\" class=\"country_to_state country_select pll-right\" title=\"Country *\" [(ngModel)]=\"payment.Expiration_Year\">\r\n                        <option value=\"YE\">YY</option>\r\n                        <option value=17>17</option>\r\n                        <option value=18>18</option><option value=19>19</option><option value=20>20</option>\r\n                        <option value=21>21</option><option value=22>22</option><option value=23>23</option>\r\n                      </select>\r\n                  </div>\r\n\r\n              </div>\r\n              \r\n              <div class=\"col-md-2\">\r\n                  Cvv*\r\n              </div>\r\n              <div class=\"col-md-2\">\r\n                <input type=\"text\" class=\"input-text\" placeholder=\"Cvv\" value name=\"billing_postcode\" id=\"billing_postcode\">\r\n              </div>\r\n          </div>\r\n          <div class=\"col-md-6 col-md-offset-6\">\r\n              <div class=\"actions\">\r\n                <a class=\"btn btn-md btn-dark pull-right\" (click)=\"makePayment()\"><span>Proceed to Payment</span></a>\r\n              </div>\r\n            </div>\r\n        </div>\r\n\r\n      <!-- end col cart totals -->\r\n\r\n    </div>\r\n    <!-- end row -->\r\n\r\n\r\n  </div>\r\n  <!-- end container -->\r\n</section>\r\n<!-- end cart -->\r\n\r\n\r\n\r\n\r\n"
 
 /***/ }),
 
@@ -290,6 +307,7 @@ module.exports = "<!-- Cart -->\r\n<section class=\"section-wrap shopping-cart\"
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__angular_core__ = __webpack_require__("../../../core/@angular/core.es5.js");
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__shared_services_json_loader_service__ = __webpack_require__("../../../../../src/app/shared/services/json-loader.service.ts");
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__shared_services_employer_service__ = __webpack_require__("../../../../../src/app/shared/services/employer.service.ts");
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_3__shared_services_user_service__ = __webpack_require__("../../../../../src/app/shared/services/user.service.ts");
 var __decorate = (this && this.__decorate) || function (decorators, target, key, desc) {
     var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
     if (typeof Reflect === "object" && typeof Reflect.decorate === "function") r = Reflect.decorate(decorators, target, key, desc);
@@ -302,13 +320,16 @@ var __metadata = (this && this.__metadata) || function (k, v) {
 
 
 
+
 var PaymentComponent = (function () {
-    function PaymentComponent(jsonLoaderService, employerservice) {
+    function PaymentComponent(jsonLoaderService, employerservice, userService) {
         this.jsonLoaderService = jsonLoaderService;
         this.employerservice = employerservice;
+        this.userService = userService;
         this.cardNumber = null;
         this.cardType = '';
         this.initializePayment();
+        // this.getDefaultAddress();
     }
     PaymentComponent.prototype.initializePayment = function () {
         this.payment = {
@@ -316,6 +337,7 @@ var PaymentComponent = (function () {
             Billing_Name: '',
             Expiration_Month: null,
             Expiration_Year: null,
+            street: '',
             City: '',
             State: '',
             Zip_Code: null,
@@ -336,7 +358,7 @@ var PaymentComponent = (function () {
         var re = new RegExp("^4");
         if (String(number).match(re) != null)
             this.cardType = "Visa";
-        // Mastercard 
+        // Mastercard   
         // Updated for Mastercard 2017 BINs expansion
         if (/^(5[1-5][0-9]{14}|2(22[1-9][0-9]{12}|2[3-9][0-9]{13}|[3-6][0-9]{14}|7[0-1][0-9]{13}|720[0-9]{12}))$/.test(number))
             this.cardType = "Mastercard";
@@ -374,8 +396,35 @@ var PaymentComponent = (function () {
         this.employerservice.makePayment(this.payment).subscribe(function (res) {
             if (res.message == 'Payment Sucessfull') {
                 _this.initializePayment();
+                _this.releaseOffer();
             }
         });
+    };
+    PaymentComponent.prototype.releaseOffer = function () {
+        this.employerservice.postOffer().subscribe(function (res) {
+            console.log(res);
+        });
+    };
+    //default address function
+    PaymentComponent.prototype.useMyAddress = function (event) {
+        var _this = this;
+        if (event.target.checked) {
+            var user = this.userService.getCurrentUser();
+            this.userService.getData(user.Email_Address).subscribe(function (res) {
+                if (res) {
+                    _this.payment.street = res["data"].Address_street;
+                    _this.payment.City = res["data"].City;
+                    _this.payment.State = res["data"].State;
+                    _this.payment.Zip_Code = res["data"].Zip_Code;
+                }
+            });
+        }
+        else if (!event.target.checked) {
+            this.payment.street = '';
+            this.payment.City = '';
+            this.payment.State = '';
+            this.payment.Zip_Code = '';
+        }
     };
     return PaymentComponent;
 }());
@@ -385,10 +434,10 @@ PaymentComponent = __decorate([
         template: __webpack_require__("../../../../../src/app/employer/components/payment/payment.component.html"),
         styles: [__webpack_require__("../../../../../src/app/employer/components/payment/payment.component.css")]
     }),
-    __metadata("design:paramtypes", [typeof (_a = typeof __WEBPACK_IMPORTED_MODULE_1__shared_services_json_loader_service__["a" /* JsonLoaderService */] !== "undefined" && __WEBPACK_IMPORTED_MODULE_1__shared_services_json_loader_service__["a" /* JsonLoaderService */]) === "function" && _a || Object, typeof (_b = typeof __WEBPACK_IMPORTED_MODULE_2__shared_services_employer_service__["a" /* EmployerService */] !== "undefined" && __WEBPACK_IMPORTED_MODULE_2__shared_services_employer_service__["a" /* EmployerService */]) === "function" && _b || Object])
+    __metadata("design:paramtypes", [typeof (_a = typeof __WEBPACK_IMPORTED_MODULE_1__shared_services_json_loader_service__["a" /* JsonLoaderService */] !== "undefined" && __WEBPACK_IMPORTED_MODULE_1__shared_services_json_loader_service__["a" /* JsonLoaderService */]) === "function" && _a || Object, typeof (_b = typeof __WEBPACK_IMPORTED_MODULE_2__shared_services_employer_service__["a" /* EmployerService */] !== "undefined" && __WEBPACK_IMPORTED_MODULE_2__shared_services_employer_service__["a" /* EmployerService */]) === "function" && _b || Object, typeof (_c = typeof __WEBPACK_IMPORTED_MODULE_3__shared_services_user_service__["a" /* UserService */] !== "undefined" && __WEBPACK_IMPORTED_MODULE_3__shared_services_user_service__["a" /* UserService */]) === "function" && _c || Object])
 ], PaymentComponent);
 
-var _a, _b;
+var _a, _b, _c;
 //# sourceMappingURL=payment.component.js.map
 
 /***/ }),
@@ -424,6 +473,7 @@ module.exports = "\t\t\t<!-- Cart -->\r\n\t\t\t<section class=\"section-wrap sho
 "use strict";
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "a", function() { return PriorJobOfferComponent; });
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__angular_core__ = __webpack_require__("../../../core/@angular/core.es5.js");
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__shared_services_employer_service__ = __webpack_require__("../../../../../src/app/shared/services/employer.service.ts");
 var __decorate = (this && this.__decorate) || function (decorators, target, key, desc) {
     var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
     if (typeof Reflect === "object" && typeof Reflect.decorate === "function") r = Reflect.decorate(decorators, target, key, desc);
@@ -434,10 +484,15 @@ var __metadata = (this && this.__metadata) || function (k, v) {
     if (typeof Reflect === "object" && typeof Reflect.metadata === "function") return Reflect.metadata(k, v);
 };
 
+
 var PriorJobOfferComponent = (function () {
-    function PriorJobOfferComponent() {
+    function PriorJobOfferComponent(employerService) {
+        this.employerService = employerService;
     }
     PriorJobOfferComponent.prototype.ngOnInit = function () {
+        this.employerService.getOffers().subscribe(function (res) {
+            console.log(res);
+        });
     };
     return PriorJobOfferComponent;
 }());
@@ -447,9 +502,10 @@ PriorJobOfferComponent = __decorate([
         template: __webpack_require__("../../../../../src/app/employer/components/prior-job-offer/prior-job-offer.component.html"),
         styles: [__webpack_require__("../../../../../src/app/employer/components/prior-job-offer/prior-job-offer.component.css")]
     }),
-    __metadata("design:paramtypes", [])
+    __metadata("design:paramtypes", [typeof (_a = typeof __WEBPACK_IMPORTED_MODULE_1__shared_services_employer_service__["a" /* EmployerService */] !== "undefined" && __WEBPACK_IMPORTED_MODULE_1__shared_services_employer_service__["a" /* EmployerService */]) === "function" && _a || Object])
 ], PriorJobOfferComponent);
 
+var _a;
 //# sourceMappingURL=prior-job-offer.component.js.map
 
 /***/ }),
@@ -568,6 +624,7 @@ var ProfileComponent = (function () {
             _this.user.Address_Unit = location + ', ' + neighborhood;
             _this.user.City = _this.geoLocation.city;
             _this.user.State = _this.geoLocation.state;
+            console.log(_this.user.State);
             _this.user.Zip_Code = _this.geoLocation.zip;
             _this.user.locationLat = _this.geoLocation.lat;
             _this.user.locationLng = _this.geoLocation.lng;
@@ -1126,6 +1183,7 @@ var __metadata = (this && this.__metadata) || function (k, v) {
 var EmployerService = (function () {
     function EmployerService(apiService) {
         this.apiService = apiService;
+        this.itemsToHire = [];
     }
     EmployerService.prototype.queryJobseekers = function (data) {
         var path = 'availability/query';
@@ -1142,6 +1200,56 @@ var EmployerService = (function () {
     };
     EmployerService.prototype.getTransactions = function () {
         var route = 'payments/';
+        return this.apiService.get(route).map(function (res) {
+            return res;
+        });
+    };
+    EmployerService.prototype.setItemsToHire = function (id) {
+        if (this.itemsToHire.length > 0) {
+            var count = 0;
+            for (var i = 0; i < this.itemsToHire.length; i++) {
+                if (this.itemsToHire[i]._id == id._id) {
+                    count++;
+                }
+            }
+            if (count == 0) {
+                this.itemsToHire.push(id);
+            }
+        }
+        else {
+            this.itemsToHire.push(id);
+        }
+    };
+    EmployerService.prototype.removeItemToHire = function (id) {
+        if (this.itemsToHire.length > 0) {
+            for (var i = 0; i < this.itemsToHire.length; i++) {
+                if (this.itemsToHire[i]._id == id._id) {
+                    this.itemsToHire.splice(id, 1);
+                }
+            }
+        }
+        else {
+            this.itemsToHire.splice(id, 1);
+        }
+        console.log(this.itemsToHire);
+    };
+    //post offer method
+    EmployerService.prototype.postOffer = function () {
+        var route = 'offers/save';
+        return this.apiService.post(route, this.itemsToHire).map(function (res) {
+            return res;
+        });
+    };
+    //get offer method
+    EmployerService.prototype.getOffers = function () {
+        var route = 'offers/all';
+        return this.apiService.get(route).map(function (res) {
+            return res;
+        });
+    };
+    // get profile information
+    EmployerService.prototype.getProfile = function (email) {
+        var route = 'user/getProfile/' + email;
         return this.apiService.get(route).map(function (res) {
             return res;
         });
