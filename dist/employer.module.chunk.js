@@ -82,7 +82,7 @@ module.exports = module.exports.toString();
 /***/ "../../../../../src/app/employer/components/job-seeker-search/job-seeker-search.component.html":
 /***/ (function(module, exports) {
 
-module.exports = "<div class=\"container-fluid\">\r\n\t<div class=\"col-lg-3\">\r\n\t\t<section class=\"page-title text-center bg-light searchjobseeker-section\">\r\n\t\t\t<h2 class=\"heading relative uppercase bottom-line full-grey mb-30\">Search Job Seekers</h2>\r\n\t\t\t<div class=\"row\">\r\n\t\t\t\t<div class=\"col-sm-10 col-sm-offset-1\">\r\n\t\t\t\t\t<label for=\"billing_address_1\" class=\"pull-left\">Date\r\n\t\t\t\t\t\t<abbr class=\"required\" title=\"required\">*</abbr>\r\n\t\t\t\t\t</label>\r\n\t\t\t\t\t<p class=\"form-row form-row-wide \">\r\n\t\t\t\t\t\t<p-calendar [(ngModel)]=\"filterJobseekers.Date\" dataType=\"Date\" (onSelect)=\"onDateChange($event)\"></p-calendar>\r\n\t\t\t\t\t</p>\r\n\t\t\t\t</div>\r\n\t\t\t\t<div class=\"col-sm-10 col-sm-offset-1\">\r\n\t\t\t\t\t<label for=\"billing_address_1\" class=\"pull-left\">Position\r\n\t\t\t\t\t\t<abbr class=\"required\" title=\"required\">*</abbr>\r\n\t\t\t\t\t</label>\r\n\t\t\t\t\t<p class=\"form-row form-row-wide \">\r\n\t\t\t\t\t\t<select name=\"calc_shipping_country\" id=\"calc_shipping_country\" class=\"country_to_state\" rel=\"calc_shipping_state\" [(ngModel)]=\"filterJobseekers.Position\">\r\n\t\t\t\t\t\t\t<option *ngFor=\"let position of positionList\">{{position.name}}</option>\r\n\t\t\t\t\t\t</select>\r\n\t\t\t\t\t</p>\r\n\t\t\t\t</div>\r\n\t\t\t\t<div class=\"col-sm-10 col-sm-offset-1\">\r\n\t\t\t\t\t<label for=\"billing_address_1\" class=\"pull-left\">Hours Guaranteed\r\n\t\t\t\t\t</label>\r\n\t\t\t\t\t<p class=\"form-row form-row-wide\">\r\n\t\t\t\t\t\t<input type=\"number\" class=\"input-text\" value placeholder=\"No. of hours\" [(ngModel)]=\"filterJobseekers.Hours_Guaranteed\" name=\"Hours_Guarnteed\" id=\"Hours_Guarnteed\" (ngModelChange)=\"onHoursChange()\">\r\n\t\t\t\t\t</p>\r\n\t\t\t\t</div>\r\n\t\t\t\t<div class=\"col-sm-10 col-sm-offset-1\">\r\n\t\t\t\t\t<label for=\"billing_address_1\" class=\"pull-left\">Pay Requested\r\n\t\t\t\t\t</label>\r\n\t\t\t\t\t<p class=\"form-row form-row-wide\">\r\n\t\t\t\t\t\t<input type=\"text\" class=\"input-text\" value placeholder=\"Pay Requested\" name=\"calc_shipping_postcode\" id=\"calc_shipping_postcode\" [(ngModel)]=\"filterJobseekers.pay_request\">\r\n\t\t\t\t\t</p>\r\n\t\t\t\t</div>\r\n\t\t\t\t<div class=\"col-sm-10 col-sm-offset-1\">\r\n\t\t\t\t\t<label for=\"billing_address_1\" class=\"pull-left\">Distance (in miles)\r\n\t\t\t\t\t</label>\r\n\t\t\t\t\t<p class=\"form-row form-row-wide \">\r\n\t\t\t\t\t\t<select name=\"calc_shipping_country\" id=\"calc_shipping_country\" class=\"country_to_state\" rel=\"calc_shipping_state\" [(ngModel)]=\"filterJobseekers.distance\">\r\n\t\t\t\t\t\t\t<option value=\"\">Select distance</option>\r\n\t\t\t\t\t\t\t<option value=\"VI\">10</option>\r\n\t\t\t\t\t\t\t<option value=\"WF\">20</option>\r\n\t\t\t\t\t\t\t<option value=\"EH\">30</option>\r\n\t\t\t\t\t\t\t<option value=\"YE\">40</option>\r\n\t\t\t\t\t\t\t<option value=\"ZM\">50</option>\r\n\t\t\t\t\t\t\t<option value=\"ZW\">60</option>\r\n\t\t\t\t\t\t</select>\r\n\t\t\t\t\t</p>\r\n\t\t\t\t</div>\r\n\t\t\t</div>\r\n\t\t</section>\r\n\t</div>\r\n\t<div class=\"col-lg-9 jobseeeker-section\">\r\n\t\t\t<h2 class=\"heading relative uppercase bottom-line full-grey mb-30\">Job Seekers</h2>\r\n\t\t\t<div class=\"row\">\r\n\t\t\t\t<div class=\"col-md-12\">\r\n\t\t\t\t\t<div class=\"table-wrap mb-30\">\r\n\t\t\t\t\t\t<table class=\"shop_table cart table\">\r\n\t\t\t\t\t\t\t<thead>\r\n\t\t\t\t\t\t\t\t<tr>\r\n\t\t\t\t\t\t\t\t\t<th class=\"product-name\">Image</th>\r\n\t\t\t\t\t\t\t\t\t<th class=\"product-name\" >Position</th>\r\n\t\t\t\t\t\t\t\t\t<th class=\"product-price\">Hourly Rate</th>\r\n\t\t\t\t\t\t\t\t\t<th class=\"product-quantity\">Experience (yrs)</th>\r\n\t\t\t\t\t\t\t\t\t<th class=\"product-subtotal\">Zip Code</th>\r\n\t\t\t\t\t\t\t\t\t<th class=\"product-Hire\"><button class=\"btn btn-success\" routerLink=\"/employer/payment\" [disabled]=\"!itemsToHire.length\">Hire</button></th>\r\n\t\t\t\t\t\t\t\t\t\r\n\t\t\t\t\t\t\t\t</tr>\r\n\t\t\t\t\t\t\t</thead>\r\n\t\t\t\t\t\t\t<tbody>\r\n\t\t\t\t\t\t\t\t<tr class=\"cart_item\" *ngFor=\"let jobseeker of jobseekers | search:filterJobseekers\">\r\n\t\t\t\t\t\t\t\t\t<td class=\"product-thumbnail\">\r\n\t\t\t\t\t\t\t\t\t\t<a >\r\n\t\t\t\t\t\t\t\t\t\t\t<img src=\"assets/img/Photos/user.png\" alt=\"\">\r\n\t\t\t\t\t\t\t\t\t\t</a>\r\n\t\t\t\t\t\t\t\t\t</td>\r\n\t\t\t\t\t\t\t\t\t<td class=\"product-name\">\r\n\t\t\t\t\t\t\t\t\t\t<a ><b>{{jobseeker.JS_id.Position}}</b></a>\r\n\t\t\t\t\t\t\t\t\t\t<ul>\r\n\t\t\t\t\t\t\t\t\t\t\t<li>Available</li>\r\n\t\t\t\t\t\t\t\t\t\t\t<li><b>From:</b> {{jobseeker.Time_Start}}</li>\r\n\t\t\t\t\t\t\t\t\t\t\t<li><b>To:</b> {{jobseeker.Time_Finish}}</li>\r\n\t\t\t\t\t\t\t\t\t\t</ul>\r\n\t\t\t\t\t\t\t\t\t</td>\r\n\t\t\t\t\t\t\t\t\t<td class=\"product-price\">\r\n\t\t\t\t\t\t\t\t\t\t<span class=\"amount\">$1250</span>\r\n\t\t\t\t\t\t\t\t\t</td>\r\n\t\t\t\t\t\t\t\t\t<td class=\"product-quantity\">\r\n\t\t\t\t\t\t\t\t\t\t<div class=\"quantity buttons_added\">\r\n\t\t\t\t\t\t\t\t\t\t\t<input type=\"number\" disabled step=\"1\" min=\"0\" value=\"{{jobseeker.Hours_Guaranteed}}\" [(ngModel)]=\"jobseeker.Hours_Guaranteed\" title=\"Qty\" class=\"input-text qty text\">\r\n\t\t\t\t\t\t\t\t\t\t</div>\r\n\t\t\t\t\t\t\t\t\t</td>\r\n\t\t\t\t\t\t\t\t\t<td class=\"product-subtotal\">\r\n\t\t\t\t\t\t\t\t\t\t<span class=\"amount\">{{jobseeker.JS_id.Zip_Code}}</span>\r\n\t\t\t\t\t\t\t\t\t</td>\r\n\t\t\t\t\t\t\t\t\t<!-- <td class=\"product-remove\">\r\n\t\t\t\t\t\t\t\t\t\t<a class=\"remove\" title=\"Remove this item\">\r\n\t\t\t\t\t\t\t\t\t\t\t<i class=\"ui-close\"></i>\r\n\t\t\t\t\t\t\t\t\t\t</a>\r\n\t\t\t\t\t\t\t\t\t</td> -->\r\n\t\t\t\t\t\t\t\t\t<td class=\"product-hire\">\r\n\t\t\t\t\t\t\t\t\t\t<a class=\"Hire\" title=\"Hire this person\">\r\n\t\t\t\t\t\t\t\t\t\t\t<input type=\"checkbox\" name=\"Hire\" (change)=\"selectToHire(jobseeker,$event)\">\r\n\t\t\t\t\t\t\t\t\t\t</a>\r\n\t\t\t\t\t\t\t\t\t</td>\r\n\t\t\t\t\t\t\t\t</tr>\r\n\t\t\t\t\t\t\t</tbody>\r\n\t\t\t\t\t\t</table>\r\n\t\t\t\t\t</div>\r\n\t\t\t\t</div>\r\n\t\t\t</div>\r\n\t</div>\r\n</div>"
+module.exports = "<div class=\"container-fluid\">\r\n\t<div class=\"col-lg-3\">\r\n\t\t<section class=\"page-title text-center bg-light searchjobseeker-section\">\r\n\t\t\t<h2 class=\"heading relative uppercase bottom-line full-grey mb-30\">Search Job Seekers</h2>\r\n\t\t\t<div class=\"row\">\r\n\t\t\t\t<div class=\"col-sm-10 col-sm-offset-1\">\r\n\t\t\t\t\t<label for=\"billing_address_1\" class=\"pull-left\">Date\r\n\t\t\t\t\t\t<abbr class=\"required\" title=\"required\">*</abbr>\r\n\t\t\t\t\t</label>\r\n\t\t\t\t\t<p class=\"form-row form-row-wide \">\r\n\t\t\t\t\t\t<p-calendar [(ngModel)]=\"filterJobseekers.Date\" dataType=\"Date\" (onSelect)=\"onDateChange($event)\"></p-calendar>\r\n\t\t\t\t\t</p>\r\n\t\t\t\t</div>\r\n\t\t\t\t<div class=\"col-sm-10 col-sm-offset-1\">\r\n\t\t\t\t\t<label for=\"billing_address_1\" class=\"pull-left\">Position\r\n\t\t\t\t\t\t<abbr class=\"required\" title=\"required\">*</abbr>\r\n\t\t\t\t\t</label>\r\n\t\t\t\t\t<p class=\"form-row form-row-wide \">\r\n\t\t\t\t\t\t<select name=\"calc_shipping_country\" id=\"calc_shipping_country\" class=\"country_to_state\" rel=\"calc_shipping_state\" [(ngModel)]=\"filterJobseekers.Position\">\r\n\t\t\t\t\t\t\t<option *ngFor=\"let position of positionList\">{{position.name}}</option>\r\n\t\t\t\t\t\t</select>\r\n\t\t\t\t\t</p>\r\n\t\t\t\t</div>\r\n\t\t\t\t<div class=\"col-sm-10 col-sm-offset-1\">\r\n\t\t\t\t\t<label for=\"billing_address_1\" class=\"pull-left\">Hours Guaranteed\r\n\t\t\t\t\t</label>\r\n\t\t\t\t\t<p class=\"form-row form-row-wide\">\r\n\t\t\t\t\t\t<input type=\"number\" class=\"input-text\" value placeholder=\"No. of hours you will guarantee\" [(ngModel)]=\"filterJobseekers.Hours_Guaranteed\" name=\"Hours_Guarnteed\" id=\"Hours_Guarnteed\" (ngModelChange)=\"onHoursChange()\">\r\n\t\t\t\t\t</p>\r\n\t\t\t\t</div>\r\n\t\t\t\t<div class=\"col-sm-10 col-sm-offset-1\">\r\n\t\t\t\t\t<label for=\"billing_address_1\" class=\"pull-left\">Pay Requested\r\n\t\t\t\t\t</label>\r\n\t\t\t\t\t<p class=\"form-row form-row-wide\">\r\n\t\t\t\t\t\t<input type=\"text\" class=\"input-text\" value placeholder=\"Pay Requested\" name=\"calc_shipping_postcode\" id=\"calc_shipping_postcode\" [(ngModel)]=\"filterJobseekers.pay_request\">\r\n\t\t\t\t\t</p>\r\n\t\t\t\t</div>\r\n\t\t\t\t<!-- <div class=\"col-sm-10 col-sm-offset-1\">\r\n\t\t\t\t\t<label for=\"billing_address_1\" class=\"pull-left\">Distance (in miles)\r\n\t\t\t\t\t</label>\r\n\t\t\t\t\t<p class=\"form-row form-row-wide \">\r\n\t\t\t\t\t\t<select name=\"calc_shipping_country\" id=\"calc_shipping_country\" class=\"country_to_state\" rel=\"calc_shipping_state\" [(ngModel)]=\"filterJobseekers.distance\">\r\n\t\t\t\t\t\t\t<option value=\"\">Select distance</option>\r\n\t\t\t\t\t\t\t<option value=\"VI\">10</option>\r\n\t\t\t\t\t\t\t<option value=\"WF\">20</option>\r\n\t\t\t\t\t\t\t<option value=\"EH\">30</option>\r\n\t\t\t\t\t\t\t<option value=\"YE\">40</option>\r\n\t\t\t\t\t\t\t<option value=\"ZM\">50</option>\r\n\t\t\t\t\t\t\t<option value=\"ZW\">60</option>\r\n\t\t\t\t\t\t</select>\r\n\t\t\t\t\t</p>\r\n\t\t\t\t</div> -->\r\n\t\t\t</div>\r\n\t\t</section>\r\n\t</div>\r\n\t<div class=\"col-lg-9 jobseeeker-section\">\r\n\t\t\t<h2 class=\"heading relative uppercase bottom-line full-grey mb-30\">Job Seekers</h2>\r\n\t\t\t<div class=\"row\">\r\n\t\t\t\t<div class=\"col-md-12\">\r\n\t\t\t\t\t<div class=\"table-wrap mb-30\">\r\n\t\t\t\t\t\t<table class=\"shop_table cart table\">\r\n\t\t\t\t\t\t\t<thead>\r\n\t\t\t\t\t\t\t\t<tr>\r\n\t\t\t\t\t\t\t\t\t<th class=\"product-name\">Image</th>\r\n\t\t\t\t\t\t\t\t\t<th class=\"product-name\" >Position</th>\r\n\t\t\t\t\t\t\t\t\t<th class=\"product-price\">Hourly Rate</th>\r\n\t\t\t\t\t\t\t\t\t<th class=\"product-quantity\">Experience (yrs)</th>\r\n\t\t\t\t\t\t\t\t\t<th class=\"product-subtotal\">Zip Code</th>\r\n\t\t\t\t\t\t\t\t\t<th class=\"product-Hire\"><button class=\"btn btn-success\" routerLink=\"/employer/payment\" [disabled]=\"!itemsToHire.length\">Hire</button></th>\r\n\t\t\t\t\t\t\t\t\t\r\n\t\t\t\t\t\t\t\t</tr>\r\n\t\t\t\t\t\t\t</thead>\r\n\t\t\t\t\t\t\t<tbody>\r\n\t\t\t\t\t\t\t\t<tr class=\"cart_item\" *ngFor=\"let jobseeker of jobseekers | search:filterJobseekers\">\r\n\t\t\t\t\t\t\t\t\t<td class=\"product-thumbnail\">\r\n\t\t\t\t\t\t\t\t\t\t<a >\r\n\t\t\t\t\t\t\t\t\t\t\t<img src=\"assets/img/Photos/user.png\" alt=\"\">\r\n\t\t\t\t\t\t\t\t\t\t</a>\r\n\t\t\t\t\t\t\t\t\t</td>\r\n\t\t\t\t\t\t\t\t\t<td class=\"product-name\">\r\n\t\t\t\t\t\t\t\t\t\t<a ><b>{{jobseeker.JS_id.Position}}</b></a>\r\n\t\t\t\t\t\t\t\t\t\t<ul>\r\n\t\t\t\t\t\t\t\t\t\t\t<li>Available</li>\r\n\t\t\t\t\t\t\t\t\t\t\t<li><b>From:</b> {{jobseeker.Time_Start}}</li>\r\n\t\t\t\t\t\t\t\t\t\t\t<li><b>To:</b> {{jobseeker.Time_Finish}}</li>\r\n\t\t\t\t\t\t\t\t\t\t</ul>\r\n\t\t\t\t\t\t\t\t\t</td>\r\n\t\t\t\t\t\t\t\t\t<td class=\"product-price\">\r\n\t\t\t\t\t\t\t\t\t\t<span class=\"amount\">$1250</span>\r\n\t\t\t\t\t\t\t\t\t</td>\r\n\t\t\t\t\t\t\t\t\t<td class=\"product-quantity\">\r\n\t\t\t\t\t\t\t\t\t\t<div class=\"quantity buttons_added\">\r\n\t\t\t\t\t\t\t\t\t\t\t<input type=\"number\" disabled step=\"1\" min=\"0\" value=\"{{jobseeker.Hours_Guaranteed}}\" [(ngModel)]=\"jobseeker.Hours_Guaranteed\" title=\"Qty\" class=\"input-text qty text\">\r\n\t\t\t\t\t\t\t\t\t\t</div>\r\n\t\t\t\t\t\t\t\t\t</td>\r\n\t\t\t\t\t\t\t\t\t<td class=\"product-subtotal\">\r\n\t\t\t\t\t\t\t\t\t\t<span class=\"amount\">{{jobseeker.JS_id.Zip_Code}}</span>\r\n\t\t\t\t\t\t\t\t\t</td>\r\n\t\t\t\t\t\t\t\t\t<!-- <td class=\"product-remove\">\r\n\t\t\t\t\t\t\t\t\t\t<a class=\"remove\" title=\"Remove this item\">\r\n\t\t\t\t\t\t\t\t\t\t\t<i class=\"ui-close\"></i>\r\n\t\t\t\t\t\t\t\t\t\t</a>\r\n\t\t\t\t\t\t\t\t\t</td> -->\r\n\t\t\t\t\t\t\t\t\t<td class=\"product-hire\">\r\n\t\t\t\t\t\t\t\t\t\t<a class=\"Hire\" title=\"Hire this person\">\r\n\t\t\t\t\t\t\t\t\t\t\t<input type=\"checkbox\" name=\"Hire\" (change)=\"selectToHire(jobseeker,$event)\">\r\n\t\t\t\t\t\t\t\t\t\t</a>\r\n\t\t\t\t\t\t\t\t\t</td>\r\n\t\t\t\t\t\t\t\t</tr>\r\n\t\t\t\t\t\t\t</tbody>\r\n\t\t\t\t\t\t</table>\r\n\t\t\t\t\t</div>\r\n\t\t\t\t</div>\r\n\t\t\t</div>\r\n\t</div>\r\n</div>"
 
 /***/ }),
 
@@ -101,6 +101,7 @@ module.exports = "<div class=\"container-fluid\">\r\n\t<div class=\"col-lg-3\">\
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_6_angular2_notifications__ = __webpack_require__("../../../../angular2-notifications/dist/index.js");
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_6_angular2_notifications___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_6_angular2_notifications__);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_7__environments_environment__ = __webpack_require__("../../../../../src/environments/environment.ts");
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_8__shared_services_loader_service__ = __webpack_require__("../../../../../src/app/shared/services/loader.service.ts");
 var __decorate = (this && this.__decorate) || function (decorators, target, key, desc) {
     var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
     if (typeof Reflect === "object" && typeof Reflect.decorate === "function") r = Reflect.decorate(decorators, target, key, desc);
@@ -118,8 +119,9 @@ var __metadata = (this && this.__metadata) || function (k, v) {
 
 
 
+
 var JobSeekerSearchComponent = (function () {
-    function JobSeekerSearchComponent(jsonLoaderService, router, userService, employerService, _haversineService, notificationsService) {
+    function JobSeekerSearchComponent(jsonLoaderService, router, userService, employerService, _haversineService, notificationsService, loaderService) {
         var _this = this;
         this.jsonLoaderService = jsonLoaderService;
         this.router = router;
@@ -127,6 +129,7 @@ var JobSeekerSearchComponent = (function () {
         this.employerService = employerService;
         this._haversineService = _haversineService;
         this.notificationsService = notificationsService;
+        this.loaderService = loaderService;
         this.value = new Date();
         var newDate = new Date();
         newDate.setUTCHours(0);
@@ -153,11 +156,14 @@ var JobSeekerSearchComponent = (function () {
     // initialise employer data to use location lattitude and longitude
     JobSeekerSearchComponent.prototype.initUserData = function (user) {
         var _this = this;
+        this.loaderService.display(true);
         if (user.userType !== undefined) {
             this.userService.getData(user.Email_Address).subscribe(function (res) {
                 _this.employerLocation.lat = res.data.locationLat;
                 _this.employerLocation.lng = res.data.locationLng;
+                _this.loaderService.display(false);
             }, function (err) {
+                _this.loaderService.display(false);
                 _this.notificationsService.error(err.title, err.error.message, __WEBPACK_IMPORTED_MODULE_7__environments_environment__["a" /* environment */].options);
             });
         }
@@ -221,10 +227,13 @@ var JobSeekerSearchComponent = (function () {
     // get the initial list of job seekers with todays date as input
     JobSeekerSearchComponent.prototype.getJobseekers = function (data) {
         var _this = this;
+        this.loaderService.display(true);
         this.employerService.queryJobseekers(data).subscribe(function (res) {
             _this.jobseekers = res.data;
             _this.calculateDistance(_this.jobseekers);
+            _this.loaderService.display(false);
         }, function (err) {
+            _this.loaderService.display(false);
             _this.notificationsService.error(err.title, err.error.message, __WEBPACK_IMPORTED_MODULE_7__environments_environment__["a" /* environment */].options);
         });
     };
@@ -266,10 +275,10 @@ JobSeekerSearchComponent = __decorate([
         template: __webpack_require__("../../../../../src/app/employer/components/job-seeker-search/job-seeker-search.component.html"),
         styles: [__webpack_require__("../../../../../src/app/employer/components/job-seeker-search/job-seeker-search.component.css")]
     }),
-    __metadata("design:paramtypes", [typeof (_a = typeof __WEBPACK_IMPORTED_MODULE_2__shared_services_json_loader_service__["a" /* JsonLoaderService */] !== "undefined" && __WEBPACK_IMPORTED_MODULE_2__shared_services_json_loader_service__["a" /* JsonLoaderService */]) === "function" && _a || Object, typeof (_b = typeof __WEBPACK_IMPORTED_MODULE_1__angular_router__["Router"] !== "undefined" && __WEBPACK_IMPORTED_MODULE_1__angular_router__["Router"]) === "function" && _b || Object, typeof (_c = typeof __WEBPACK_IMPORTED_MODULE_3__shared_services_user_service__["a" /* UserService */] !== "undefined" && __WEBPACK_IMPORTED_MODULE_3__shared_services_user_service__["a" /* UserService */]) === "function" && _c || Object, typeof (_d = typeof __WEBPACK_IMPORTED_MODULE_4__shared_services_employer_service__["a" /* EmployerService */] !== "undefined" && __WEBPACK_IMPORTED_MODULE_4__shared_services_employer_service__["a" /* EmployerService */]) === "function" && _d || Object, typeof (_e = typeof __WEBPACK_IMPORTED_MODULE_5_ng2_haversine__["HaversineService"] !== "undefined" && __WEBPACK_IMPORTED_MODULE_5_ng2_haversine__["HaversineService"]) === "function" && _e || Object, typeof (_f = typeof __WEBPACK_IMPORTED_MODULE_6_angular2_notifications__["NotificationsService"] !== "undefined" && __WEBPACK_IMPORTED_MODULE_6_angular2_notifications__["NotificationsService"]) === "function" && _f || Object])
+    __metadata("design:paramtypes", [typeof (_a = typeof __WEBPACK_IMPORTED_MODULE_2__shared_services_json_loader_service__["a" /* JsonLoaderService */] !== "undefined" && __WEBPACK_IMPORTED_MODULE_2__shared_services_json_loader_service__["a" /* JsonLoaderService */]) === "function" && _a || Object, typeof (_b = typeof __WEBPACK_IMPORTED_MODULE_1__angular_router__["Router"] !== "undefined" && __WEBPACK_IMPORTED_MODULE_1__angular_router__["Router"]) === "function" && _b || Object, typeof (_c = typeof __WEBPACK_IMPORTED_MODULE_3__shared_services_user_service__["a" /* UserService */] !== "undefined" && __WEBPACK_IMPORTED_MODULE_3__shared_services_user_service__["a" /* UserService */]) === "function" && _c || Object, typeof (_d = typeof __WEBPACK_IMPORTED_MODULE_4__shared_services_employer_service__["a" /* EmployerService */] !== "undefined" && __WEBPACK_IMPORTED_MODULE_4__shared_services_employer_service__["a" /* EmployerService */]) === "function" && _d || Object, typeof (_e = typeof __WEBPACK_IMPORTED_MODULE_5_ng2_haversine__["HaversineService"] !== "undefined" && __WEBPACK_IMPORTED_MODULE_5_ng2_haversine__["HaversineService"]) === "function" && _e || Object, typeof (_f = typeof __WEBPACK_IMPORTED_MODULE_6_angular2_notifications__["NotificationsService"] !== "undefined" && __WEBPACK_IMPORTED_MODULE_6_angular2_notifications__["NotificationsService"]) === "function" && _f || Object, typeof (_g = typeof __WEBPACK_IMPORTED_MODULE_8__shared_services_loader_service__["a" /* LoaderService */] !== "undefined" && __WEBPACK_IMPORTED_MODULE_8__shared_services_loader_service__["a" /* LoaderService */]) === "function" && _g || Object])
 ], JobSeekerSearchComponent);
 
-var _a, _b, _c, _d, _e, _f;
+var _a, _b, _c, _d, _e, _f, _g;
 //# sourceMappingURL=job-seeker-search.component.js.map
 
 /***/ }),
@@ -308,6 +317,7 @@ module.exports = "<!-- Cart -->\r\n<section class=\"section-wrap shopping-cart\"
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__shared_services_json_loader_service__ = __webpack_require__("../../../../../src/app/shared/services/json-loader.service.ts");
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__shared_services_employer_service__ = __webpack_require__("../../../../../src/app/shared/services/employer.service.ts");
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_3__shared_services_user_service__ = __webpack_require__("../../../../../src/app/shared/services/user.service.ts");
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_4__shared_services_loader_service__ = __webpack_require__("../../../../../src/app/shared/services/loader.service.ts");
 var __decorate = (this && this.__decorate) || function (decorators, target, key, desc) {
     var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
     if (typeof Reflect === "object" && typeof Reflect.decorate === "function") r = Reflect.decorate(decorators, target, key, desc);
@@ -321,11 +331,13 @@ var __metadata = (this && this.__metadata) || function (k, v) {
 
 
 
+
 var PaymentComponent = (function () {
-    function PaymentComponent(jsonLoaderService, employerservice, userService) {
+    function PaymentComponent(jsonLoaderService, employerservice, userService, loaderService) {
         this.jsonLoaderService = jsonLoaderService;
         this.employerservice = employerservice;
         this.userService = userService;
+        this.loaderService = loaderService;
         this.cardNumber = null;
         this.cardType = '';
         this.initializePayment();
@@ -393,11 +405,13 @@ var PaymentComponent = (function () {
     //payment method
     PaymentComponent.prototype.makePayment = function () {
         var _this = this;
+        this.loaderService.display(true);
         this.employerservice.makePayment(this.payment).subscribe(function (res) {
             if (res.message == 'Payment Sucessfull') {
                 _this.initializePayment();
                 _this.releaseOffer();
             }
+            _this.loaderService.display(false);
         });
     };
     PaymentComponent.prototype.releaseOffer = function () {
@@ -434,10 +448,10 @@ PaymentComponent = __decorate([
         template: __webpack_require__("../../../../../src/app/employer/components/payment/payment.component.html"),
         styles: [__webpack_require__("../../../../../src/app/employer/components/payment/payment.component.css")]
     }),
-    __metadata("design:paramtypes", [typeof (_a = typeof __WEBPACK_IMPORTED_MODULE_1__shared_services_json_loader_service__["a" /* JsonLoaderService */] !== "undefined" && __WEBPACK_IMPORTED_MODULE_1__shared_services_json_loader_service__["a" /* JsonLoaderService */]) === "function" && _a || Object, typeof (_b = typeof __WEBPACK_IMPORTED_MODULE_2__shared_services_employer_service__["a" /* EmployerService */] !== "undefined" && __WEBPACK_IMPORTED_MODULE_2__shared_services_employer_service__["a" /* EmployerService */]) === "function" && _b || Object, typeof (_c = typeof __WEBPACK_IMPORTED_MODULE_3__shared_services_user_service__["a" /* UserService */] !== "undefined" && __WEBPACK_IMPORTED_MODULE_3__shared_services_user_service__["a" /* UserService */]) === "function" && _c || Object])
+    __metadata("design:paramtypes", [typeof (_a = typeof __WEBPACK_IMPORTED_MODULE_1__shared_services_json_loader_service__["a" /* JsonLoaderService */] !== "undefined" && __WEBPACK_IMPORTED_MODULE_1__shared_services_json_loader_service__["a" /* JsonLoaderService */]) === "function" && _a || Object, typeof (_b = typeof __WEBPACK_IMPORTED_MODULE_2__shared_services_employer_service__["a" /* EmployerService */] !== "undefined" && __WEBPACK_IMPORTED_MODULE_2__shared_services_employer_service__["a" /* EmployerService */]) === "function" && _b || Object, typeof (_c = typeof __WEBPACK_IMPORTED_MODULE_3__shared_services_user_service__["a" /* UserService */] !== "undefined" && __WEBPACK_IMPORTED_MODULE_3__shared_services_user_service__["a" /* UserService */]) === "function" && _c || Object, typeof (_d = typeof __WEBPACK_IMPORTED_MODULE_4__shared_services_loader_service__["a" /* LoaderService */] !== "undefined" && __WEBPACK_IMPORTED_MODULE_4__shared_services_loader_service__["a" /* LoaderService */]) === "function" && _d || Object])
 ], PaymentComponent);
 
-var _a, _b, _c;
+var _a, _b, _c, _d;
 //# sourceMappingURL=payment.component.js.map
 
 /***/ }),
@@ -546,6 +560,7 @@ module.exports = "<section class=\"section-wrap\">\r\n  <div class=\"container\"
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_3_angular2_notifications__ = __webpack_require__("../../../../angular2-notifications/dist/index.js");
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_3_angular2_notifications___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_3_angular2_notifications__);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_4__environments_environment__ = __webpack_require__("../../../../../src/environments/environment.ts");
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_5__shared_services_loader_service__ = __webpack_require__("../../../../../src/app/shared/services/loader.service.ts");
 var __decorate = (this && this.__decorate) || function (decorators, target, key, desc) {
     var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
     if (typeof Reflect === "object" && typeof Reflect.decorate === "function") r = Reflect.decorate(decorators, target, key, desc);
@@ -560,13 +575,15 @@ var __metadata = (this && this.__metadata) || function (k, v) {
 
 
 
+
 var ProfileComponent = (function () {
-    function ProfileComponent(jsonLoaderService, userService, notificationsService, ngzone) {
+    function ProfileComponent(jsonLoaderService, userService, notificationsService, ngzone, loaderService) {
         var _this = this;
         this.jsonLoaderService = jsonLoaderService;
         this.userService = userService;
         this.notificationsService = notificationsService;
         this.ngzone = ngzone;
+        this.loaderService = loaderService;
         this.isUserDataEdit = false;
         this.isWorkDataEdit = false;
         this.newImageUploaded = false;
@@ -635,7 +652,9 @@ var ProfileComponent = (function () {
         if (user.userType !== undefined) {
             this.userService.getData(user.Email_Address).subscribe(function (res) {
                 _this.user = res.data;
+                _this.loaderService.display(false);
             }, function (err) {
+                _this.loaderService.display(false);
                 _this.notificationsService.error(err.title, err.error.message, __WEBPACK_IMPORTED_MODULE_4__environments_environment__["a" /* environment */].options);
             });
         }
@@ -648,10 +667,13 @@ var ProfileComponent = (function () {
     };
     ProfileComponent.prototype.updateUserData = function () {
         var _this = this;
+        this.loaderService.display(true);
         this.userService.updatePersonal(this.user).subscribe(function (res) {
+            _this.loaderService.display(false);
             _this.notificationsService.success('Success', res.message, __WEBPACK_IMPORTED_MODULE_4__environments_environment__["a" /* environment */].options);
             _this.isUserDataEdit = !_this.isUserDataEdit;
         }, function (err) {
+            _this.loaderService.display(false);
             _this.notificationsService.error(err.title, err.error.message, __WEBPACK_IMPORTED_MODULE_4__environments_environment__["a" /* environment */].options);
         });
     };
@@ -663,10 +685,13 @@ var ProfileComponent = (function () {
     };
     ProfileComponent.prototype.updateWorkData = function (user) {
         var _this = this;
+        this.loaderService.display(true);
         this.userService.updateWork(this.user).subscribe(function (res) {
+            _this.loaderService.display(false);
             _this.notificationsService.success('Success', res.message, __WEBPACK_IMPORTED_MODULE_4__environments_environment__["a" /* environment */].options);
             _this.isWorkDataEdit = !_this.isWorkDataEdit;
         }, function (err) {
+            _this.loaderService.display(false);
             _this.notificationsService.error(err.title, err.error.message, __WEBPACK_IMPORTED_MODULE_4__environments_environment__["a" /* environment */].options);
         });
     };
@@ -763,10 +788,10 @@ ProfileComponent = __decorate([
         template: __webpack_require__("../../../../../src/app/employer/components/profile/profile.component.html"),
         styles: [__webpack_require__("../../../../../src/app/employer/components/profile/profile.component.css")]
     }),
-    __metadata("design:paramtypes", [typeof (_a = typeof __WEBPACK_IMPORTED_MODULE_1__shared_services_json_loader_service__["a" /* JsonLoaderService */] !== "undefined" && __WEBPACK_IMPORTED_MODULE_1__shared_services_json_loader_service__["a" /* JsonLoaderService */]) === "function" && _a || Object, typeof (_b = typeof __WEBPACK_IMPORTED_MODULE_2__shared_services_user_service__["a" /* UserService */] !== "undefined" && __WEBPACK_IMPORTED_MODULE_2__shared_services_user_service__["a" /* UserService */]) === "function" && _b || Object, typeof (_c = typeof __WEBPACK_IMPORTED_MODULE_3_angular2_notifications__["NotificationsService"] !== "undefined" && __WEBPACK_IMPORTED_MODULE_3_angular2_notifications__["NotificationsService"]) === "function" && _c || Object, typeof (_d = typeof __WEBPACK_IMPORTED_MODULE_0__angular_core__["NgZone"] !== "undefined" && __WEBPACK_IMPORTED_MODULE_0__angular_core__["NgZone"]) === "function" && _d || Object])
+    __metadata("design:paramtypes", [typeof (_a = typeof __WEBPACK_IMPORTED_MODULE_1__shared_services_json_loader_service__["a" /* JsonLoaderService */] !== "undefined" && __WEBPACK_IMPORTED_MODULE_1__shared_services_json_loader_service__["a" /* JsonLoaderService */]) === "function" && _a || Object, typeof (_b = typeof __WEBPACK_IMPORTED_MODULE_2__shared_services_user_service__["a" /* UserService */] !== "undefined" && __WEBPACK_IMPORTED_MODULE_2__shared_services_user_service__["a" /* UserService */]) === "function" && _b || Object, typeof (_c = typeof __WEBPACK_IMPORTED_MODULE_3_angular2_notifications__["NotificationsService"] !== "undefined" && __WEBPACK_IMPORTED_MODULE_3_angular2_notifications__["NotificationsService"]) === "function" && _c || Object, typeof (_d = typeof __WEBPACK_IMPORTED_MODULE_0__angular_core__["NgZone"] !== "undefined" && __WEBPACK_IMPORTED_MODULE_0__angular_core__["NgZone"]) === "function" && _d || Object, typeof (_e = typeof __WEBPACK_IMPORTED_MODULE_5__shared_services_loader_service__["a" /* LoaderService */] !== "undefined" && __WEBPACK_IMPORTED_MODULE_5__shared_services_loader_service__["a" /* LoaderService */]) === "function" && _e || Object])
 ], ProfileComponent);
 
-var _a, _b, _c, _d;
+var _a, _b, _c, _d, _e;
 //# sourceMappingURL=profile.component.js.map
 
 /***/ }),
@@ -806,6 +831,7 @@ module.exports = "\t\t\t<!-- Cart -->\r\n\t\t\t<section class=\"section-wrap sho
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_2_angular2_notifications__ = __webpack_require__("../../../../angular2-notifications/dist/index.js");
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_2_angular2_notifications___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_2_angular2_notifications__);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_3__environments_environment__ = __webpack_require__("../../../../../src/environments/environment.ts");
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_4__shared_services_loader_service__ = __webpack_require__("../../../../../src/app/shared/services/loader.service.ts");
 var __decorate = (this && this.__decorate) || function (decorators, target, key, desc) {
     var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
     if (typeof Reflect === "object" && typeof Reflect.decorate === "function") r = Reflect.decorate(decorators, target, key, desc);
@@ -819,14 +845,19 @@ var __metadata = (this && this.__metadata) || function (k, v) {
 
 
 
+
 var TransactionHistoryComponent = (function () {
-    function TransactionHistoryComponent(employerService, notificationsService) {
+    function TransactionHistoryComponent(employerService, notificationsService, loaderService) {
         var _this = this;
         this.employerService = employerService;
         this.notificationsService = notificationsService;
+        this.loaderService = loaderService;
+        this.loaderService.display(true);
         this.employerService.getTransactions().subscribe(function (res) {
             _this.transactions = res.data;
+            _this.loaderService.display(false);
         }, function (err) {
+            _this.loaderService.display(false);
             _this.notificationsService.error(err.title, err.error.message, __WEBPACK_IMPORTED_MODULE_3__environments_environment__["a" /* environment */].options);
         });
     }
@@ -840,10 +871,10 @@ TransactionHistoryComponent = __decorate([
         template: __webpack_require__("../../../../../src/app/employer/components/transaction-history/transaction-history.component.html"),
         styles: [__webpack_require__("../../../../../src/app/employer/components/transaction-history/transaction-history.component.css")]
     }),
-    __metadata("design:paramtypes", [typeof (_a = typeof __WEBPACK_IMPORTED_MODULE_1__shared_services_employer_service__["a" /* EmployerService */] !== "undefined" && __WEBPACK_IMPORTED_MODULE_1__shared_services_employer_service__["a" /* EmployerService */]) === "function" && _a || Object, typeof (_b = typeof __WEBPACK_IMPORTED_MODULE_2_angular2_notifications__["NotificationsService"] !== "undefined" && __WEBPACK_IMPORTED_MODULE_2_angular2_notifications__["NotificationsService"]) === "function" && _b || Object])
+    __metadata("design:paramtypes", [typeof (_a = typeof __WEBPACK_IMPORTED_MODULE_1__shared_services_employer_service__["a" /* EmployerService */] !== "undefined" && __WEBPACK_IMPORTED_MODULE_1__shared_services_employer_service__["a" /* EmployerService */]) === "function" && _a || Object, typeof (_b = typeof __WEBPACK_IMPORTED_MODULE_2_angular2_notifications__["NotificationsService"] !== "undefined" && __WEBPACK_IMPORTED_MODULE_2_angular2_notifications__["NotificationsService"]) === "function" && _b || Object, typeof (_c = typeof __WEBPACK_IMPORTED_MODULE_4__shared_services_loader_service__["a" /* LoaderService */] !== "undefined" && __WEBPACK_IMPORTED_MODULE_4__shared_services_loader_service__["a" /* LoaderService */]) === "function" && _c || Object])
 ], TransactionHistoryComponent);
 
-var _a, _b;
+var _a, _b, _c;
 //# sourceMappingURL=transaction-history.component.js.map
 
 /***/ }),

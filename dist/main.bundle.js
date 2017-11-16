@@ -191,7 +191,7 @@ exports = module.exports = __webpack_require__("../../../../css-loader/lib/css-b
 
 
 // module
-exports.push([module.i, "", ""]);
+exports.push([module.i, ".tootlbar-icon {\r\n  padding: 0 14px;\r\n}\r\n\r\n.tootlbar-spacer {\r\n  -webkit-box-flex: 1;\r\n      -ms-flex: 1 1 auto;\r\n          flex: 1 1 auto;\r\n}\r\n\r\n/* Absolute Center Spinner */\r\n.loading {\r\n  position: fixed;\r\n  z-index: 999;\r\n  height: 2em;\r\n  width: 2em;\r\n  overflow: show;\r\n  margin: auto;\r\n  top: 0;\r\n  left: 0;\r\n  bottom: 0;\r\n  right: 0;\r\n}\r\n\r\n/* Transparent Overlay */\r\n.loading:before {\r\n  content: '';\r\n  display: block;\r\n  position: fixed;\r\n  top: 0;\r\n  left: 0;\r\n  width: 100%;\r\n  height: 100%;\r\n  background-color: rgba(0,0,0,0.6);\r\n}\r\n\r\n/* :not(:required) hides these rules from IE9 and below */\r\n.loading:not(:required) {\r\n  /* hide \"loading...\" text */\r\n  font: 0/0 a;\r\n  color: transparent;\r\n  text-shadow: none;\r\n  background-color: transparent;\r\n  border: 0;\r\n}\r\n\r\n.loading:not(:required):after {\r\n  content: '';\r\n  display: block;\r\n  font-size: 10px;\r\n  width: 1em;\r\n  height: 1em;\r\n  margin-top: -0.5em;\r\n  -webkit-animation: spinner 1500ms infinite linear;\r\n  animation: spinner 1500ms infinite linear;\r\n  border-radius: 0.5em;\r\n  box-shadow: rgba(0, 0, 0, 0.75) 1.5em 0 0 0, rgba(0, 0, 0, 0.75) 1.1em 1.1em 0 0, rgba(0, 0, 0, 0.75) 0 1.5em 0 0, rgba(0, 0, 0, 0.75) -1.1em 1.1em 0 0, rgba(0, 0, 0, 0.75) -1.5em 0 0 0, rgba(0, 0, 0, 0.75) -1.1em -1.1em 0 0, rgba(0, 0, 0, 0.75) 0 -1.5em 0 0, rgba(0, 0, 0, 0.75) 1.1em -1.1em 0 0;\r\n}\r\n\r\n/* Animation */\r\n\r\n@-webkit-keyframes spinner {\r\n  0% {\r\n    -webkit-transform: rotate(0deg);\r\n    transform: rotate(0deg);\r\n  }\r\n  100% {\r\n    -webkit-transform: rotate(360deg);\r\n    transform: rotate(360deg);\r\n  }\r\n}\r\n@keyframes spinner {\r\n  0% {\r\n    -webkit-transform: rotate(0deg);\r\n    transform: rotate(0deg);\r\n  }\r\n  100% {\r\n    -webkit-transform: rotate(360deg);\r\n    transform: rotate(360deg);\r\n  }\r\n}", ""]);
 
 // exports
 
@@ -204,7 +204,7 @@ module.exports = module.exports.toString();
 /***/ "../../../../../src/app/app.component.html":
 /***/ (function(module, exports) {
 
-module.exports = "\r\n  <!-- Preloader -->\r\n<simple-notifications [options]=\"options\"></simple-notifications>\r\n\r\n<main class=\"main-wrapper\">\r\n  <app-top-nav></app-top-nav>\r\n    \r\n  <div class=\"content-wrapper oh\">\r\n  \r\n  <!-- main content -->\r\n  <router-outlet></router-outlet>\r\n\r\n\r\n  <app-footer></app-footer>\r\n    \r\n  </div> <!-- end content wrapper -->\r\n</main> <!-- end main wrapper -->\r\n\r\n\r\n    \r\n"
+module.exports = "\r\n  <!-- Preloader -->\r\n<simple-notifications [options]=\"options\"></simple-notifications>\r\n\r\n<main class=\"main-wrapper\">\r\n  <app-top-nav></app-top-nav>\r\n    \r\n  <div class=\"content-wrapper oh\">\r\n  \r\n  <!-- main content -->\r\n  <router-outlet>\r\n    <span *ngIf=\"showLoader\" class=\"loading\"></span>\r\n  </router-outlet>\r\n\r\n\r\n  <app-footer></app-footer>\r\n    \r\n  </div> <!-- end content wrapper -->\r\n</main> <!-- end main wrapper -->\r\n\r\n\r\n    \r\n"
 
 /***/ }),
 
@@ -215,6 +215,7 @@ module.exports = "\r\n  <!-- Preloader -->\r\n<simple-notifications [options]=\"
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "a", function() { return AppComponent; });
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__angular_core__ = __webpack_require__("../../../core/@angular/core.es5.js");
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__shared_services_user_service__ = __webpack_require__("../../../../../src/app/shared/services/user.service.ts");
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__shared_services_loader_service__ = __webpack_require__("../../../../../src/app/shared/services/loader.service.ts");
 var __decorate = (this && this.__decorate) || function (decorators, target, key, desc) {
     var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
     if (typeof Reflect === "object" && typeof Reflect.decorate === "function") r = Reflect.decorate(decorators, target, key, desc);
@@ -226,14 +227,20 @@ var __metadata = (this && this.__metadata) || function (k, v) {
 };
 
 
+
 var AppComponent = (function () {
-    function AppComponent(userService) {
+    function AppComponent(userService, loaderService) {
+        var _this = this;
         this.userService = userService;
+        this.loaderService = loaderService;
         this.options = {
             position: ["top", "right"],
             timeOut: 5000,
             lastOnBottom: true,
         };
+        this.loaderService.status.subscribe(function (val) {
+            _this.showLoader = val;
+        });
     }
     AppComponent.prototype.ngOnInit = function () {
         this.userService.populate();
@@ -246,10 +253,10 @@ AppComponent = __decorate([
         template: __webpack_require__("../../../../../src/app/app.component.html"),
         styles: [__webpack_require__("../../../../../src/app/app.component.css")]
     }),
-    __metadata("design:paramtypes", [typeof (_a = typeof __WEBPACK_IMPORTED_MODULE_1__shared_services_user_service__["a" /* UserService */] !== "undefined" && __WEBPACK_IMPORTED_MODULE_1__shared_services_user_service__["a" /* UserService */]) === "function" && _a || Object])
+    __metadata("design:paramtypes", [typeof (_a = typeof __WEBPACK_IMPORTED_MODULE_1__shared_services_user_service__["a" /* UserService */] !== "undefined" && __WEBPACK_IMPORTED_MODULE_1__shared_services_user_service__["a" /* UserService */]) === "function" && _a || Object, typeof (_b = typeof __WEBPACK_IMPORTED_MODULE_2__shared_services_loader_service__["a" /* LoaderService */] !== "undefined" && __WEBPACK_IMPORTED_MODULE_2__shared_services_loader_service__["a" /* LoaderService */]) === "function" && _b || Object])
 ], AppComponent);
 
-var _a;
+var _a, _b;
 //# sourceMappingURL=app.component.js.map
 
 /***/ }),
@@ -284,7 +291,8 @@ var _a;
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_19__shared_services_user_service__ = __webpack_require__("../../../../../src/app/shared/services/user.service.ts");
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_20__shared_services_auth_guard_service__ = __webpack_require__("../../../../../src/app/shared/services/auth-guard.service.ts");
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_21__shared_services_no_auth_guard_service__ = __webpack_require__("../../../../../src/app/shared/services/no-auth-guard.service.ts");
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_22__activate_user_activate_user_component__ = __webpack_require__("../../../../../src/app/activate-user/activate-user.component.ts");
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_22__shared_services_loader_service__ = __webpack_require__("../../../../../src/app/shared/services/loader.service.ts");
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_23__activate_user_activate_user_component__ = __webpack_require__("../../../../../src/app/activate-user/activate-user.component.ts");
 var __decorate = (this && this.__decorate) || function (decorators, target, key, desc) {
     var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
     if (typeof Reflect === "object" && typeof Reflect.decorate === "function") r = Reflect.decorate(decorators, target, key, desc);
@@ -317,6 +325,7 @@ var __decorate = (this && this.__decorate) || function (decorators, target, key,
 
 
 
+
 // import { SearchPipe } from './shared/pipes/search.pipe';
 var AppModule = (function () {
     function AppModule() {
@@ -330,7 +339,7 @@ AppModule = __decorate([
             __WEBPACK_IMPORTED_MODULE_13__login_login_component__["a" /* LoginComponent */],
             __WEBPACK_IMPORTED_MODULE_14__home_home_component__["a" /* HomeComponent */],
             __WEBPACK_IMPORTED_MODULE_15__register_register_component__["a" /* RegisterComponent */],
-            __WEBPACK_IMPORTED_MODULE_22__activate_user_activate_user_component__["a" /* ActivateUserComponent */]
+            __WEBPACK_IMPORTED_MODULE_23__activate_user_activate_user_component__["a" /* ActivateUserComponent */]
             // SearchPipe
         ],
         imports: [
@@ -352,7 +361,8 @@ AppModule = __decorate([
             __WEBPACK_IMPORTED_MODULE_19__shared_services_user_service__["a" /* UserService */],
             __WEBPACK_IMPORTED_MODULE_20__shared_services_auth_guard_service__["a" /* AuthGuardService */],
             __WEBPACK_IMPORTED_MODULE_21__shared_services_no_auth_guard_service__["a" /* NoAuthGuardService */],
-            __WEBPACK_IMPORTED_MODULE_16_ng2_haversine__["HaversineService"]
+            __WEBPACK_IMPORTED_MODULE_16_ng2_haversine__["HaversineService"],
+            __WEBPACK_IMPORTED_MODULE_22__shared_services_loader_service__["a" /* LoaderService */]
         ],
         bootstrap: [__WEBPACK_IMPORTED_MODULE_12__app_component__["a" /* AppComponent */]],
         entryComponents: [__WEBPACK_IMPORTED_MODULE_13__login_login_component__["a" /* LoginComponent */]]
@@ -485,6 +495,7 @@ module.exports = "\r\n\r\n<div class=\"modal-dialog\">\r\n  <div class=\"modal-c
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_3_angular2_notifications___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_3_angular2_notifications__);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_4__shared_services_user_service__ = __webpack_require__("../../../../../src/app/shared/services/user.service.ts");
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_5__environments_environment__ = __webpack_require__("../../../../../src/environments/environment.ts");
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_6__shared_services_loader_service__ = __webpack_require__("../../../../../src/app/shared/services/loader.service.ts");
 var __extends = (this && this.__extends) || (function () {
     var extendStatics = Object.setPrototypeOf ||
         ({ __proto__: [] } instanceof Array && function (d, b) { d.__proto__ = b; }) ||
@@ -510,13 +521,15 @@ var __metadata = (this && this.__metadata) || function (k, v) {
 
 
 
+
 var LoginComponent = (function (_super) {
     __extends(LoginComponent, _super);
-    function LoginComponent(dialogService, router, userService, notificationsService) {
+    function LoginComponent(dialogService, router, userService, notificationsService, loaderService) {
         var _this = _super.call(this, dialogService) || this;
         _this.router = router;
         _this.userService = userService;
         _this.notificationsService = notificationsService;
+        _this.loaderService = loaderService;
         _this.isLogin = true;
         _this.user = {
             Email_Address: '',
@@ -538,22 +551,26 @@ var LoginComponent = (function (_super) {
     };
     LoginComponent.prototype.login = function () {
         var _this = this;
+        this.loaderService.display(true);
         this.userService.attemptAuth(this.user).subscribe(function (res) {
             _this.router.navigate([res.userType + '/profile']);
             _this.close();
         }, function (err) {
             _this.close();
             _this.notificationsService.error(err.title, err.error.message, __WEBPACK_IMPORTED_MODULE_5__environments_environment__["a" /* environment */].options);
+            _this.loaderService.display(false);
         });
     };
     LoginComponent.prototype.reset = function () {
         var _this = this;
+        this.loaderService.display(true);
+        this.close();
         this.userService.resetPassword(this.forgotPasswordData).subscribe(function (res) {
-            _this.close();
+            _this.loaderService.display(false);
             _this.notificationsService.success('Success', res.message, __WEBPACK_IMPORTED_MODULE_5__environments_environment__["a" /* environment */].options);
         }, function (err) {
-            _this.close();
             _this.notificationsService.error(err.title, err.message, __WEBPACK_IMPORTED_MODULE_5__environments_environment__["a" /* environment */].options);
+            _this.loaderService.display(false);
         });
     };
     LoginComponent.prototype.navigateToRegister = function () {
@@ -570,10 +587,10 @@ LoginComponent = __decorate([
         template: __webpack_require__("../../../../../src/app/login/login.component.html"),
         styles: [__webpack_require__("../../../../../src/app/login/login.component.css")]
     }),
-    __metadata("design:paramtypes", [typeof (_a = typeof __WEBPACK_IMPORTED_MODULE_2_ng2_bootstrap_modal__["DialogService"] !== "undefined" && __WEBPACK_IMPORTED_MODULE_2_ng2_bootstrap_modal__["DialogService"]) === "function" && _a || Object, typeof (_b = typeof __WEBPACK_IMPORTED_MODULE_1__angular_router__["Router"] !== "undefined" && __WEBPACK_IMPORTED_MODULE_1__angular_router__["Router"]) === "function" && _b || Object, typeof (_c = typeof __WEBPACK_IMPORTED_MODULE_4__shared_services_user_service__["a" /* UserService */] !== "undefined" && __WEBPACK_IMPORTED_MODULE_4__shared_services_user_service__["a" /* UserService */]) === "function" && _c || Object, typeof (_d = typeof __WEBPACK_IMPORTED_MODULE_3_angular2_notifications__["NotificationsService"] !== "undefined" && __WEBPACK_IMPORTED_MODULE_3_angular2_notifications__["NotificationsService"]) === "function" && _d || Object])
+    __metadata("design:paramtypes", [typeof (_a = typeof __WEBPACK_IMPORTED_MODULE_2_ng2_bootstrap_modal__["DialogService"] !== "undefined" && __WEBPACK_IMPORTED_MODULE_2_ng2_bootstrap_modal__["DialogService"]) === "function" && _a || Object, typeof (_b = typeof __WEBPACK_IMPORTED_MODULE_1__angular_router__["Router"] !== "undefined" && __WEBPACK_IMPORTED_MODULE_1__angular_router__["Router"]) === "function" && _b || Object, typeof (_c = typeof __WEBPACK_IMPORTED_MODULE_4__shared_services_user_service__["a" /* UserService */] !== "undefined" && __WEBPACK_IMPORTED_MODULE_4__shared_services_user_service__["a" /* UserService */]) === "function" && _c || Object, typeof (_d = typeof __WEBPACK_IMPORTED_MODULE_3_angular2_notifications__["NotificationsService"] !== "undefined" && __WEBPACK_IMPORTED_MODULE_3_angular2_notifications__["NotificationsService"]) === "function" && _d || Object, typeof (_e = typeof __WEBPACK_IMPORTED_MODULE_6__shared_services_loader_service__["a" /* LoaderService */] !== "undefined" && __WEBPACK_IMPORTED_MODULE_6__shared_services_loader_service__["a" /* LoaderService */]) === "function" && _e || Object])
 ], LoginComponent);
 
-var _a, _b, _c, _d;
+var _a, _b, _c, _d, _e;
 //# sourceMappingURL=login.component.js.map
 
 /***/ }),
@@ -614,6 +631,7 @@ module.exports = "<section class=\"section-wrap promo-banners pb-30 slider-secti
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_3_angular2_notifications__ = __webpack_require__("../../../../angular2-notifications/dist/index.js");
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_3_angular2_notifications___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_3_angular2_notifications__);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_4__environments_environment__ = __webpack_require__("../../../../../src/environments/environment.ts");
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_5__shared_services_loader_service__ = __webpack_require__("../../../../../src/app/shared/services/loader.service.ts");
 var __decorate = (this && this.__decorate) || function (decorators, target, key, desc) {
     var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
     if (typeof Reflect === "object" && typeof Reflect.decorate === "function") r = Reflect.decorate(decorators, target, key, desc);
@@ -628,11 +646,13 @@ var __metadata = (this && this.__metadata) || function (k, v) {
 
 
 
+
 var RegisterComponent = (function () {
-    function RegisterComponent(userService, router, notificationsService) {
+    function RegisterComponent(userService, router, notificationsService, loaderService) {
         this.userService = userService;
         this.router = router;
         this.notificationsService = notificationsService;
+        this.loaderService = loaderService;
         this.selectedUserType = false;
         this.userType = '';
         this.employee = {
@@ -658,10 +678,13 @@ var RegisterComponent = (function () {
     RegisterComponent.prototype.registerUser = function () {
         var _this = this;
         this.employee.userType = this.userType;
+        this.loaderService.display(true);
         this.userService.registerUser(this.employee).subscribe(function (res) {
             _this.router.navigate(['']);
+            _this.loaderService.display(false);
             _this.notificationsService.success('Success', res.message, __WEBPACK_IMPORTED_MODULE_4__environments_environment__["a" /* environment */].options);
         }, function (err) {
+            _this.loaderService.display(false);
             _this.notificationsService.error(err.title, err.error.message, __WEBPACK_IMPORTED_MODULE_4__environments_environment__["a" /* environment */].options);
         });
     };
@@ -673,10 +696,10 @@ RegisterComponent = __decorate([
         template: __webpack_require__("../../../../../src/app/register/register.component.html"),
         styles: [__webpack_require__("../../../../../src/app/register/register.component.css")]
     }),
-    __metadata("design:paramtypes", [typeof (_a = typeof __WEBPACK_IMPORTED_MODULE_2__shared_services_user_service__["a" /* UserService */] !== "undefined" && __WEBPACK_IMPORTED_MODULE_2__shared_services_user_service__["a" /* UserService */]) === "function" && _a || Object, typeof (_b = typeof __WEBPACK_IMPORTED_MODULE_1__angular_router__["Router"] !== "undefined" && __WEBPACK_IMPORTED_MODULE_1__angular_router__["Router"]) === "function" && _b || Object, typeof (_c = typeof __WEBPACK_IMPORTED_MODULE_3_angular2_notifications__["NotificationsService"] !== "undefined" && __WEBPACK_IMPORTED_MODULE_3_angular2_notifications__["NotificationsService"]) === "function" && _c || Object])
+    __metadata("design:paramtypes", [typeof (_a = typeof __WEBPACK_IMPORTED_MODULE_2__shared_services_user_service__["a" /* UserService */] !== "undefined" && __WEBPACK_IMPORTED_MODULE_2__shared_services_user_service__["a" /* UserService */]) === "function" && _a || Object, typeof (_b = typeof __WEBPACK_IMPORTED_MODULE_1__angular_router__["Router"] !== "undefined" && __WEBPACK_IMPORTED_MODULE_1__angular_router__["Router"]) === "function" && _b || Object, typeof (_c = typeof __WEBPACK_IMPORTED_MODULE_3_angular2_notifications__["NotificationsService"] !== "undefined" && __WEBPACK_IMPORTED_MODULE_3_angular2_notifications__["NotificationsService"]) === "function" && _c || Object, typeof (_d = typeof __WEBPACK_IMPORTED_MODULE_5__shared_services_loader_service__["a" /* LoaderService */] !== "undefined" && __WEBPACK_IMPORTED_MODULE_5__shared_services_loader_service__["a" /* LoaderService */]) === "function" && _d || Object])
 ], RegisterComponent);
 
-var _a, _b, _c;
+var _a, _b, _c, _d;
 //# sourceMappingURL=register.component.js.map
 
 /***/ }),
@@ -1088,7 +1111,7 @@ module.exports = module.exports.toString();
 /***/ "../../../../../src/app/shared/components/top-nav/top-nav.component.html":
 /***/ (function(module, exports) {
 
-module.exports = "<header class=\"nav-type-1\">\r\n  <!-- Top Bar -->\r\n  <div class=\"top-bar\">\r\n    <div class=\"container\">\r\n      <div class=\"top-bar-links flex-parent\">\r\n        <ul class=\"top-bar-currency-language\">\r\n\r\n        </ul>\r\n\r\n        <ul class=\"top-bar-acc pull-right\" *ngIf = '!isLoggedIn'>\r\n          <!-- <li class=\"top-bar-link\"><a >My Wishlist</a></li> -->\r\n          <li class=\"top-bar-link\" [routerLink]=\"['contactus']\" routerLinkActive=\"active\"><a >Contact Us</a></li>\r\n          <li class=\"top-bar-link\" ><a (click)=showConfirm()>Login</a></li>\r\n          <li class=\"top-bar-link\" ><a (click)=navigateToRegister()>Register</a></li>                 \r\n        </ul>\r\n\r\n      </div>\r\n    </div>\r\n  </div> <!-- end top bar -->\r\n   <div class=\"profile-status\" *ngIf = \"isLoggedIn || (currentUser.personalInfo || currentUser.workInfo)\">\r\n    Your <span *ngIf=\"currentUser.personalInfo\">personal</span><span *ngIf=\"(currentUser.workInfo && currentUser.personalInfo)\"> and  </span><span *ngIf=\"currentUser.workInfo\">work</span> profile not updated\r\n     <span class=\"pull-right\" (click)=\"closeProfileStatus()\"><i class=\"fa fa-times\" aria-hidden=\"true\"></i></span>\r\n   </div>       \r\n  <nav class=\"navbar navbar-static-top\">\r\n    <div class=\"navigation\" id=\"sticky-nav\">\r\n      <div class=\"container relative\">\r\n\r\n        <div class=\"row flex-parent\">\r\n\r\n          <div class=\"navbar-header flex-child\">\r\n            <!-- Logo -->\r\n            <div class=\"logo-container\">\r\n              <div class=\"logo-wrap\">\r\n                <a routerLink='/'>\r\n                  <img class=\"logo\" src=\"assets/img/Photos/logo-1.png\" alt=\"logo\">\r\n                </a>\r\n              </div>\r\n            </div>\r\n            <button type=\"button\" class=\"navbar-toggle\" data-toggle=\"collapse\" data-target=\"#navbar-collapse\">\r\n              <span class=\"sr-only\">Toggle navigation</span>\r\n              <span class=\"icon-bar\"></span>\r\n              <span class=\"icon-bar\"></span>\r\n              <span class=\"icon-bar\"></span>\r\n            </button>\r\n             <!-- Mobile cart -->\r\n             \r\n          </div> <!-- end navbar-header -->\r\n\r\n          <div class=\"nav-wrap flex-child\">\r\n            <div class=\"collapse navbar-collapse text-center\" id=\"navbar-collapse\">\r\n              \r\n              <!-- <ul class=\"nav navbar-nav\" *ngIf=\"userType == 'jobseeker'\"> -->\r\n              <ul class=\"nav navbar-nav\" *ngIf=\"userType == 'jobseeker'\">\r\n                <li>\r\n                  <a [routerLink]=\"['jobseeker/schedule']\" routerLinkActive=\"active\">Schedule Work</a>\r\n                </li>\r\n                <li>\r\n                  <a [routerLink]=\"['jobseeker/joboffers']\" routerLinkActive=\"active\">My Job Offers</a>\r\n                </li>\r\n                \r\n                <li class=\"mobile-links hidden-lg hidden-md\">\r\n                  <a  [routerLink]=\"['jobseeker/schedule']\" routerLinkActive=\"active\">Change Password</a>\r\n                </li>\r\n                <li class=\"mobile-links hidden-lg hidden-md\">\r\n                  <a (click)='logoutUser()'>Log Out</a>\r\n                </li>\r\n\r\n              </ul> <!-- end menu -->\r\n              <ul class=\"nav navbar-nav\" *ngIf=\"userType == 'employer'\">\r\n                <li>\r\n                  <a [routerLink]=\"['employer/search']\" routerLinkActive=\"active\">Search</a>\r\n                </li>\r\n                <li>\r\n                  <a [routerLink]=\"['employer/joboffers']\" routerLinkActive=\"active\">Job Offers</a>\r\n                </li>\r\n                <li>\r\n                  <a [routerLink]=\"['employer/payment']\" routerLinkActive=\"active\">Payment</a>\r\n                </li>\r\n                <li>\r\n                  <a [routerLink]=\"['employer/transactionhistory']\" routerLinkActive=\"active\">Transaction History</a>\r\n                </li>\r\n\r\n                <li class=\"mobile-links hidden-lg hidden-md\">\r\n                  <a (click)='logoutUser()' >Log Out</a>\r\n                </li>\r\n              </ul> <!-- end menu -->\r\n            </div> <!-- end collapse -->\r\n          </div> <!-- end col -->\r\n\r\n          <div *ngIf='isLoggedIn' class=\"flex-child flex-right nav-right hidden-sm hidden-xs\">\r\n              <ul>\r\n                <li class=\"nav-cart\">\r\n                  \r\n                    <div class=\"nav-cart-outer\">\r\n                      <div class=\"nav-cart-inner\">\r\n                        <a>\r\n                          My Account\r\n                        </a>\r\n                      </div>\r\n                    </div>\r\n                    <div class=\"nav-cart-container\">\r\n                      <div class=\"nav-cart-items\">\r\n                      </div>\r\n                      <!-- end cart items -->\r\n\r\n                      <div class=\"nav-cart-summary\">\r\n                        <span>Welcome</span>\r\n                        <span class=\"total-price\">{{currentUser.Firstname}} {{currentUser.Lastname}}</span>\r\n                      </div>\r\n\r\n                      <div class=\"nav-cart-actions mt-20\">\r\n                        <a  class=\"btn btn-md btn-dark\" (click)=\"userProfile()\"><span>View Profile</span></a>\r\n                        <a class=\"btn btn-md btn-dark mt-10\" [routerLink]=\"['changepassword']\" routerLinkActive=\"active\"><span>Change Password</span></a>\r\n                        <a class=\"btn btn-md btn-color mt-10\" (click)='logoutUser()'><span>Log Out</span></a>\r\n                      </div>\r\n                    </div>\r\n                  </li>\r\n              </ul>\r\n            </div>\r\n          <!-- <div class=\"flex-child flex-right nav-right hidden-sm hidden-xs\">\r\n            <ul>\r\n              <li class=\"nav-register\" *ngIf=\"!isLoggedIn\">\r\n                <a >Log Out</a>\r\n              </li>\r\n            </ul>\r\n          </div> -->\r\n      \r\n        </div> <!-- end row -->\r\n      </div> <!-- end container -->\r\n    </div> <!-- end navigation -->\r\n  </nav> <!-- end navbar -->\r\n</header>"
+module.exports = "<header class=\"nav-type-1\">\r\n  <!-- Top Bar -->\r\n  <div class=\"top-bar\">\r\n    <div class=\"container\">\r\n      <div class=\"top-bar-links flex-parent\">\r\n        <ul class=\"top-bar-currency-language\">\r\n\r\n        </ul>\r\n\r\n        <ul class=\"top-bar-acc pull-right\" *ngIf = '!isLoggedIn'>\r\n          <!-- <li class=\"top-bar-link\"><a >My Wishlist</a></li> -->\r\n          <li class=\"top-bar-link\" [routerLink]=\"['contactus']\" routerLinkActive=\"active\"><a >Contact Us</a></li>\r\n          <li class=\"top-bar-link\" ><a (click)=showConfirm()>Login</a></li>\r\n          <li class=\"top-bar-link\" ><a (click)=navigateToRegister()>Register</a></li>                 \r\n        </ul>\r\n\r\n      </div>\r\n    </div>\r\n  </div> <!-- end top bar -->\r\n   <div class=\"profile-status\" *ngIf = \"isLoggedIn || (currentUser.personalInfo || currentUser.workInfo)\">\r\n    Your <span *ngIf=\"currentUser.personalInfo\">personal</span><span *ngIf=\"(currentUser.workInfo && currentUser.personalInfo)\"> and </span><span *ngIf=\"currentUser.workInfo\">work</span>profile not updated\r\n     <span class=\"pull-right\" (click)=\"closeProfileStatus()\"><i class=\"fa fa-times\" aria-hidden=\"true\"></i></span>\r\n   </div>       \r\n  <nav class=\"navbar navbar-static-top\">\r\n    <div class=\"navigation\" id=\"sticky-nav\">\r\n      <div class=\"container relative\">\r\n\r\n        <div class=\"row flex-parent\">\r\n\r\n          <div class=\"navbar-header flex-child\">\r\n            <!-- Logo -->\r\n            <div class=\"logo-container\">\r\n              <div class=\"logo-wrap\">\r\n                <a routerLink='/'>\r\n                  <img class=\"logo\" src=\"assets/img/Photos/logo-1.png\" alt=\"logo\">\r\n                </a>\r\n              </div>\r\n            </div>\r\n            <button type=\"button\" class=\"navbar-toggle\" data-toggle=\"collapse\" data-target=\"#navbar-collapse\">\r\n              <span class=\"sr-only\">Toggle navigation</span>\r\n              <span class=\"icon-bar\"></span>\r\n              <span class=\"icon-bar\"></span>\r\n              <span class=\"icon-bar\"></span>\r\n            </button>\r\n             <!-- Mobile cart -->\r\n             \r\n          </div> <!-- end navbar-header -->\r\n\r\n          <div class=\"nav-wrap flex-child\">\r\n            <div class=\"collapse navbar-collapse text-center\" id=\"navbar-collapse\">\r\n              \r\n              <!-- <ul class=\"nav navbar-nav\" *ngIf=\"userType == 'jobseeker'\"> -->\r\n              <ul class=\"nav navbar-nav\" *ngIf=\"userType == 'jobseeker'\">\r\n                <li>\r\n                  <a [routerLink]=\"['jobseeker/schedule']\" routerLinkActive=\"active\">Schedule Work</a>\r\n                </li>\r\n                <li>\r\n                  <a [routerLink]=\"['jobseeker/joboffers']\" routerLinkActive=\"active\">My Job Offers</a>\r\n                </li>\r\n                \r\n                <li class=\"mobile-links hidden-lg hidden-md\">\r\n                  <a  [routerLink]=\"['jobseeker/schedule']\" routerLinkActive=\"active\">Change Password</a>\r\n                </li>\r\n                <li class=\"mobile-links hidden-lg hidden-md\">\r\n                  <a (click)='logoutUser()'>Log Out</a>\r\n                </li>\r\n\r\n              </ul> <!-- end menu -->\r\n              <ul class=\"nav navbar-nav\" *ngIf=\"userType == 'employer'\">\r\n                <li>\r\n                  <a [routerLink]=\"['employer/search']\" routerLinkActive=\"active\">Search</a>\r\n                </li>\r\n                <li>\r\n                  <a [routerLink]=\"['employer/joboffers']\" routerLinkActive=\"active\">Job Offers</a>\r\n                </li>\r\n                <li>\r\n                  <a [routerLink]=\"['employer/payment']\" routerLinkActive=\"active\">Payment</a>\r\n                </li>\r\n                <li>\r\n                  <a [routerLink]=\"['employer/transactionhistory']\" routerLinkActive=\"active\">Transaction History</a>\r\n                </li>\r\n\r\n                <li class=\"mobile-links hidden-lg hidden-md\">\r\n                  <a (click)='logoutUser()' >Log Out</a>\r\n                </li>\r\n              </ul> <!-- end menu -->\r\n            </div> <!-- end collapse -->\r\n          </div> <!-- end col -->\r\n\r\n          <div *ngIf='isLoggedIn' class=\"flex-child flex-right nav-right hidden-sm hidden-xs\">\r\n              <ul>\r\n                <li class=\"nav-cart\">\r\n                  \r\n                    <div class=\"nav-cart-outer\">\r\n                      <div class=\"nav-cart-inner\">\r\n                        <a>\r\n                          My Account\r\n                        </a>\r\n                      </div>\r\n                    </div>\r\n                    <div class=\"nav-cart-container\">\r\n                      <div class=\"nav-cart-items\">\r\n                      </div>\r\n                      <!-- end cart items -->\r\n\r\n                      <div class=\"nav-cart-summary\">\r\n                        <span>Welcome</span>\r\n                        <span class=\"total-price\">{{currentUser.Firstname}} {{currentUser.Lastname}}</span>\r\n                      </div>\r\n\r\n                      <div class=\"nav-cart-actions mt-20\">\r\n                        <a  class=\"btn btn-md btn-dark\" (click)=\"userProfile()\"><span>View Profile</span></a>\r\n                        <a class=\"btn btn-md btn-dark mt-10\" [routerLink]=\"['changepassword']\" routerLinkActive=\"active\"><span>Change Password</span></a>\r\n                        <a class=\"btn btn-md btn-color mt-10\" (click)='logoutUser()'><span>Log Out</span></a>\r\n                      </div>\r\n                    </div>\r\n                  </li>\r\n              </ul>\r\n            </div>\r\n          <!-- <div class=\"flex-child flex-right nav-right hidden-sm hidden-xs\">\r\n            <ul>\r\n              <li class=\"nav-register\" *ngIf=\"!isLoggedIn\">\r\n                <a >Log Out</a>\r\n              </li>\r\n            </ul>\r\n          </div> -->\r\n      \r\n        </div> <!-- end row -->\r\n      </div> <!-- end container -->\r\n    </div> <!-- end navigation -->\r\n  </nav> <!-- end navbar -->\r\n</header>"
 
 /***/ }),
 
@@ -1457,6 +1480,39 @@ JwtService = __decorate([
 ], JwtService);
 
 //# sourceMappingURL=jwt.service.js.map
+
+/***/ }),
+
+/***/ "../../../../../src/app/shared/services/loader.service.ts":
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "a", function() { return LoaderService; });
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__angular_core__ = __webpack_require__("../../../core/@angular/core.es5.js");
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1_rxjs_BehaviorSubject__ = __webpack_require__("../../../../rxjs/BehaviorSubject.js");
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1_rxjs_BehaviorSubject___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_1_rxjs_BehaviorSubject__);
+var __decorate = (this && this.__decorate) || function (decorators, target, key, desc) {
+    var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
+    if (typeof Reflect === "object" && typeof Reflect.decorate === "function") r = Reflect.decorate(decorators, target, key, desc);
+    else for (var i = decorators.length - 1; i >= 0; i--) if (d = decorators[i]) r = (c < 3 ? d(r) : c > 3 ? d(target, key, r) : d(target, key)) || r;
+    return c > 3 && r && Object.defineProperty(target, key, r), r;
+};
+
+
+var LoaderService = (function () {
+    function LoaderService() {
+        this.status = new __WEBPACK_IMPORTED_MODULE_1_rxjs_BehaviorSubject__["BehaviorSubject"](false);
+    }
+    LoaderService.prototype.display = function (value) {
+        this.status.next(value);
+    };
+    return LoaderService;
+}());
+LoaderService = __decorate([
+    Object(__WEBPACK_IMPORTED_MODULE_0__angular_core__["Injectable"])()
+], LoaderService);
+
+//# sourceMappingURL=loader.service.js.map
 
 /***/ }),
 
