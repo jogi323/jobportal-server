@@ -605,7 +605,7 @@ router.post('/sendOtp/:id', auth.required, function(req, res) {
         } else {
             var otp = Math.floor(1000 + Math.random() * 9000);
             client.messages.create({
-                to: "+917989856408",
+                to: "+91"+req.body.number,
                 from: "+16364892045",
                 body: "Hi, " + user.Firstname + " " + user.Lastname + "," + "your OTP to verify mobile number is :" + otp,
             }, function(err, message) {
