@@ -1897,7 +1897,7 @@ SharedModule = __decorate([
 // The file contents for the current environment will overwrite these during build.
 var environment = {
     production: false,
-    api_url: 'http://localhost:3000/',
+    api_url: '/',
     options: {
         timeOut: 5000,
         showProgressBar: true,
