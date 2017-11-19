@@ -10,7 +10,11 @@ var nodemailer = require("nodemailer");
 
 var MailService = require('../config/transport')
 var serverUrl = require('../config').serverUrl;
+var accountSid = 'ACe59061ce19c17d5d22f24f4030077216';
+var authToken = 'c72ecbf92ae0157e39b97ace69aef668';
 
+//require the Twilio module and create a REST client 
+var client = require('twilio')(accountSid, authToken);
 /* GET users listing. */
 router.get('/auth', auth.required, function(req, res, next) {
     User.findById(req.payload.id, function(err, user) {
@@ -64,14 +68,14 @@ router.post('/auth', function(req, res, next) {
             token.token = crypto.randomBytes(16).toString('hex')
             token.save(function(err) {
                 if (err) {
-            console.log('err1');
-                    
+                    console.log('err1');
+
                     return res.status(500).json({
                         title: 'An error occurred',
                         error: err
                     });
                 }
-                
+
                 var confirmationLink = serverUrl + token.token;
                 var mailOptions = {
                     from: 'ashokona@gmail.com',
@@ -145,7 +149,7 @@ router.post('/save', function(req, res, next) {
                         error: err
                     });
                 }
-                var confirmationLink = serverUrl+ 'confirm/' + token.token;
+                var confirmationLink = serverUrl + 'confirm/' + token.token;
                 var mailOptions = {
                     from: 'ashokona@gmail.com',
                     to: result.Email_Address,
@@ -198,7 +202,100 @@ router.get('/confirmation/:id', function(req, res, next) {
             //user.setPassword(req.body.Password);
             user.save(function(err) {
                 if (err) { return res.status(500).send({ msg: err.message }); }
-                res.status(200).send({message:"Account has been verified. Please login."});
+                res.status(200).send({ message: "Account has been verified. Please login." });
+            });
+        });
+    });
+});
+
+router.get('/resendconfirmation/:id', auth.required, function(req, res, next) {
+    User.findOne({ Email_Address: req.params.id }, function(err, user) {
+        if (err) {
+            console.log(err);
+            return res.status(500).json({
+                title: 'An error occurred',
+                error: err
+            });
+        }
+        if (!user) {
+            return res.status(401).json({
+                title: 'No account found with the associated email',
+                error: { message: 'please register' }
+            });
+        }
+        if (user.Email_Verified) {
+            return res.status(401).json({
+                title: user.Email_Address + 'is already verified, please login',
+                error: { message: 'please Login' }
+            });
+        } else {
+            var token = new VerifyToken();
+            token.user = user._id;
+            token.token = crypto.randomBytes(16).toString('hex')
+            token.save(function(err) {
+                if (err) {
+                    console.log('err1');
+
+                    return res.status(500).json({
+                        title: 'An error occurred',
+                        error: err
+                    });
+                }
+
+                var confirmationLink = serverUrl + token.token;
+                var mailOptions = {
+                    from: 'ashokona@gmail.com',
+                    to: user.Email_Address,
+                    subject: 'Congratulations ' + user.Firstname + ', Welcome to Employment - Dental Connections',
+                    // text: 'eaders.host + '\/user' + '\/confirmation\/' + token.token + '.\n'
+                    html: '<b>Welcome <strong>' + user.Firstname + '</strong>,</b><br>' +
+                        ' <p>Congratulation on Signing up with Employment – Dental Connections. Your next step is to complete your profile and then you are ready to join the growing community of Dental Professionals ready to Get Help or Get Hired, Right Now, Today, AnyDay you want….</p>' +
+                        ' <p>What exactly does that mean? We are a real-time portal using Text/Email messaging to allow connections between Dental Office Employers and the Immediate Staff or Specialists they need. If an employee calls in sick, has an emergency, is on vacation or away from the office for any reason, the Dental Office can login and immediately search for individuals who have indicated in their work schedule they are available to work Right Now, Today. Text/Email connections are made privately through the Communication System. As a Job Seeker, your name and contact information is kept secure until you accept the job offer from the dental office. It’s fast, simple, easy and FREE!  As an employer, it is FREE to search for available team members before posting your job offer to them in real time, Right Now, Today, AnyDay.</p>' +
+                        ' <p>Click the link below to Login with your Email and Password and Complete your Profile Information. As a Job Seeker, enter your availability on the scheduling calendar with one day a week, one day a month, or AnyDay you like………..Employers are looking for you.</p>' +
+                        ' <p>Login here and Complete your Profile:</p>' +
+                        ' <a href="' + confirmationLink + '">click here</a>' +
+                        ' <p>Thank you, now you’re on your way to Get Help or Get Hired to Work AnyDay you want.</p>' +
+                        ' <p><b>The Community is adding new members everyday however the growth depends COMPLETELY on your involvement to help everyone be productive. Tell your friends, co-workers, office managers, dental specialists and dental employers about this service. Please keep your contact information updated as well as you work schedule. The Community is Building and if you do not get a job or find a team member with your initial attempts, as more offices and team members join, you will. Keep Checking as we grow.</b></p><br>' +
+                        ' <p>Thank you Again and Welcome,</p>' +
+                        ' <p>Administrator</p>' +
+                        ' <p>At Employment</p>'
+                };
+
+                MailService(mailOptions)
+                    .then(result => {
+                        res.status(200).json({
+                            message: 'A verification email has been sent to ' + user.Email_Address + '.',
+                        });
+                    })
+                    .catch(err => {
+                        return res.status(500).json({
+                            title: 'An error occurred',
+                            error: err
+                        });
+                    })
+            });
+        }
+
+    })
+});
+
+router.get('/confirmation/:id', function(req, res, next) {
+    // Find a matching token
+    console.log(req.params.id);
+    VerifyToken.findOne({ token: req.params.id }, function(err, token) {
+        if (!token) return res.status(400).send({ type: 'not-verified', msg: 'We were unable to find a valid token. Your token my have expired.' });
+
+        // If we found a token, find a matching user
+        User.findOne({ _id: token.user }, function(err, user) {
+            if (!user) return res.status(400).send({ msg: 'We were unable to find a user for this token.' });
+            if (user.Email_Verified) return res.status(400).send({ type: 'already-verified', msg: 'This user has already been verified.' });
+
+            // Verify and save the user
+            user.Email_Verified = true;
+            //user.setPassword(req.body.Password);
+            user.save(function(err) {
+                if (err) { return res.status(500).send({ msg: err.message }); }
+                res.status(200).send({ message: "Account has been verified. Please login." });
             });
         });
     });
@@ -231,6 +328,36 @@ router.get('/getProfile/:id', auth.required, function(req, res, next) {
             });
         }
 
+    })
+});
+
+router.put('/changepassword', auth.required, function(req, res, next) {
+    User.findById(req.payload.id, function(err, user) {
+        if (err) {
+            console.log(err);
+            return res.status(500).json({
+                title: 'An error occurred',
+                error: err
+            });
+        }
+        if (!user) {
+            return res.status(401).json({
+                title: 'Not Authorised',
+                error: { message: 'Login Again' }
+            });
+        }
+        if (!user.validPassword(req.body.oldPassword)) {
+            return res.status(401).json({
+                title: 'Incorrect old password',
+                error: { message: 'Try again' }
+            });
+        } else {
+            user.setPassword(req.body.newPassword);
+            user.save(function(err) {
+                if (err) { return res.status(500).json({ title: 'Password not changed sucessfully', error: err }); }
+                res.status(200).json({ message: 'Password updated sucessfully' });
+            });
+        }
     })
 });
 
@@ -288,7 +415,7 @@ router.put('/update/personal', auth.required, function(req, res, next) {
             user.personalInfo = false;
             user.save(function(err) {
                 if (err) { return res.status(500).json({ title: 'Personal Information Not Updated', error: err }); }
-                res.status(200).json({ message: 'Personal information updated sucessfully'});
+                res.status(200).json({ message: 'Personal information updated sucessfully' });
             });
         }
 
@@ -441,7 +568,7 @@ router.post('/resetpassword', function(req, res, next) {
             user.setPassword(req.body.newPassword);
             user.save(function(err) {
                 if (err) { return res.status(500).send({ msg: err.message }); }
-                res.status(200).send({message:"Your password has been changed successfully"});
+                res.status(200).send({ message: "Your password has been changed successfully" });
             });
         });
     });
@@ -460,6 +587,89 @@ router.post('/contactus', function(req, res, next) {
         if (err) { return res.status(500).json({ title: 'unable to save details', error: err }) }
         res.status(200).send({ message: "We received your details, will soon get back to you" });
     });
+});
+
+router.post('/sendOtp/:id', auth.required, function(req, res) {
+    User.findOne({ Email_Address: req.params.id }, function(err, user) {
+        if (err) {
+            return res.status(500).json({
+                title: 'An error occurred',
+                error: err
+            });
+        }
+        if (!user) {
+            return res.status(401).json({
+                title: 'No account found with the associated email',
+                error: { message: 'please register' }
+            });
+        } else {
+            var otp = Math.floor(1000 + Math.random() * 9000);
+            client.messages.create({
+                to: "+917989856408",
+                from: "+16364892045",
+                body: "Hi, " + user.Firstname + " " + user.Lastname + "," + "your OTP to verify mobile number is :" + otp,
+            }, function(err, message) {
+                if (err) {
+                    return res.status(500).json({ title: 'Unable To Send Request', error: err });
+                } else {
+                    User.update({ Email_Address: req.params.id }, { $set: { otp: otp } }, function(err, data) {
+                        if (err) {
+                            return res.status(500).json({
+                                title: 'An error occurred',
+                                error: err
+                            })
+                        } else {
+                            return res.status(200).json({
+                                message: "OTP has sent to your mobile"
+                            })
+                        }
+                    });
+
+                }
+
+            });
+        }
+
+    });
+});
+
+router.post('/verifyOtp/:id', auth.required, function(req, res) {
+    User.find({ Email_Address: req.params.id }, function(err, user) {
+        if (err) {
+            return res.status(500).json({
+                title: 'An error occurred',
+                error: err
+            });
+        }
+        if (!user) {
+            return res.status(401).json({
+                title: 'No account found with the associated email',
+                error: { message: 'please register' }
+            });
+        } else {
+            User.find({ otp: req.body.otp }, function(err, data) {
+                console.log(data);
+                if (err) {
+                    return res.status(500).json({
+                        title: 'An error occurred',
+                        error: err
+                    });
+                }
+                if (data.length === 0) {
+                    console.log('mismatched')
+                    return res.status(401).json({
+                        title: 'Failed',
+                        error: { message: 'Invalid OTP' }
+                    });
+                } else {
+                    console.log('success')
+                    return res.status(200).json({
+                        message: 'Mobile number verified successfully'
+                    });
+                }
+            });
+        }
+    })
 });
 
 module.exports = router;

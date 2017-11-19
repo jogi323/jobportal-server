@@ -8,7 +8,7 @@ var Offers = mongoose.model('Offers');
 var VerifyToken = mongoose.model('VerifyToken');
 var auth = require('./auth');
 
-router.get('/', auth.required, function(req, res, next) {
+router.get('/history', auth.required, function(req, res, next) {
     User.findById(req.payload.id, function(err, user) {
         if (err) { return res.status(500).json({ title: 'An error occurred', error: err }); }
         if (!user) { return res.status(401).json({ title: 'Not Authorised', error: { message: 'Login Again' } }) } else {
@@ -29,7 +29,6 @@ router.post('/pay', auth.required, function(req, res, next) {
         if (err) { return res.status(500).json({ title: 'An error occurred', error: err }); }
         if (!user) { return res.status(401).json({ title: 'Not Authorised', error: { message: 'Login Again' } }) } else {
             var payment = new Payments();
-            console.log(req.body)
             payment.Card_Nr = req.body.Card_Nr;
             payment.Billing_Name = req.body.Billing_Name;
             payment.Expiration_Month = req.body.Expiration_Month;

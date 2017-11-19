@@ -91,12 +91,9 @@ var ActivateUserComponent = (function () {
     ActivateUserComponent.prototype.ngOnInit = function () {
         var _this = this;
         this.activatedRoute.params.subscribe(function (params) {
-            console.log(_this.id);
             _this.id = params['id'];
         });
-        console.log(this.id);
         if (this.id) {
-            console.log(this.id);
             this.userService.activateUser(this.id).subscribe(function (res) {
                 _this.notificationsService.success('Success', res.message, __WEBPACK_IMPORTED_MODULE_3__environments_environment__["a" /* environment */].options);
                 _this.router.navigate(['']);
@@ -553,8 +550,8 @@ var LoginComponent = (function (_super) {
         var _this = this;
         this.loaderService.display(true);
         this.userService.attemptAuth(this.user).subscribe(function (res) {
-            _this.router.navigate([res.userType + '/profile']);
             _this.close();
+            _this.router.navigate([res.userType + '/profile']);
         }, function (err) {
             _this.close();
             _this.notificationsService.error(err.title, err.error.message, __WEBPACK_IMPORTED_MODULE_5__environments_environment__["a" /* environment */].options);
@@ -565,7 +562,7 @@ var LoginComponent = (function (_super) {
         var _this = this;
         this.loaderService.display(true);
         this.close();
-        this.userService.resetPassword(this.forgotPasswordData).subscribe(function (res) {
+        this.userService.forgotPassword(this.forgotPasswordData).subscribe(function (res) {
             _this.loaderService.display(false);
             _this.notificationsService.success('Success', res.message, __WEBPACK_IMPORTED_MODULE_5__environments_environment__["a" /* environment */].options);
         }, function (err) {
@@ -712,7 +709,7 @@ exports = module.exports = __webpack_require__("../../../../css-loader/lib/css-b
 
 
 // module
-exports.push([module.i, "", ""]);
+exports.push([module.i, ".btn:hover span {\r\n    color: white !important;\r\n}", ""]);
 
 // exports
 
@@ -725,7 +722,7 @@ module.exports = module.exports.toString();
 /***/ "../../../../../src/app/shared/components/change-password/change-password.component.html":
 /***/ (function(module, exports) {
 
-module.exports = "\t\t\t<!-- 404 -->\r\n<section class=\"section-wrap\">\r\n  <div class=\"container\">\r\n    <div class=\"row\">\r\n      <div class=\"container-fluid \">\r\n\r\n        <div class=\"col-sm-6 col-sm-offset-3 forms-container\">\r\n\r\n          <h3>Change Password</h3>\r\n          <div class=\"form-box-pad\">\r\n            <form>\r\n\r\n\r\n              <label for=\"pwd\">Old Password:</label>\r\n              <input name=\"password\" id=\"password\" type=\"password\" placeholder=\"Password \">\r\n          \r\n              <label for=\"pwd\">New Password:</label>\r\n              <input name=\"password\" id=\"password\" type=\"password\" placeholder=\"Password \">\r\n\r\n              <label for=\"pwd\">Confirm Password:</label>\r\n              <input name=\"password\" id=\"password\" type=\"password\" placeholder=\"Password \">\r\n\r\n\r\n              <div class=\"container-fluid\">\r\n                <div class=\"row\">\r\n                  <a class=\"btn btn-md btn-stroke pull-right\"><span>Change Password?</span></a>\r\n                </div>\r\n              </div>\r\n\r\n            </form>\r\n          </div>\r\n        </div>\r\n      </div>\r\n    </div>\r\n  </div>\r\n</section>\r\n        <!-- end 404 -->"
+module.exports = "<!-- 404 -->\r\n<section class=\"section-wrap\">\r\n  <div class=\"container\">\r\n    <div class=\"row\">\r\n      <div class=\"container-fluid \">\r\n\r\n        <div class=\"col-sm-6 col-sm-offset-3 forms-container\">\r\n\r\n          <h3>Change Password</h3>\r\n          <div class=\"form-box-pad\">\r\n            <form name=\"changePasswordForm\" #changePasswordForm = \"ngForm\" novalidate>\r\n              <div>\r\n                <label for=\"pwd\">Old Password:</label>\r\n                <input name=\"oldPassword\" id=\"password\" type=\"password\" placeholder=\"Old Password\" [(ngModel)]=\"changePassword.oldPassword\" #oldPassword = \"ngModel\" minlength=\"8\" required>\r\n                <div  *ngIf=\"oldPassword.errors && (oldPassword.dirty || oldPassword.touched)\" class=\"error\">\r\n                  <div [hidden]=\"!oldPassword.errors.required\">Please enter your old password</div>\r\n                </div>\r\n              </div>\r\n              <div>\r\n                <label for=\"pwd\">New Password:</label>\r\n                <input name=\"newPassword\" id=\"password\" type=\"password\" placeholder=\"New Password\" [(ngModel)]=\"changePassword.newPassword\" #newPassword = \"ngModel\" minlength=\"8\" required>\r\n                <div  *ngIf=\"newPassword.errors && (newPassword.dirty || newPassword.touched)\" class=\"error\">\r\n                  <div [hidden]=\"!newPassword.errors.required\">Please enter your new password</div>\r\n                </div>\r\n              </div>\r\n              <div>\r\n                <label for=\"pwd\">Confirm Password:</label>\r\n                <input name=\"confirmPassword\" id=\"password\" type=\"password\" placeholder=\"Confirm Password\" [(ngModel)]=\"changePassword.confirmPassword\" minlength=\"8\" #confirmPassword = \"ngModel\" (ngModelChange)=\"onChange($event)\" [ngClass]=\"{'mismatchError': mismatched}\" minlength=\"8\" maxlength=\"changePassword.newPassword.length\" required>\r\n                <div *ngIf = \"mismatched\" class=\"error\">Password mismatched</div>\r\n              </div>\r\n              <div class=\"container-fluid\">\r\n                <div class=\"row\">\r\n                  <button class=\"btn btn-md btn-stroke pull-right\" [disabled] = \"!changePasswordForm.form.valid || mismatched\" (click)=\"submit()\"><span>Change Password?</span></button>\r\n                </div>\r\n              </div>\r\n            </form>\r\n          </div>\r\n        </div>\r\n      </div>\r\n    </div>\r\n  </div>\r\n</section>\r\n<!-- end 404 -->"
 
 /***/ }),
 
@@ -734,7 +731,14 @@ module.exports = "\t\t\t<!-- 404 -->\r\n<section class=\"section-wrap\">\r\n  <d
 
 "use strict";
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "a", function() { return ChangePasswordComponent; });
+/* unused harmony export changePasswordInterface */
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__angular_core__ = __webpack_require__("../../../core/@angular/core.es5.js");
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__angular_router__ = __webpack_require__("../../../router/@angular/router.es5.js");
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__services_user_service__ = __webpack_require__("../../../../../src/app/shared/services/user.service.ts");
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_3_angular2_notifications__ = __webpack_require__("../../../../angular2-notifications/dist/index.js");
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_3_angular2_notifications___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_3_angular2_notifications__);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_4__environments_environment__ = __webpack_require__("../../../../../src/environments/environment.ts");
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_5__services_loader_service__ = __webpack_require__("../../../../../src/app/shared/services/loader.service.ts");
 var __decorate = (this && this.__decorate) || function (decorators, target, key, desc) {
     var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
     if (typeof Reflect === "object" && typeof Reflect.decorate === "function") r = Reflect.decorate(decorators, target, key, desc);
@@ -745,10 +749,51 @@ var __metadata = (this && this.__metadata) || function (k, v) {
     if (typeof Reflect === "object" && typeof Reflect.metadata === "function") return Reflect.metadata(k, v);
 };
 
+
+
+
+
+
 var ChangePasswordComponent = (function () {
-    function ChangePasswordComponent() {
+    function ChangePasswordComponent(router, userServie, notificationsService, loaderService) {
+        this.router = router;
+        this.userServie = userServie;
+        this.notificationsService = notificationsService;
+        this.loaderService = loaderService;
+        this.mismatched = false;
+        this.currentUrl = this.router.url;
+        this.changePassword = {
+            oldPassword: '',
+            newPassword: '',
+            confirmPassword: ''
+        };
     }
     ChangePasswordComponent.prototype.ngOnInit = function () {
+    };
+    ChangePasswordComponent.prototype.onChange = function ($event) {
+        if (this.changePassword.confirmPassword !== this.changePassword.newPassword) {
+            this.mismatched = true;
+        }
+        else {
+            this.mismatched = false;
+        }
+    };
+    ChangePasswordComponent.prototype.submit = function () {
+        var _this = this;
+        this.loaderService.display(true);
+        var payload = {
+            oldPassword: this.changePassword.oldPassword,
+            newPassword: this.changePassword.newPassword
+        };
+        this.userServie.resetPassword(payload).subscribe(function (res) {
+            console.log(res);
+            _this.loaderService.display(false);
+            _this.notificationsService.success('Success', res.message, __WEBPACK_IMPORTED_MODULE_4__environments_environment__["a" /* environment */].options);
+            _this.router.navigate(['']);
+        }, function (err) {
+            _this.loaderService.display(false);
+            _this.notificationsService.error(err.title, err.error.message, __WEBPACK_IMPORTED_MODULE_4__environments_environment__["a" /* environment */].options);
+        });
     };
     return ChangePasswordComponent;
 }());
@@ -758,9 +803,16 @@ ChangePasswordComponent = __decorate([
         template: __webpack_require__("../../../../../src/app/shared/components/change-password/change-password.component.html"),
         styles: [__webpack_require__("../../../../../src/app/shared/components/change-password/change-password.component.css")]
     }),
-    __metadata("design:paramtypes", [])
+    __metadata("design:paramtypes", [typeof (_a = typeof __WEBPACK_IMPORTED_MODULE_1__angular_router__["Router"] !== "undefined" && __WEBPACK_IMPORTED_MODULE_1__angular_router__["Router"]) === "function" && _a || Object, typeof (_b = typeof __WEBPACK_IMPORTED_MODULE_2__services_user_service__["a" /* UserService */] !== "undefined" && __WEBPACK_IMPORTED_MODULE_2__services_user_service__["a" /* UserService */]) === "function" && _b || Object, typeof (_c = typeof __WEBPACK_IMPORTED_MODULE_3_angular2_notifications__["NotificationsService"] !== "undefined" && __WEBPACK_IMPORTED_MODULE_3_angular2_notifications__["NotificationsService"]) === "function" && _c || Object, typeof (_d = typeof __WEBPACK_IMPORTED_MODULE_5__services_loader_service__["a" /* LoaderService */] !== "undefined" && __WEBPACK_IMPORTED_MODULE_5__services_loader_service__["a" /* LoaderService */]) === "function" && _d || Object])
 ], ChangePasswordComponent);
 
+var changePasswordInterface = (function () {
+    function changePasswordInterface() {
+    }
+    return changePasswordInterface;
+}());
+
+var _a, _b, _c, _d;
 //# sourceMappingURL=change-password.component.js.map
 
 /***/ }),
@@ -773,7 +825,7 @@ exports = module.exports = __webpack_require__("../../../../css-loader/lib/css-b
 
 
 // module
-exports.push([module.i, "", ""]);
+exports.push([module.i, ".btn:hover span {\r\n    color: white !important;\r\n}", ""]);
 
 // exports
 
@@ -786,7 +838,7 @@ module.exports = module.exports.toString();
 /***/ "../../../../../src/app/shared/components/contact-us/contact-us.component.html":
 /***/ (function(module, exports) {
 
-module.exports = "<!-- 404 -->\r\n<section class=\"section-wrap\">\r\n  <div class=\"container\">\r\n    <div class=\"row\">\r\n      <div class=\"container-fluid \">\r\n\r\n        <div class=\"col-sm-8 col-sm-offset-2 forms-container\">\r\n\r\n          <h3>Contact Us</h3>\r\n          <div class=\"form-box-pad\">\r\n            <form name=\"contactusForm\" #contactusForm='ngForm' novalidate>\r\n              <div class=\"row form-group\">\r\n                <div class=\"col-lg-6\">\r\n                  <label for=\"FirstName\">First Name:</label>\r\n                  <input name=\"FirstName\"  type=\"text\" placeholder=\"First Name\" class=\"form-control\" [(ngModel)]=\"data.FirstName\"\r\n                    #FirstName=\"ngModel\" required>\r\n                  <div *ngIf=\"FirstName.errors && (FirstName.dirty || FirstName.touched)\" class=\"error\">\r\n                    <div [hidden]=\"!FirstName.errors.required\">Please Enter Firstname</div>\r\n                  </div>\r\n                </div>\r\n                <div class=\"col-lg-6\">\r\n                  <label for=\"pwd\">Last Name:</label>\r\n                  <input name=\"LastName\"  type=\"text\" placeholder=\"Last Name\" class=\"form-control\" [(ngModel)]=\"data.LastName\"\r\n                    #LastName=\"ngModel\" required>\r\n                  <div *ngIf=\"LastName.errors && (LastName.dirty || LastName.touched)\" class=\"error\">\r\n                    <div [hidden]=\"!LastName.errors.required\">Please Enter Lastname</div>\r\n                  </div>\r\n                </div>\r\n          </div>\r\n          <div class=\"row form-group\">\r\n            <div class=\"col-lg-12\">\r\n              <label for=\"Email\">Email:</label>\r\n              <input name=\"email\" type=\"text\" placeholder=\"abc@xyz.com \" class=\"form-control\" [(ngModel)]=\"data.email\"\r\n                #email=\"ngModel\" pattern=\"^[a-z0-9._%+-]+@[a-z0-9.-]+\\.[a-z]{2,3}$\" required>\r\n              <div *ngIf=\"email.errors && (email.dirty || email.touched)\" class=\"error\">\r\n                <div [hidden]=\"!email.errors.required\">Please Enter Email-Id</div>\r\n                <div [hidden]=\"!email.errors.pattern\">Please Enter proper email-Id</div>\r\n              </div>\r\n            </div>\r\n          </div>\r\n          <div class=\"row\">\r\n            <div class=\"col-lg-12\">\r\n              <p class=\"form-row notes ecommerce-validated\" id=\"order_comments_field\">\r\n                <label for=\"order_comments\">Enter Comments</label>\r\n                <textarea name=\"order_comments\" class=\"input-text\" id=\"order_comments\" placeholder=\"Leave us a message and we will get back to you.\"\r\n                  rows=\"2\"  [(ngModel)]=\"data.comment\"></textarea>\r\n              </p>\r\n            </div>\r\n          </div>\r\n          <div class=\"container-fluid\">\r\n            <div class=\"row\">\r\n              <button class=\"btn btn-md btn-stroke pull-right\" [disabled]=\"!contactusForm.form.valid\" (click)=\"submit()\"><span>Submit</span></button>\r\n            </div>\r\n          </div>\r\n\r\n          </form>\r\n        </div>\r\n      </div>\r\n    </div>\r\n  </div>\r\n  </div>\r\n</section>\r\n<!-- end 404 -->"
+module.exports = "<!-- 404 -->\r\n<section class=\"section-wrap\">\r\n  <div class=\"container\">\r\n    <div class=\"row\">\r\n      <div class=\"container-fluid \">\r\n\r\n        <div class=\"col-sm-8 col-sm-offset-2 forms-container\">\r\n\r\n          <h3>Contact Us</h3>\r\n          <div class=\"form-box-pad\">\r\n            <form name=\"contactusForm\" #contactusForm='ngForm' novalidate>\r\n              <div class=\"row form-group\">\r\n                <div class=\"col-lg-6\">\r\n                  <label for=\"FirstName\">First Name:</label>\r\n                  <input name=\"FirstName\" type=\"text\" placeholder=\"First Name\" class=\"form-control\" [(ngModel)]=\"data.FirstName\" #FirstName=\"ngModel\"\r\n                    required>\r\n                  <div *ngIf=\"FirstName.errors && (FirstName.dirty || FirstName.touched)\" class=\"error\">\r\n                    <div [hidden]=\"!FirstName.errors.required\">Please enter Firstname</div>\r\n                  </div>\r\n                </div>\r\n                <div class=\"col-lg-6\">\r\n                  <label for=\"pwd\">Last Name:</label>\r\n                  <input name=\"LastName\" type=\"text\" placeholder=\"Last Name\" class=\"form-control\" [(ngModel)]=\"data.LastName\" #LastName=\"ngModel\"\r\n                    required>\r\n                  <div *ngIf=\"LastName.errors && (LastName.dirty || LastName.touched)\" class=\"error\">\r\n                    <div [hidden]=\"!LastName.errors.required\">Please enter Lastname</div>\r\n                  </div>\r\n                </div>\r\n              </div>\r\n              <div class=\"row form-group\">\r\n                <div class=\"col-lg-12\">\r\n                  <label for=\"Email\">Email:</label>\r\n                  <input name=\"email\" type=\"text\" placeholder=\"abc@xyz.com \" class=\"form-control\" [(ngModel)]=\"data.Email_Address\" #Email_Address=\"ngModel\"\r\n                    pattern=\"^[a-z0-9._%+-]+@[a-z0-9.-]+\\.[a-z]{2,3}$\" required>\r\n                  <div *ngIf=\"Email_Address.errors && (Email_Address.dirty || Email_Address.touched)\" class=\"error\">\r\n                    <div [hidden]=\"!Email_Address.errors.required\">Please enter Email-Id</div>\r\n                    <div [hidden]=\"!Email_Address.errors.pattern\">Please enter proper email-Id</div>\r\n                  </div>\r\n                </div>\r\n              </div>\r\n              <div class=\"row\">\r\n                <div class=\"col-lg-12\">\r\n                  <!--<p class=\"form-row notes ecommerce-validated\" id=\"order_comments_field\">-->\r\n                  <label for=\"order_comments\">Enter Comments</label>\r\n                  <textarea name=\"order_comments\" class=\"input-text\" id=\"order_comments\" placeholder=\"Leave us a message and we will get back to you.\"\r\n                    rows=\"2\" [(ngModel)]=\"data.Comments\" #Comments=\"ngModel\" required>\r\n                      \r\n                      </textarea>\r\n                  <!--</p>-->\r\n                  <div *ngIf=\"Comments.errors && (Comments.dirty || Comments.touched)\" class=\"error\">\r\n                    <div [hidden]=\"!Comments.errors.required\">Please enter your comments</div>\r\n                  </div>\r\n                </div>\r\n              </div>\r\n              <div class=\"container-fluid\">\r\n                <div class=\"row\">\r\n                  <button class=\"btn btn-md btn-stroke pull-right\" [disabled]=\"!contactusForm.form.valid\" (click)=\"submit(contactusForm)\"><span>Submit</span></button>\r\n                </div>\r\n              </div>\r\n\r\n            </form>\r\n          </div>\r\n        </div>\r\n      </div>\r\n    </div>\r\n  </div>\r\n</section>\r\n<!-- end 404 -->"
 
 /***/ }),
 
@@ -796,6 +848,11 @@ module.exports = "<!-- 404 -->\r\n<section class=\"section-wrap\">\r\n  <div cla
 "use strict";
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "a", function() { return ContactUsComponent; });
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__angular_core__ = __webpack_require__("../../../core/@angular/core.es5.js");
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__services_user_service__ = __webpack_require__("../../../../../src/app/shared/services/user.service.ts");
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2_angular2_notifications__ = __webpack_require__("../../../../angular2-notifications/dist/index.js");
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2_angular2_notifications___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_2_angular2_notifications__);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_3__environments_environment__ = __webpack_require__("../../../../../src/environments/environment.ts");
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_4__services_loader_service__ = __webpack_require__("../../../../../src/app/shared/services/loader.service.ts");
 var __decorate = (this && this.__decorate) || function (decorators, target, key, desc) {
     var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
     if (typeof Reflect === "object" && typeof Reflect.decorate === "function") r = Reflect.decorate(decorators, target, key, desc);
@@ -806,13 +863,21 @@ var __metadata = (this && this.__metadata) || function (k, v) {
     if (typeof Reflect === "object" && typeof Reflect.metadata === "function") return Reflect.metadata(k, v);
 };
 
+
+
+
+
 var ContactUsComponent = (function () {
-    function ContactUsComponent() {
+    function ContactUsComponent(userService, notificationsService, loaderService) {
+        this.userService = userService;
+        this.notificationsService = notificationsService;
+        this.loaderService = loaderService;
         this.data = {
             FirstName: '',
             LastName: '',
-            email: '',
-            comments: '',
+            Email_Address: '',
+            Comments: '',
+            Date_Submitted: null
         };
         window['verifyCallback'] = this.verifyCallback.bind(this);
     }
@@ -827,7 +892,18 @@ var ContactUsComponent = (function () {
         script.defer = true;
         doc.appendChild(script);
     };
-    ContactUsComponent.prototype.submit = function () {
+    ContactUsComponent.prototype.submit = function (form) {
+        var _this = this;
+        this.data.Date_Submitted = new Date();
+        this.loaderService.display(true);
+        this.userService.contactus(this.data).subscribe(function (res) {
+            _this.loaderService.display(false);
+            form.reset();
+            _this.notificationsService.success('Success', res.message, __WEBPACK_IMPORTED_MODULE_3__environments_environment__["a" /* environment */].options);
+        }, function (err) {
+            _this.loaderService.display(false);
+            _this.notificationsService.error(err.title, err.error.message, __WEBPACK_IMPORTED_MODULE_3__environments_environment__["a" /* environment */].options);
+        });
     };
     ContactUsComponent.prototype.verifyCallback = function (response) {
         alert(response);
@@ -840,9 +916,10 @@ ContactUsComponent = __decorate([
         template: __webpack_require__("../../../../../src/app/shared/components/contact-us/contact-us.component.html"),
         styles: [__webpack_require__("../../../../../src/app/shared/components/contact-us/contact-us.component.css")]
     }),
-    __metadata("design:paramtypes", [])
+    __metadata("design:paramtypes", [typeof (_a = typeof __WEBPACK_IMPORTED_MODULE_1__services_user_service__["a" /* UserService */] !== "undefined" && __WEBPACK_IMPORTED_MODULE_1__services_user_service__["a" /* UserService */]) === "function" && _a || Object, typeof (_b = typeof __WEBPACK_IMPORTED_MODULE_2_angular2_notifications__["NotificationsService"] !== "undefined" && __WEBPACK_IMPORTED_MODULE_2_angular2_notifications__["NotificationsService"]) === "function" && _b || Object, typeof (_c = typeof __WEBPACK_IMPORTED_MODULE_4__services_loader_service__["a" /* LoaderService */] !== "undefined" && __WEBPACK_IMPORTED_MODULE_4__services_loader_service__["a" /* LoaderService */]) === "function" && _c || Object])
 ], ContactUsComponent);
 
+var _a, _b, _c;
 //# sourceMappingURL=contact-us.component.js.map
 
 /***/ }),
@@ -957,6 +1034,7 @@ module.exports = "\t\t\t<!-- 404 -->\n<section class=\"section-wrap\">\n  <div c
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_3_angular2_notifications__ = __webpack_require__("../../../../angular2-notifications/dist/index.js");
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_3_angular2_notifications___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_3_angular2_notifications__);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_4__environments_environment__ = __webpack_require__("../../../../../src/environments/environment.ts");
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_5__services_loader_service__ = __webpack_require__("../../../../../src/app/shared/services/loader.service.ts");
 var __decorate = (this && this.__decorate) || function (decorators, target, key, desc) {
     var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
     if (typeof Reflect === "object" && typeof Reflect.decorate === "function") r = Reflect.decorate(decorators, target, key, desc);
@@ -971,12 +1049,14 @@ var __metadata = (this && this.__metadata) || function (k, v) {
 
 
 
+
 var ForgotPasswordComponent = (function () {
-    function ForgotPasswordComponent(userService, activatedRoute, notificationsService, router) {
+    function ForgotPasswordComponent(userService, activatedRoute, notificationsService, router, loaderService) {
         this.userService = userService;
         this.activatedRoute = activatedRoute;
         this.notificationsService = notificationsService;
         this.router = router;
+        this.loaderService = loaderService;
         this.mismatched = false;
         this.resetPassword = {
             newPassword: '',
@@ -1000,10 +1080,13 @@ var ForgotPasswordComponent = (function () {
     };
     ForgotPasswordComponent.prototype.submit = function () {
         var _this = this;
+        this.loaderService.display(true);
         this.userService.changePassword(this.resetPassword).subscribe(function (res) {
+            _this.loaderService.display(false);
             _this.notificationsService.success('Success', res.message, __WEBPACK_IMPORTED_MODULE_4__environments_environment__["a" /* environment */].options);
             _this.router.navigate(['']);
         }, function (err) {
+            _this.loaderService.display(false);
             _this.notificationsService.error(err.title, err.error.message, __WEBPACK_IMPORTED_MODULE_4__environments_environment__["a" /* environment */].options);
         });
     };
@@ -1015,7 +1098,7 @@ ForgotPasswordComponent = __decorate([
         template: __webpack_require__("../../../../../src/app/shared/components/forgot-password/forgot-password.component.html"),
         styles: [__webpack_require__("../../../../../src/app/shared/components/forgot-password/forgot-password.component.css")]
     }),
-    __metadata("design:paramtypes", [typeof (_a = typeof __WEBPACK_IMPORTED_MODULE_2__services_user_service__["a" /* UserService */] !== "undefined" && __WEBPACK_IMPORTED_MODULE_2__services_user_service__["a" /* UserService */]) === "function" && _a || Object, typeof (_b = typeof __WEBPACK_IMPORTED_MODULE_1__angular_router__["ActivatedRoute"] !== "undefined" && __WEBPACK_IMPORTED_MODULE_1__angular_router__["ActivatedRoute"]) === "function" && _b || Object, typeof (_c = typeof __WEBPACK_IMPORTED_MODULE_3_angular2_notifications__["NotificationsService"] !== "undefined" && __WEBPACK_IMPORTED_MODULE_3_angular2_notifications__["NotificationsService"]) === "function" && _c || Object, typeof (_d = typeof __WEBPACK_IMPORTED_MODULE_1__angular_router__["Router"] !== "undefined" && __WEBPACK_IMPORTED_MODULE_1__angular_router__["Router"]) === "function" && _d || Object])
+    __metadata("design:paramtypes", [typeof (_a = typeof __WEBPACK_IMPORTED_MODULE_2__services_user_service__["a" /* UserService */] !== "undefined" && __WEBPACK_IMPORTED_MODULE_2__services_user_service__["a" /* UserService */]) === "function" && _a || Object, typeof (_b = typeof __WEBPACK_IMPORTED_MODULE_1__angular_router__["ActivatedRoute"] !== "undefined" && __WEBPACK_IMPORTED_MODULE_1__angular_router__["ActivatedRoute"]) === "function" && _b || Object, typeof (_c = typeof __WEBPACK_IMPORTED_MODULE_3_angular2_notifications__["NotificationsService"] !== "undefined" && __WEBPACK_IMPORTED_MODULE_3_angular2_notifications__["NotificationsService"]) === "function" && _c || Object, typeof (_d = typeof __WEBPACK_IMPORTED_MODULE_1__angular_router__["Router"] !== "undefined" && __WEBPACK_IMPORTED_MODULE_1__angular_router__["Router"]) === "function" && _d || Object, typeof (_e = typeof __WEBPACK_IMPORTED_MODULE_5__services_loader_service__["a" /* LoaderService */] !== "undefined" && __WEBPACK_IMPORTED_MODULE_5__services_loader_service__["a" /* LoaderService */]) === "function" && _e || Object])
 ], ForgotPasswordComponent);
 
 var ForgotPasswordData = (function () {
@@ -1024,7 +1107,7 @@ var ForgotPasswordData = (function () {
     return ForgotPasswordData;
 }());
 
-var _a, _b, _c, _d;
+var _a, _b, _c, _d, _e;
 //# sourceMappingURL=forgot-password.component.js.map
 
 /***/ }),
@@ -1111,7 +1194,7 @@ module.exports = module.exports.toString();
 /***/ "../../../../../src/app/shared/components/top-nav/top-nav.component.html":
 /***/ (function(module, exports) {
 
-module.exports = "<header class=\"nav-type-1\">\r\n  <!-- Top Bar -->\r\n  <div class=\"top-bar\">\r\n    <div class=\"container\">\r\n      <div class=\"top-bar-links flex-parent\">\r\n        <ul class=\"top-bar-currency-language\">\r\n\r\n        </ul>\r\n\r\n        <ul class=\"top-bar-acc pull-right\" *ngIf = '!isLoggedIn'>\r\n          <!-- <li class=\"top-bar-link\"><a >My Wishlist</a></li> -->\r\n          <li class=\"top-bar-link\" [routerLink]=\"['contactus']\" routerLinkActive=\"active\"><a >Contact Us</a></li>\r\n          <li class=\"top-bar-link\" ><a (click)=showConfirm()>Login</a></li>\r\n          <li class=\"top-bar-link\" ><a (click)=navigateToRegister()>Register</a></li>                 \r\n        </ul>\r\n\r\n      </div>\r\n    </div>\r\n  </div> <!-- end top bar -->\r\n   <div class=\"profile-status\" *ngIf = \"isLoggedIn || (currentUser.personalInfo || currentUser.workInfo)\">\r\n    Your <span *ngIf=\"currentUser.personalInfo\">personal</span><span *ngIf=\"(currentUser.workInfo && currentUser.personalInfo)\"> and </span><span *ngIf=\"currentUser.workInfo\">work</span>profile not updated\r\n     <span class=\"pull-right\" (click)=\"closeProfileStatus()\"><i class=\"fa fa-times\" aria-hidden=\"true\"></i></span>\r\n   </div>       \r\n  <nav class=\"navbar navbar-static-top\">\r\n    <div class=\"navigation\" id=\"sticky-nav\">\r\n      <div class=\"container relative\">\r\n\r\n        <div class=\"row flex-parent\">\r\n\r\n          <div class=\"navbar-header flex-child\">\r\n            <!-- Logo -->\r\n            <div class=\"logo-container\">\r\n              <div class=\"logo-wrap\">\r\n                <a routerLink='/'>\r\n                  <img class=\"logo\" src=\"assets/img/Photos/logo-1.png\" alt=\"logo\">\r\n                </a>\r\n              </div>\r\n            </div>\r\n            <button type=\"button\" class=\"navbar-toggle\" data-toggle=\"collapse\" data-target=\"#navbar-collapse\">\r\n              <span class=\"sr-only\">Toggle navigation</span>\r\n              <span class=\"icon-bar\"></span>\r\n              <span class=\"icon-bar\"></span>\r\n              <span class=\"icon-bar\"></span>\r\n            </button>\r\n             <!-- Mobile cart -->\r\n             \r\n          </div> <!-- end navbar-header -->\r\n\r\n          <div class=\"nav-wrap flex-child\">\r\n            <div class=\"collapse navbar-collapse text-center\" id=\"navbar-collapse\">\r\n              \r\n              <!-- <ul class=\"nav navbar-nav\" *ngIf=\"userType == 'jobseeker'\"> -->\r\n              <ul class=\"nav navbar-nav\" *ngIf=\"userType == 'jobseeker'\">\r\n                <li>\r\n                  <a [routerLink]=\"['jobseeker/schedule']\" routerLinkActive=\"active\">Schedule Work</a>\r\n                </li>\r\n                <li>\r\n                  <a [routerLink]=\"['jobseeker/joboffers']\" routerLinkActive=\"active\">My Job Offers</a>\r\n                </li>\r\n                \r\n                <li class=\"mobile-links hidden-lg hidden-md\">\r\n                  <a  [routerLink]=\"['jobseeker/schedule']\" routerLinkActive=\"active\">Change Password</a>\r\n                </li>\r\n                <li class=\"mobile-links hidden-lg hidden-md\">\r\n                  <a (click)='logoutUser()'>Log Out</a>\r\n                </li>\r\n\r\n              </ul> <!-- end menu -->\r\n              <ul class=\"nav navbar-nav\" *ngIf=\"userType == 'employer'\">\r\n                <li>\r\n                  <a [routerLink]=\"['employer/search']\" routerLinkActive=\"active\">Search</a>\r\n                </li>\r\n                <li>\r\n                  <a [routerLink]=\"['employer/joboffers']\" routerLinkActive=\"active\">Job Offers</a>\r\n                </li>\r\n                <li>\r\n                  <a [routerLink]=\"['employer/payment']\" routerLinkActive=\"active\">Payment</a>\r\n                </li>\r\n                <li>\r\n                  <a [routerLink]=\"['employer/transactionhistory']\" routerLinkActive=\"active\">Transaction History</a>\r\n                </li>\r\n\r\n                <li class=\"mobile-links hidden-lg hidden-md\">\r\n                  <a (click)='logoutUser()' >Log Out</a>\r\n                </li>\r\n              </ul> <!-- end menu -->\r\n            </div> <!-- end collapse -->\r\n          </div> <!-- end col -->\r\n\r\n          <div *ngIf='isLoggedIn' class=\"flex-child flex-right nav-right hidden-sm hidden-xs\">\r\n              <ul>\r\n                <li class=\"nav-cart\">\r\n                  \r\n                    <div class=\"nav-cart-outer\">\r\n                      <div class=\"nav-cart-inner\">\r\n                        <a>\r\n                          My Account\r\n                        </a>\r\n                      </div>\r\n                    </div>\r\n                    <div class=\"nav-cart-container\">\r\n                      <div class=\"nav-cart-items\">\r\n                      </div>\r\n                      <!-- end cart items -->\r\n\r\n                      <div class=\"nav-cart-summary\">\r\n                        <span>Welcome</span>\r\n                        <span class=\"total-price\">{{currentUser.Firstname}} {{currentUser.Lastname}}</span>\r\n                      </div>\r\n\r\n                      <div class=\"nav-cart-actions mt-20\">\r\n                        <a  class=\"btn btn-md btn-dark\" (click)=\"userProfile()\"><span>View Profile</span></a>\r\n                        <a class=\"btn btn-md btn-dark mt-10\" [routerLink]=\"['changepassword']\" routerLinkActive=\"active\"><span>Change Password</span></a>\r\n                        <a class=\"btn btn-md btn-color mt-10\" (click)='logoutUser()'><span>Log Out</span></a>\r\n                      </div>\r\n                    </div>\r\n                  </li>\r\n              </ul>\r\n            </div>\r\n          <!-- <div class=\"flex-child flex-right nav-right hidden-sm hidden-xs\">\r\n            <ul>\r\n              <li class=\"nav-register\" *ngIf=\"!isLoggedIn\">\r\n                <a >Log Out</a>\r\n              </li>\r\n            </ul>\r\n          </div> -->\r\n      \r\n        </div> <!-- end row -->\r\n      </div> <!-- end container -->\r\n    </div> <!-- end navigation -->\r\n  </nav> <!-- end navbar -->\r\n</header>"
+module.exports = "<header class=\"nav-type-1\">\r\n  <!-- Top Bar -->\r\n  <div class=\"top-bar\">\r\n    <div class=\"container\">\r\n      <div class=\"top-bar-links flex-parent\">\r\n        <ul class=\"top-bar-currency-language\">\r\n\r\n        </ul>\r\n\r\n        <ul class=\"top-bar-acc pull-right\" *ngIf = '!isLoggedIn'>\r\n          <!-- <li class=\"top-bar-link\"><a >My Wishlist</a></li> -->\r\n          <li class=\"top-bar-link\" [routerLink]=\"['contactus']\" routerLinkActive=\"active\"><a >Contact Us</a></li>\r\n          <li class=\"top-bar-link\" ><a (click)=showConfirm()>Login</a></li>\r\n          <li class=\"top-bar-link\" ><a (click)=navigateToRegister()>Register</a></li>                 \r\n        </ul>\r\n\r\n      </div>\r\n    </div>\r\n  </div> <!-- end top bar -->\r\n   <div class=\"profile-status\" *ngIf = \"isLoggedIn && (currentUser.personalInfo || currentUser.workInfo) && showProfileStatus\">\r\n    Your <span *ngIf=\"currentUser.personalInfo\">personal</span><span *ngIf=\"(currentUser.workInfo && currentUser.personalInfo)\"> and </span><span *ngIf=\"currentUser.workInfo\">work</span>profile not updated\r\n     <span class=\"pull-right\" (click)=\"closeProfileStatus()\"><i class=\"fa fa-times\" aria-hidden=\"true\"></i></span>\r\n   </div>       \r\n  <nav class=\"navbar navbar-static-top\">\r\n    <div class=\"navigation\" id=\"sticky-nav\">\r\n      <div class=\"container relative\">\r\n\r\n        <div class=\"row flex-parent\">\r\n\r\n          <div class=\"navbar-header flex-child\">\r\n            <!-- Logo -->\r\n            <div class=\"logo-container\">\r\n              <div class=\"logo-wrap\">\r\n                <a routerLink='/'>\r\n                  <img class=\"logo\" src=\"assets/img/Photos/logo-1.png\" alt=\"logo\">\r\n                </a>\r\n              </div>\r\n            </div>\r\n            <button type=\"button\" class=\"navbar-toggle\" data-toggle=\"collapse\" data-target=\"#navbar-collapse\">\r\n              <span class=\"sr-only\">Toggle navigation</span>\r\n              <span class=\"icon-bar\"></span>\r\n              <span class=\"icon-bar\"></span>\r\n              <span class=\"icon-bar\"></span>\r\n            </button>\r\n             <!-- Mobile cart -->\r\n             \r\n          </div> <!-- end navbar-header -->\r\n\r\n          <div class=\"nav-wrap flex-child\">\r\n            <div class=\"collapse navbar-collapse text-center\" id=\"navbar-collapse\">\r\n              \r\n              <!-- <ul class=\"nav navbar-nav\" *ngIf=\"userType == 'jobseeker'\"> -->\r\n              <ul class=\"nav navbar-nav\" *ngIf=\"userType == 'jobseeker'\">\r\n                <li>\r\n                  <a [routerLink]=\"['jobseeker/schedule']\" routerLinkActive=\"active\">Schedule Work</a>\r\n                </li>\r\n                <li>\r\n                  <a [routerLink]=\"['jobseeker/joboffers']\" routerLinkActive=\"active\">My Job Offers</a>\r\n                </li>\r\n                \r\n                <li class=\"mobile-links hidden-lg hidden-md\">\r\n                  <a  [routerLink]=\"['jobseeker/schedule']\" routerLinkActive=\"active\">Change Password</a>\r\n                </li>\r\n                <li class=\"mobile-links hidden-lg hidden-md\">\r\n                  <a (click)='logoutUser()'>Log Out</a>\r\n                </li>\r\n\r\n              </ul> <!-- end menu -->\r\n              <ul class=\"nav navbar-nav\" *ngIf=\"userType == 'employer'\">\r\n                <li>\r\n                  <a [routerLink]=\"['employer/search']\" routerLinkActive=\"active\">Search</a>\r\n                </li>\r\n                <li>\r\n                  <a [routerLink]=\"['employer/joboffers']\" routerLinkActive=\"active\">Job Offers</a>\r\n                </li>\r\n                <!--<li>\r\n                  <a [routerLink]=\"['employer/payment']\" routerLinkActive=\"active\">Payment</a>\r\n                </li>-->\r\n                <li>\r\n                  <a [routerLink]=\"['employer/transactionhistory']\" routerLinkActive=\"active\">Transaction History</a>\r\n                </li>\r\n\r\n                <li class=\"mobile-links hidden-lg hidden-md\">\r\n                  <a (click)='logoutUser()' >Log Out</a>\r\n                </li>\r\n              </ul> <!-- end menu -->\r\n            </div> <!-- end collapse -->\r\n          </div> <!-- end col -->\r\n\r\n          <div *ngIf='isLoggedIn' class=\"flex-child flex-right nav-right hidden-sm hidden-xs\">\r\n              <ul>\r\n                <li class=\"nav-cart\">\r\n                  \r\n                    <div class=\"nav-cart-outer\">\r\n                      <div class=\"nav-cart-inner\">\r\n                        <a>\r\n                          My Account\r\n                        </a>\r\n                      </div>\r\n                    </div>\r\n                    <div class=\"nav-cart-container\">\r\n                      <div class=\"nav-cart-items\">\r\n                      </div>\r\n                      <!-- end cart items -->\r\n\r\n                      <div class=\"nav-cart-summary\">\r\n                        <span>Welcome</span>\r\n                        <span class=\"total-price\">{{currentUser.Firstname}} {{currentUser.Lastname}}</span>\r\n                      </div>\r\n\r\n                      <div class=\"nav-cart-actions mt-20\">\r\n                        <a  class=\"btn btn-md btn-dark\" (click)=\"userProfile()\"><span>View Profile</span></a>\r\n                        <a *ngIf=\"userType == 'employer'\" class=\"btn btn-md btn-dark mt-10\" [routerLink]=\"['employer/changepassword']\" routerLinkActive=\"active\"><span>Change Password</span></a>\r\n                        <a *ngIf=\"userType == 'jobseeker'\" class=\"btn btn-md btn-dark mt-10\" [routerLink]=\"['jobseeker/changepassword']\" routerLinkActive=\"active\"><span>Change Password</span></a>                        \r\n                        <a class=\"btn btn-md btn-color mt-10\" (click)='logoutUser()'><span>Log Out</span></a>\r\n                      </div>\r\n                    </div>\r\n                  </li>\r\n              </ul>\r\n            </div>\r\n          <!-- <div class=\"flex-child flex-right nav-right hidden-sm hidden-xs\">\r\n            <ul>\r\n              <li class=\"nav-register\" *ngIf=\"!isLoggedIn\">\r\n                <a >Log Out</a>\r\n              </li>\r\n            </ul>\r\n          </div> -->\r\n      \r\n        </div> <!-- end row -->\r\n      </div> <!-- end container -->\r\n    </div> <!-- end navigation -->\r\n  </nav> <!-- end navbar -->\r\n</header>"
 
 /***/ }),
 
@@ -1126,6 +1209,7 @@ module.exports = "<header class=\"nav-type-1\">\r\n  <!-- Top Bar -->\r\n  <div 
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_2_ng2_bootstrap_modal___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_2_ng2_bootstrap_modal__);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_3__login_login_component__ = __webpack_require__("../../../../../src/app/login/login.component.ts");
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_4__shared_services_user_service__ = __webpack_require__("../../../../../src/app/shared/services/user.service.ts");
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_5__services_loader_service__ = __webpack_require__("../../../../../src/app/shared/services/loader.service.ts");
 var __decorate = (this && this.__decorate) || function (decorators, target, key, desc) {
     var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
     if (typeof Reflect === "object" && typeof Reflect.decorate === "function") r = Reflect.decorate(decorators, target, key, desc);
@@ -1140,18 +1224,19 @@ var __metadata = (this && this.__metadata) || function (k, v) {
 
 
 
+
 var TopNavComponent = (function () {
-    function TopNavComponent(router, route, dialogService, userService) {
+    function TopNavComponent(router, route, dialogService, userService, loaderService) {
         var _this = this;
         this.router = router;
         this.route = route;
         this.dialogService = dialogService;
         this.userService = userService;
+        this.loaderService = loaderService;
         this.userType = '';
         this.isLoggedIn = false;
-        this.showProfileStatus = false;
+        this.showProfileStatus = true;
         this.subscription = userService.currentUser.subscribe(function (user) {
-            console.log(user);
             if (user.userType !== undefined) {
                 _this.isLoggedIn = true;
             }
@@ -1185,11 +1270,12 @@ var TopNavComponent = (function () {
     };
     TopNavComponent.prototype.logoutUser = function () {
         this.userService.purgeAuth();
+        this.loaderService.display(false);
         this.router.navigate(['']);
         this.isLoggedIn = false;
     };
     TopNavComponent.prototype.closeProfileStatus = function () {
-        console.log('clicked');
+        this.showProfileStatus = false;
     };
     return TopNavComponent;
 }());
@@ -1199,10 +1285,10 @@ TopNavComponent = __decorate([
         template: __webpack_require__("../../../../../src/app/shared/components/top-nav/top-nav.component.html"),
         styles: [__webpack_require__("../../../../../src/app/shared/components/top-nav/top-nav.component.css")]
     }),
-    __metadata("design:paramtypes", [typeof (_a = typeof __WEBPACK_IMPORTED_MODULE_1__angular_router__["Router"] !== "undefined" && __WEBPACK_IMPORTED_MODULE_1__angular_router__["Router"]) === "function" && _a || Object, typeof (_b = typeof __WEBPACK_IMPORTED_MODULE_1__angular_router__["ActivatedRoute"] !== "undefined" && __WEBPACK_IMPORTED_MODULE_1__angular_router__["ActivatedRoute"]) === "function" && _b || Object, typeof (_c = typeof __WEBPACK_IMPORTED_MODULE_2_ng2_bootstrap_modal__["DialogService"] !== "undefined" && __WEBPACK_IMPORTED_MODULE_2_ng2_bootstrap_modal__["DialogService"]) === "function" && _c || Object, typeof (_d = typeof __WEBPACK_IMPORTED_MODULE_4__shared_services_user_service__["a" /* UserService */] !== "undefined" && __WEBPACK_IMPORTED_MODULE_4__shared_services_user_service__["a" /* UserService */]) === "function" && _d || Object])
+    __metadata("design:paramtypes", [typeof (_a = typeof __WEBPACK_IMPORTED_MODULE_1__angular_router__["Router"] !== "undefined" && __WEBPACK_IMPORTED_MODULE_1__angular_router__["Router"]) === "function" && _a || Object, typeof (_b = typeof __WEBPACK_IMPORTED_MODULE_1__angular_router__["ActivatedRoute"] !== "undefined" && __WEBPACK_IMPORTED_MODULE_1__angular_router__["ActivatedRoute"]) === "function" && _b || Object, typeof (_c = typeof __WEBPACK_IMPORTED_MODULE_2_ng2_bootstrap_modal__["DialogService"] !== "undefined" && __WEBPACK_IMPORTED_MODULE_2_ng2_bootstrap_modal__["DialogService"]) === "function" && _c || Object, typeof (_d = typeof __WEBPACK_IMPORTED_MODULE_4__shared_services_user_service__["a" /* UserService */] !== "undefined" && __WEBPACK_IMPORTED_MODULE_4__shared_services_user_service__["a" /* UserService */]) === "function" && _d || Object, typeof (_e = typeof __WEBPACK_IMPORTED_MODULE_5__services_loader_service__["a" /* LoaderService */] !== "undefined" && __WEBPACK_IMPORTED_MODULE_5__services_loader_service__["a" /* LoaderService */]) === "function" && _e || Object])
 ], TopNavComponent);
 
-var _a, _b, _c, _d;
+var _a, _b, _c, _d, _e;
 //# sourceMappingURL=top-nav.component.js.map
 
 /***/ }),
@@ -1685,7 +1771,7 @@ var UserService = (function () {
             return data;
         });
     };
-    UserService.prototype.resetPassword = function (data) {
+    UserService.prototype.forgotPassword = function (data) {
         var path = 'user/resetpasswordlink';
         return this.apiService.post(path, data).
             map(function (data) {
@@ -1702,13 +1788,24 @@ var UserService = (function () {
         });
     };
     UserService.prototype.activateUser = function (id) {
-        console.log(id);
         var path = 'user/confirmation/' + id;
         return this.apiService.get(path).
             map(function (data) {
             return data;
         }, function (err) {
             return err;
+        });
+    };
+    UserService.prototype.contactus = function (data) {
+        var url = 'user/contactus';
+        return this.apiService.post(url, data).map(function (res) {
+            return res;
+        });
+    };
+    UserService.prototype.resetPassword = function (data) {
+        var url = "user/changepassword";
+        return this.apiService.put(url, data).map(function (res) {
+            return res;
         });
     };
     return UserService;
@@ -1800,7 +1897,7 @@ SharedModule = __decorate([
 // The file contents for the current environment will overwrite these during build.
 var environment = {
     production: false,
-    api_url: '/',
+    api_url: 'http://localhost:3000/',
     options: {
         timeOut: 5000,
         showProgressBar: true,
