@@ -826,7 +826,7 @@ var routes = [
         path: '',
         component: __WEBPACK_IMPORTED_MODULE_2__job_seeker_component__["a" /* JobSeekerComponent */],
         children: [
-            { path: '', redirectTo: 'dashboard' },
+            { path: '', redirectTo: 'profile' },
             { path: 'dashboard', component: __WEBPACK_IMPORTED_MODULE_3__components_dashboard_dashboard_component__["a" /* DashboardComponent */] },
             { path: 'schedule', component: __WEBPACK_IMPORTED_MODULE_4__components_work_schedule_work_schedule_component__["a" /* WorkScheduleComponent */] },
             // {path:'update', component:UpdateProfileComponent},

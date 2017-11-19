@@ -933,13 +933,12 @@ var _a, _b, _c;
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__angular_core__ = __webpack_require__("../../../core/@angular/core.es5.js");
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__angular_router__ = __webpack_require__("../../../router/@angular/router.es5.js");
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__employer_component__ = __webpack_require__("../../../../../src/app/employer/employer.component.ts");
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_3__components_dashboard_dashboard_component__ = __webpack_require__("../../../../../src/app/employer/components/dashboard/dashboard.component.ts");
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_4__components_job_seeker_search_job_seeker_search_component__ = __webpack_require__("../../../../../src/app/employer/components/job-seeker-search/job-seeker-search.component.ts");
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_5__components_transaction_history_transaction_history_component__ = __webpack_require__("../../../../../src/app/employer/components/transaction-history/transaction-history.component.ts");
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_6__components_prior_job_offer_prior_job_offer_component__ = __webpack_require__("../../../../../src/app/employer/components/prior-job-offer/prior-job-offer.component.ts");
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_7__components_payment_payment_component__ = __webpack_require__("../../../../../src/app/employer/components/payment/payment.component.ts");
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_8__components_profile_profile_component__ = __webpack_require__("../../../../../src/app/employer/components/profile/profile.component.ts");
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_9__shared_components_change_password_change_password_component__ = __webpack_require__("../../../../../src/app/shared/components/change-password/change-password.component.ts");
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_3__components_job_seeker_search_job_seeker_search_component__ = __webpack_require__("../../../../../src/app/employer/components/job-seeker-search/job-seeker-search.component.ts");
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_4__components_transaction_history_transaction_history_component__ = __webpack_require__("../../../../../src/app/employer/components/transaction-history/transaction-history.component.ts");
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_5__components_prior_job_offer_prior_job_offer_component__ = __webpack_require__("../../../../../src/app/employer/components/prior-job-offer/prior-job-offer.component.ts");
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_6__components_payment_payment_component__ = __webpack_require__("../../../../../src/app/employer/components/payment/payment.component.ts");
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_7__components_profile_profile_component__ = __webpack_require__("../../../../../src/app/employer/components/profile/profile.component.ts");
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_8__shared_components_change_password_change_password_component__ = __webpack_require__("../../../../../src/app/shared/components/change-password/change-password.component.ts");
 var __decorate = (this && this.__decorate) || function (decorators, target, key, desc) {
     var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
     if (typeof Reflect === "object" && typeof Reflect.decorate === "function") r = Reflect.decorate(decorators, target, key, desc);
@@ -955,20 +954,19 @@ var __decorate = (this && this.__decorate) || function (decorators, target, key,
 
 
 
-
 var routes = [
     {
         path: '',
         component: __WEBPACK_IMPORTED_MODULE_2__employer_component__["a" /* EmployerComponent */],
         children: [
-            { path: '', component: __WEBPACK_IMPORTED_MODULE_3__components_dashboard_dashboard_component__["a" /* DashboardComponent */] },
-            { path: 'search', component: __WEBPACK_IMPORTED_MODULE_4__components_job_seeker_search_job_seeker_search_component__["a" /* JobSeekerSearchComponent */] },
+            { path: '', component: __WEBPACK_IMPORTED_MODULE_7__components_profile_profile_component__["a" /* ProfileComponent */] },
+            { path: 'search', component: __WEBPACK_IMPORTED_MODULE_3__components_job_seeker_search_job_seeker_search_component__["a" /* JobSeekerSearchComponent */] },
             // {path:'profile', component:ViewProfileComponent},
-            { path: 'transactionhistory', component: __WEBPACK_IMPORTED_MODULE_5__components_transaction_history_transaction_history_component__["a" /* TransactionHistoryComponent */] },
-            { path: 'joboffers', component: __WEBPACK_IMPORTED_MODULE_6__components_prior_job_offer_prior_job_offer_component__["a" /* PriorJobOfferComponent */] },
-            { path: 'payment', component: __WEBPACK_IMPORTED_MODULE_7__components_payment_payment_component__["a" /* PaymentComponent */] },
-            { path: 'profile', component: __WEBPACK_IMPORTED_MODULE_8__components_profile_profile_component__["a" /* ProfileComponent */] },
-            { path: 'changepassword', component: __WEBPACK_IMPORTED_MODULE_9__shared_components_change_password_change_password_component__["a" /* ChangePasswordComponent */] }
+            { path: 'transactionhistory', component: __WEBPACK_IMPORTED_MODULE_4__components_transaction_history_transaction_history_component__["a" /* TransactionHistoryComponent */] },
+            { path: 'joboffers', component: __WEBPACK_IMPORTED_MODULE_5__components_prior_job_offer_prior_job_offer_component__["a" /* PriorJobOfferComponent */] },
+            { path: 'payment', component: __WEBPACK_IMPORTED_MODULE_6__components_payment_payment_component__["a" /* PaymentComponent */] },
+            { path: 'profile', component: __WEBPACK_IMPORTED_MODULE_7__components_profile_profile_component__["a" /* ProfileComponent */] },
+            { path: 'changepassword', component: __WEBPACK_IMPORTED_MODULE_8__shared_components_change_password_change_password_component__["a" /* ChangePasswordComponent */] }
         ]
     }
 ];
