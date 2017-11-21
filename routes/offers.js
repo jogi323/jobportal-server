@@ -6,8 +6,12 @@ var User = mongoose.model('User');
 var Payments = mongoose.model('Payments');
 var Offers = mongoose.model('Offers');
 var VerifyToken = mongoose.model('VerifyToken');
+var OffersToken = mongoose.model('OffersToken');
 var auth = require('./auth');
 var crypto = require('crypto');
+var MailService = require('../config/transport');
+var TwilioService = require('../config/twilio');
+var serverUrl = require('../config').serverUrl;
 
 var accountSid = 'ACe59061ce19c17d5d22f24f4030077216';
 var authToken = 'c72ecbf92ae0157e39b97ace69aef668';
@@ -67,12 +71,10 @@ router.post('/save', auth.required, function(req, res, next) {
                     if (err) {
                         return res.status(500).json({ title: 'Unable To create offer', error: err });
                     } else {
-
                         Offers.findOne({ 'Availability_id': offer._id, 'Employer_id': user._id }, function(err, result) {
                             if (err) { return res.status(500).json({ title: 'Unable To create offer', error: err }) }
                             if (result) {
                                 offerList.splice(0, 1);
-                                console.log(offerList.length);
                                 if (offerList.length === 0) {
                                     res.status(200).json({
                                         message: 'Offer Created and Request was sent',
@@ -87,36 +89,61 @@ router.post('/save', auth.required, function(req, res, next) {
                                 offers.Date_Submitted = offer.Date_Submitted;
                                 // offers.messageSid = message.sid;
                                 offers.messageId = messageId;
-                                offers.save(function(err, offer) {
-                                    if (err) { return res.status(500).json({ title: 'Unable To create offer', error: err }); } else {
-                                        // user.Offers_id.push(result);
-
-                                        offerList.splice(0, 1);
-                                        console.log(js.Phone1)
-                                        client.messages.create({
-                                            to: "+91" + js.Phone1,
-                                            from: "+16364892045",
-                                            body: "Hi, " + user.Firstname + " " + user.Lastname + "has a job offer for you, send  " + "'" + "ACCEPT" + " " + messageId + "'" + "to accept Offer" + " to decline send " + "'" + "DECLINE" + " " + messageId + "'" + " to '+16364892045' ",
-                                        }, function(err, message) {
+                                offers.save(function(err, offerResult) {
+                                    if (err) {
+                                        return res.status(500).json({ title: 'Unable To create offer', error: err })
+                                    } else {
+                                        var token = new OffersToken();
+                                        token.offerId = offerResult._id;
+                                        token.token = crypto.randomBytes(16).toString('hex')
+                                        token.save(function(err) {
                                             if (err) {
-                                                return res.status(500).json({ title: 'Unable To Send Request', error: err });
-                                            }
-                                            if (message) {
+                                                return res.status(500).json({
+                                                    title: 'An error occurred',
+                                                    error: err
+                                                });
+                                            } else {
+                                                var acceptOfferLink = serverUrl + 'acceptoffer/' + token.token;
+                                                var rejectOfferLink = serverUrl + 'rejectoffer/' + token.token;
+                                                var offerDate = offer.Date
+                                                    // var offerDate = offer.Date.toISOString().slice(0, 10);
+                                                var mailOptions = {
+                                                    from: 'ashokona@gmail.com',
+                                                    to: js.Email_Address,
+                                                    subject: 'Congratulations ' + user.Firstname + ', Welcome to Employment - Dental Connections',
+                                                    // text: 'eaders.host + '\/user' + '\/confirmation\/' + token.token + '.\n'
+                                                    html: '<b>Hi, <strong>' + js.Firstname + '</strong></b><br>' +
+                                                        ' <p><b>' + user.Firstname + ' ' + user.Lastname + '</b>' + ' has offerd you a job for position ' + '<b>' + offer.JS_id.Position + '</b>' + ' on ' + offerDate + '</p>' +
+                                                        ' <p>' + 'If you are interested in this offer, accept the offer by accepting the link below' + '</p>' +
+                                                        ' <a href="' + acceptOfferLink + '">Accept Offer</a>' +
+                                                        ' <p>' + 'To decline the job offer follow the link below' + '</p>' +
+                                                        ' <a href="' + rejectOfferLink + '">Reject Offer</a>' +
+                                                        ' <p>Administrator</p>' +
+                                                        ' <p>At Employment</p>'
+                                                };
 
+                                                MailService(mailOptions)
+                                                    .then(result => {
+                                                        offerList.splice(0, 1);
+                                                        if (offerList.length === 0) {
+                                                            res.status(200).json({
+                                                                message: 'Offer Created and Request was sent',
+                                                            });
+                                                        }
+                                                    })
+                                                    .catch(err => {
+                                                        return res.status(500).json({
+                                                            title: 'An error occurred',
+                                                            error: err
+                                                        });
+                                                    })
                                             }
                                         });
-                                        if (offerList.length === 0) {
-                                            // user.save();
-                                            res.status(200).json({
-                                                message: 'Offer Created and Request was sent',
-                                            });
-                                        }
 
                                     }
                                 })
                             }
                         })
-
                     }
                 })
             });
@@ -124,15 +151,15 @@ router.post('/save', auth.required, function(req, res, next) {
     })
 });
 
-
 router.post('/sms', function(req, res) {
-    console.log(req.body);
 
     jsRespone = req.body.Body.split(" ")[0];
     jsMessageId = req.body.Body.split(" ")[1];
     console.log(jsRespone)
     console.log(jsMessageId)
-    console.log("----strated---")
+    console.log("----strated---");
+    var twilio = require('twilio');
+    var twiml = new twilio.twiml.MessagingResponse();
     if (jsRespone === 'ACCEPT' && typeof jsMessageId !== 'undefined') {
         console.log("----if called----")
         Offers.findOne({ 'messageId': req.body.Body.split(" ")[1] })
@@ -148,9 +175,6 @@ router.post('/sms', function(req, res) {
                 console.log("----db called----")
                 console.log(result)
                 if (err) {
-
-                    var twilio = require('twilio');
-                    var twiml = new twilio.TwimlResponse();
                     twiml.message('OOPS!! Something went wrong, please contact our administrator');
                     res.writeHead(200, { 'Content-Type': 'text/xml' });
                     res.end(twiml.toString());
@@ -159,9 +183,6 @@ router.post('/sms', function(req, res) {
                     result.Ready_to_work = 'PENDING';
                     result.save(function(err) {
                         if (err) {
-
-                            var twilio = require('twilio');
-                            var twiml = new twilio.TwimlResponse();
                             twiml.message('OOPS!! Something went wrong, please contact our administrator');
                             res.writeHead(200, { 'Content-Type': 'text/xml' });
                             res.end(twiml.toString());
@@ -175,9 +196,6 @@ router.post('/sms', function(req, res) {
                                     return res.status(500).json({ title: 'Unable To Send Request', error: err });
                                 } else {
                                     console.log("You have accepted " + result.Employer_id.Firstname + " " + result.Employer_id.Lastname + " job offer to report to work send " + "'" + 'RTW ' + result.messageId + "'" + " if not ready to work send" + "'" + "NRTW " + result.messageId + "'" + " to '+16364892045' ");
-
-                                    var twilio = require('twilio');
-                                    var twiml = new twilio.TwimlResponse();
                                     twiml.message("You have accepted " + result.Employer_id.Firstname + " " + result.Employer_id.Lastname + " job offer to report to work send " + "'" + 'RTW ' + result.messageId + "'" + " if not ready to work send" + "'" + "NRTW " + result.messageId + "'" + " to '+16364892045' ");
                                     res.writeHead(200, { 'Content-Type': 'text/xml' });
                                     res.end(twiml.toString());
@@ -224,7 +242,6 @@ router.post('/sms', function(req, res) {
                 }
             })
     } else if (jsRespone === 'DECLINE' && typeof jsMessageId !== 'undefined') {
-        console.log("declinecalled")
         Offers.findOne({ 'messageId': req.body.Body.split(" ")[1] })
             .populate('Employer_id', 'Firstname')
             .exec(function(err, result) {
@@ -460,15 +477,597 @@ router.post('/sms', function(req, res) {
                 }
             })
     } else {
-
-        var twilio = require('twilio');
-        var twiml = new twilio.TwimlResponse();
         twiml.message('Incorrect code sent Pleasse send the correct code with ACCEPT or REJECT message');
         res.writeHead(200, { 'Content-Type': 'text/xml' });
         res.end(twiml.toString());
     }
 
 });
+
+router.get('/accept/:id', function(req, res) {
+    OffersToken.findOne({ token: req.params.id })
+        .populate({
+            path: 'offerId',
+            populate: {
+                path: 'JS_id',
+                model: 'User',
+                select: ['Firstname', 'Lastname', 'Phone1', 'Email_Address', 'Position'],
+            }
+        })
+        .populate({
+            path: 'offerId',
+            populate: {
+                path: 'Employer_id',
+                model: 'User',
+                select: ['Firstname', 'Lastname', 'Contact_Phone_Nr', 'Contact_Person', 'Email_Address'],
+            }
+        })
+        .populate({
+            path: 'offerId',
+            populate: {
+                path: 'Availability_id',
+                model: 'Availabilities',
+                select: ['Date'],
+            }
+        })
+        .exec(function(err, offerDetails) {
+            if (err) {
+                console.log(err);
+                return res.status(500).json({ title: 'An error occurred', error: err });
+            }
+            if (!offerDetails) {
+                return res.status(401).json({
+                    title: 'Offer No longer Available or expired,  check the status of your job offers below',
+                    error: { message: 'Offer Expired' }
+                });
+            }
+            if (typeof offerDetails !== 'undefined' && offerDetails.offerId.Status === 'ACCEPTED') {
+                res.status(200).send({ message: "You have already accepted the job offer by, " + offerDetails.offerId.JS_id.Firstname + ' ' + offerDetails.offerId.JS_id.Lastname + " for the position " + offerDetails.offerId.JS_id.Position + " on " + offerDate + " Request was sent to employer, please wait for the response" });
+            } else {
+                var token = new OffersToken();
+                token.offerId = offerDetails.offerId._id;
+                token.token = crypto.randomBytes(16).toString('hex')
+                token.save(function(err, result) {
+                    if (err) {
+                        if (err) {
+                            console.log(err)
+                            return res.status(500).json({
+                                title: 'An error occurred',
+                                error: err
+                            });
+                        }
+                    } else {
+                        var acceptJSLink = serverUrl + 'acceptjobseeker/' + token.token;
+                        var rejectJSLink = serverUrl + 'rejectjobseeker/' + token.token;
+                        var offerDate = offerDetails.offerId.Availability_id.Date.toISOString().slice(0, 10);
+                        var mailOptions = {
+                            from: 'ashokona@gmail.com',
+                            to: offerDetails.offerId.Employer_id.Email_Address,
+                            subject: offerDetails.offerId.Employer_id.Firstname + ', Has Accepted Your job offer',
+                            // text: 'eaders.host + '\/user' + '\/confirmation\/' + token.token + '.\n'
+                            html: '<b>Hi, <strong>' + offerDetails.offerId.Employer_id.Firstname + '</strong></b><br>' +
+                                ' <p>' + '<strong>' + offerDetails.offerId.JS_id.Firstname + ' ' + offerDetails.offerId.JS_id.Lastname + '</strong>' + ' has accepted your job offer for position ' + '<b>' + offerDetails.offerId.JS_id.Position + '</b>' + ' on ' + offerDate + '</p>' +
+                                ' <p>' + ' To choose this job seeker and Invite him to work ' + '</p>' +
+                                ' <a href="' + acceptJSLink + '">Report To work</a>' +
+                                ' <p>' + ' if you prefer to choose other jobseeker cancel the current job seekers offer ' + '</p>' +
+                                ' <a href="' + rejectJSLink + '">Cancel Offer</a>' +
+                                ' <p>Administrator</p>' +
+                                ' <p>At Employment</p>'
+                        };
+
+                        MailService(mailOptions)
+                            .then(result => {
+                                offerDetails.remove();
+                                Offers.update({ _id: offerDetails.offerId._id }, { Status: 'ACCEPTED' },
+                                    function(err, data) {
+                                        if (err) {
+                                            console.log("update error")
+                                            return res.status(500).json({
+                                                title: 'An error occurred',
+                                                error: err
+                                            });
+                                        } else {
+                                            res.status(200).send({ message: "Congrats your have accepted the job offer by, " + offerDetails.offerId.JS_id.Firstname + ' ' + offerDetails.offerId.JS_id.Lastname + " for the position " + offerDetails.offerId.JS_id.Position + " on " + offerDate + " Request was sent to employer, please wait for the response" });
+
+                                        }
+                                    });
+                            })
+                            .catch(err => {
+                                console.log(err)
+                                return res.status(500).json({
+                                    title: 'An error occurred',
+                                    error: err
+                                });
+                            })
+                    }
+                })
+            }
+        })
+})
+
+router.get('/reject/:id', function(req, res) {
+    OffersToken.findOne({ token: req.params.id })
+        .populate({
+            path: 'offerId',
+            populate: {
+                path: 'JS_id',
+                model: 'User',
+                select: ['Firstname', 'Lastname', 'Phone1', 'Email_Address', 'Position'],
+            }
+        })
+        .populate({
+            path: 'offerId',
+            populate: {
+                path: 'Employer_id',
+                model: 'User',
+                select: ['Firstname', 'Lastname', 'Contact_Phone_Nr', 'Contact_Person', 'Email_Address'],
+            }
+        })
+        .populate({
+            path: 'offerId',
+            populate: {
+                path: 'Availability_id',
+                model: 'Availabilities',
+                select: ['Date'],
+            }
+        })
+        .exec(function(err, offerDetails) {
+            if (err) {
+                console.log(err);
+                return res.status(500).json({ title: 'An error occurred', error: err });
+            }
+            if (!offerDetails) {
+                return res.status(401).json({
+                    title: 'Offer No longer Available or expired,  check the status of your job offers below',
+                    error: { message: 'Offer Expired' }
+                });
+            } else {
+                var token = new OffersToken();
+                token.offerId = offerDetails.offerId._id;
+                token.token = crypto.randomBytes(16).toString('hex')
+                token.save(function(err, result) {
+                    if (err) {
+                        if (err) {
+                            console.log(err)
+                            return res.status(500).json({
+                                title: 'An error occurred',
+                                error: err
+                            });
+                        }
+                    } else {
+
+                        var offerDate = offerDetails.offerId.Availability_id.Date.toISOString().slice(0, 10);
+                        var mailOptions = {
+                            from: 'ashokona@gmail.com',
+                            to: offerDetails.offerId.Employer_id.Email_Address,
+                            subject: offerDetails.offerId.Employer_id.Firstname + ', Has Declined Your job offer',
+                            // text: 'eaders.host + '\/user' + '\/confirmation\/' + token.token + '.\n'
+                            html: '<b>Hi, <strong>' + offerDetails.offerId.Employer_id.Firstname + '</strong></b><br>' +
+                                ' <p>' + '<strong>' + offerDetails.offerId.JS_id.Firstname + ' ' + offerDetails.offerId.JS_id.Lastname + '</strong>' + ' has declined your job offer for position ' + '<b>' + offerDetails.offerId.JS_id.Position + '</b>' + ' on ' + offerDate + '</p>' +
+                                ' <p>' + ' There are few other jobseekers ready to work, Login to DEntal Assistant and choose any one from them' + '</p>' +
+                                ' <p>Administrator</p>' +
+                                ' <p>At Employment</p>'
+                        };
+
+                        MailService(mailOptions)
+                            .then(result => {
+                                offerDetails.remove();
+                                Offers.update({ _id: offerDetails.offerId._id }, { Status: 'DECLINED', Ready_to_work: 'DECLINED' },
+                                    function(err, data) {
+                                        if (err) {
+                                            console.log("update error")
+                                            return res.status(500).json({
+                                                title: 'An error occurred',
+                                                error: err
+                                            });
+                                        } else {
+                                            res.status(200).send({ message: "You have rejected job offer by " + offerDetails.offerId.JS_id.Firstname + ' ' + offerDetails.offerId.JS_id.Lastname + " for the position " + offerDetails.offerId.JS_id.Position + " on " + offerDate + ". There are more job offer waiting for you!" });
+                                        }
+                                    });
+
+                            })
+                            .catch(err => {
+                                return res.status(500).json({
+                                    title: 'An error occurred',
+                                    error: err
+                                });
+                            })
+
+                    }
+                })
+            }
+        })
+})
+
+router.get('/acceptjs/:id', function(req, res) {
+    OffersToken.findOne({ token: req.params.id })
+        .populate({
+            path: 'offerId',
+            populate: {
+                path: 'JS_id',
+                model: 'User',
+                select: ['Firstname', 'Lastname', 'Phone1', 'Email_Address', 'Position'],
+            }
+        })
+        .populate({
+            path: 'offerId',
+            populate: {
+                path: 'Employer_id',
+                model: 'User',
+                select: ['Firstname', 'Lastname', 'Contact_Phone_Nr', 'Contact_Person', 'Email_Address'],
+            }
+        })
+        .populate({
+            path: 'offerId',
+            populate: {
+                path: 'Availability_id',
+                model: 'Availabilities',
+                select: ['Date'],
+            }
+        })
+        .exec(function(err, offerDetails) {
+            if (err) {
+                console.log(err);
+                return res.status(500).json({ title: 'An error occurred', error: err });
+            }
+            if (!offerDetails) {
+                return res.status(401).json({
+                    title: 'Offer No longer Available or expired,  check the status of your job offers below',
+                    error: { message: 'Offer Expired' }
+                });
+            } else {
+                var token = new OffersToken();
+                token.offerId = offerDetails.offerId._id;
+                token.token = crypto.randomBytes(16).toString('hex')
+                token.save(function(err, result) {
+                    if (err) {
+                        if (err) {
+                            console.log(err)
+                            return res.status(500).json({
+                                title: 'An error occurred',
+                                error: err
+                            });
+                        }
+                    } else {
+                        var jobseekerRtw = serverUrl + 'jobseekerrtw/' + token.token;
+                        var declineNrtwLink = serverUrl + 'jobseekernrtw/' + token.token;
+                        var offerDate = offerDetails.offerId.Availability_id.Date.toISOString().slice(0, 10)
+                        var mailOptions = {
+                            from: 'ashokona@gmail.com',
+                            to: offerDetails.offerId.JS_id.Email_Address,
+                            subject: offerDetails.offerId.Employer_id.Firstname + ', Has Accepted Your job offer',
+                            // text: 'eaders.host + '\/user' + '\/confirmation\/' + token.token + '.\n'
+                            html: '<b>Hi, <strong>' + offerDetails.offerId.JS_id.Firstname + '</strong></b><br>' +
+                                ' <p>' + '<strong>' + offerDetails.offerId.Employer_id.Firstname + ' ' + offerDetails.offerId.Employer_id.Lastname + '</strong>' + ' has accepted your job offer for position ' + offerDetails.offerId.JS_id.Position + ' on ' + offerDate + '</p>' +
+                                ' <p>' + ' To confirm and report and report to work, follow link below' + '</p>' +
+                                ' <a href="' + jobseekerRtw + '">Report To work</a>' +
+                                ' <p>' + ' To confirm and report and report to work, follow link below' + '</p>' +
+                                ' <a href="' + declineNrtwLink + '">Cancel Offer</a>' +
+                                ' <p>Administrator</p>' +
+                                ' <p>At Employment</p>'
+                        };
+
+                        MailService(mailOptions)
+                            .then(result => {
+                                offerDetails.remove();
+                                Offers.update({ _id: offerDetails.offerId._id }, { Status: 'ACCEPTED' },
+                                    function(err, data) {
+                                        if (err) {
+                                            console.log("update error")
+                                            return res.status(500).json({
+                                                title: 'An error occurred',
+                                                error: err
+                                            });
+                                        } else {
+                                            res.status(200).send({ message: "You have selected jobseeker, " + offerDetails.offerId.Employer_id.Firstname + ' ' + offerDetails.offerId.Employer_id.Lastname + " for position " + offerDetails.offerId.JS_id.Position + " on " + offerDate + ". Login here to check the status of joboffers " });
+
+                                        }
+                                    });
+                            })
+                            .catch(err => {
+                                console.log(err)
+                                return res.status(500).json({
+                                    title: 'An error occurred',
+                                    error: err
+                                });
+                            })
+
+
+
+                    }
+                })
+            }
+        })
+})
+
+router.get('/rejectjs/:id', function(req, res) {
+    OffersToken.findOne({ token: req.params.id })
+        .populate({
+            path: 'offerId',
+            populate: {
+                path: 'JS_id',
+                model: 'User',
+                select: ['Firstname', 'Lastname', 'Phone1', 'Email_Address', 'Position'],
+            }
+        })
+        .populate({
+            path: 'offerId',
+            populate: {
+                path: 'Employer_id',
+                model: 'User',
+                select: ['Firstname', 'Lastname', 'Contact_Phone_Nr', 'Contact_Person', 'Email_Address'],
+            }
+        })
+        .populate({
+            path: 'offerId',
+            populate: {
+                path: 'Availability_id',
+                model: 'Availabilities',
+                select: ['Date'],
+            }
+        })
+        .exec(function(err, offerDetails) {
+            if (err) {
+                console.log(err);
+                return res.status(500).json({ title: 'An error occurred', error: err });
+            }
+            if (!offerDetails) {
+                return res.status(401).json({
+                    title: 'Offer No longer Available or expired,  check the status of your job offers below',
+                    error: { message: 'Offer Expired' }
+                });
+            } else {
+                var token = new OffersToken();
+                token.offerId = offerDetails.offerId._id;
+                token.token = crypto.randomBytes(16).toString('hex')
+                token.save(function(err, result) {
+                    if (err) {
+                        if (err) {
+                            console.log(err)
+                            return res.status(500).json({
+                                title: 'An error occurred',
+                                error: err
+                            });
+                        }
+                    } else {
+
+                        var offerDate = offerDetails.offerId.Availability_id.Date.toISOString().slice(0, 10);
+                        var mailOptions = {
+                            from: 'ashokona@gmail.com',
+                            to: offerDetails.offerId.Employer_id.Email_Address,
+                            subject: offerDetails.offerId.Employer_id.Firstname + ', Has Declined Your job offer',
+                            // text: 'eaders.host + '\/user' + '\/confirmation\/' + token.token + '.\n'
+                            html: '<b>Hi, <strong>' + offerDetails.offerId.Employer_id.Firstname + '</strong></b><br>' +
+                                ' <p>' + '<strong>' + offerDetails.offerId.JS_id.Firstname + ' ' + offerDetails.offerId.JS_id.Lastname + '</strong>' + ' has declined your job offer for position ' + offerDetails.offerId.JS_id.Position + ' on ' + offerDate + '</p>' +
+                                ' <p>' + ' There are few other jobseekers ready to work, Login to DEntal Assistant and choose any one from them' + '</p>' +
+                                ' <p>Administrator</p>' +
+                                ' <p>At Employment</p>'
+                        };
+
+                        MailService(mailOptions)
+                            .then(result => {
+                                offerDetails.remove();
+                                Offers.update({ _id: offerDetails.offerId._id }, { Status: 'DECLINED', Ready_to_work: 'DECLINED' },
+                                    function(err, data) {
+                                        if (err) {
+                                            console.log("update error")
+                                            return res.status(500).json({
+                                                title: 'An error occurred',
+                                                error: err
+                                            });
+                                        } else {
+                                            res.status(200).send({ message: "You have rejected job seeker " + offerDetails.offerId.JS_id.Firstname + ' ' + offerDetails.offerId.JS_id.Lastname + " for the position " + offerDetails.offerId.JS_id.Position + " on " + offerDate + ". There are more job seekers to work!" });
+                                        }
+                                    });
+
+                            })
+                            .catch(err => {
+                                return res.status(500).json({
+                                    title: 'An error occurred',
+                                    error: err
+                                });
+                            })
+                    }
+                })
+            }
+        })
+})
+
+router.get('/rtw/:id', function(req, res) {
+    OffersToken.findOne({ token: req.params.id })
+        .populate({
+            path: 'offerId',
+            populate: {
+                path: 'JS_id',
+                model: 'User',
+                select: ['Firstname', 'Lastname', 'Phone1', 'Email_Address', 'Position'],
+            }
+        })
+        .populate({
+            path: 'offerId',
+            populate: {
+                path: 'Employer_id',
+                model: 'User',
+                select: ['Firstname', 'Lastname', 'Contact_Phone_Nr', 'Contact_Person', 'Email_Address'],
+            }
+        })
+        .populate({
+            path: 'offerId',
+            populate: {
+                path: 'Availability_id',
+                model: 'Availabilities',
+                select: ['Date'],
+            }
+        })
+        .exec(function(err, offerDetails) {
+            if (err) {
+                console.log(err);
+                return res.status(500).json({ title: 'An error occurred', error: err });
+            }
+            if (!offerDetails) {
+                return res.status(401).json({
+                    title: 'Offer No longer Available or expired,  check the status of your job offers below',
+                    error: { message: 'Offer Expired' }
+                });
+            } else {
+                var token = new OffersToken();
+                token.offerId = offerDetails.offerId._id;
+                token.token = crypto.randomBytes(16).toString('hex')
+                token.save(function(err, result) {
+                    if (err) {
+                        if (err) {
+                            console.log(err)
+                            return res.status(500).json({
+                                title: 'An error occurred',
+                                error: err
+                            });
+                        }
+                    } else {
+
+                        var offerDate = offerDetails.offerId.Availability_id.Date.toISOString().slice(0, 10);
+
+                        var mailOptions = {
+                            from: 'ashokona@gmail.com',
+                            to: offerDetails.offerId.Employer_id.Email_Address,
+                            subject: offerDetails.offerId.Employer_id.Firstname + ', Has Accepted Your job offer',
+                            // text: 'eaders.host + '\/user' + '\/confirmation\/' + token.token + '.\n'
+                            html: '<b>Hi, <strong>' + offerDetails.offerId.Employer_id.Firstname + '</strong></b><br>' +
+                                ' <p>' + '<strong>' + offerDetails.offerId.JS_id.Firstname + ' ' + offerDetails.offerId.JS_id.Lastname + '</strong>' + ' is ready to work for your job offer for position ' + offerDetails.offerId.JS_id.Position + ' on ' + offerDate + '</p>' +
+                                ' <p>Administrator</p>' +
+                                ' <p>At Employment</p>'
+                        };
+
+                        MailService(mailOptions)
+                            .then(result => {
+                                offerDetails.remove();
+                                Offers.update({ _id: offerDetails.offerId._id }, { Ready_to_work: 'ACCEPTED' },
+                                    function(err, data) {
+                                        if (err) {
+                                            return res.status(500).json({
+                                                title: 'An error occurred',
+                                                error: err
+                                            });
+                                        } else {
+                                            Availabilities.updateMany({ '_id': offerDetails.offerId.Availability_id._id }, { $set: { Hired: true } }, function(err, data) {
+                                                if (err) {
+                                                    return res.status(500).json({
+                                                        title: 'An error occurred',
+                                                        error: err
+                                                    });
+                                                } else {
+                                                    res.status(200).send({ message: "Congrats your have Choosen to work with " + offerDetails.offerId.Employer_id.Firstname + " Report to work on " + offerDate });
+                                                }
+                                            })
+
+                                        }
+                                    });
+                            })
+                            .catch(err => {
+                                console.log(err)
+                                return res.status(500).json({
+                                    title: 'An error occurred',
+                                    error: err
+                                });
+                            })
+                    }
+                })
+            }
+        })
+})
+
+router.get('/nrtw/:id', function(req, res) {
+    OffersToken.findOne({ token: req.params.id })
+        .populate({
+            path: 'offerId',
+            populate: {
+                path: 'JS_id',
+                model: 'User',
+                select: ['Firstname', 'Lastname', 'Phone1', 'Email_Address', 'Position'],
+            }
+        })
+        .populate({
+            path: 'offerId',
+            populate: {
+                path: 'Employer_id',
+                model: 'User',
+                select: ['Firstname', 'Lastname', 'Contact_Phone_Nr', 'Contact_Person', 'Email_Address'],
+            }
+        })
+        .populate({
+            path: 'offerId',
+            populate: {
+                path: 'Availability_id',
+                model: 'Availabilities',
+                select: ['Date'],
+            }
+        })
+        .exec(function(err, offerDetails) {
+            if (err) {
+                console.log(err);
+                return res.status(500).json({ title: 'An error occurred', error: err });
+            }
+            if (!offerDetails) {
+                return res.status(401).json({
+                    title: 'Offer No longer Available or expired,  check the status of your job offers below',
+                    error: { message: 'Offer Expired' }
+                });
+            } else {
+                var token = new OffersToken();
+                token.offerId = offerDetails.offerId._id;
+                token.token = crypto.randomBytes(16).toString('hex')
+                token.save(function(err, result) {
+                    if (err) {
+                        if (err) {
+                            console.log(err)
+                            return res.status(500).json({
+                                title: 'An error occurred',
+                                error: err
+                            });
+                        }
+                    } else {
+
+                        var offerDate = offerDetails.offerId.Availability_id.Date.toISOString().slice(0, 10);
+                        var mailOptions = {
+                            from: 'ashokona@gmail.com',
+                            to: offerDetails.offerId.Employer_id.Email_Address,
+                            subject: offerDetails.offerId.Employer_id.Firstname + ', Has Declined Your job offer',
+                            html: '<b>Hi, <strong>' + offerDetails.offerId.Employer_id.Firstname + '</strong></b><br>' +
+                                ' <p>' + '<strong>' + offerDetails.offerId.JS_id.Firstname + ' ' + offerDetails.offerId.JS_id.Lastname + '</strong>' + ' has declined your job offer for position ' + offerDetails.offerId.JS_id.Position + ' on ' + offerDate + '</p>' +
+                                ' <p>' + ' There are few other jobseekers ready to work, Login to DEntal Assistant and choose any one from them' + '</p>' +
+                                ' <p>Administrator</p>' +
+                                ' <p>At Employment</p>'
+                        };
+
+
+                        MailService(mailOptions)
+                            .then(result => {
+                                offerDetails.remove();
+                                Offers.update({ _id: offerDetails.offerId._id }, { Status: 'DECLINED', Ready_to_work: 'DECLINED' },
+                                    function(err, data) {
+                                        if (err) {
+                                            console.log("update error")
+                                            return res.status(500).json({
+                                                title: 'An error occurred',
+                                                error: err
+                                            });
+                                        } else {
+                                            res.status(200).send({ message: "You have choose  not to work with" + offerDetails.offerId.Employer_id.Firstname + ' ' + offerDetails.offerId.Employer_id.Lastname + " for the position " + offerDetails.offerId.JS_id.Position + " on " + offerDate + ". There are more job offer waiting for you!" });
+                                        }
+                                    });
+
+                            })
+                            .catch(err => {
+                                return res.status(500).json({
+                                    title: 'An error occurred',
+                                    error: err
+                                });
+                            })
+
+                    }
+                })
+            }
+        })
+})
 
 
 module.exports = router;

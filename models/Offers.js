@@ -8,7 +8,7 @@ var OffersSchema = new Schema({
     Employer_id: { type: Schema.Types.ObjectId, ref: 'User' },
     Status: {
         type: String,
-        enum: ['PENDING', 'DECLINED', 'ACCEPTED', 'EXPIRED'],
+        enum: ['PENDING', 'DECLINED', 'ACCEPTED', 'RTW', 'EXPIRED', 'HIRED'],
         default: 'PENDING'
     },
     messageId: { type: String, default: false },

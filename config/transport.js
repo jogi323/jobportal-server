@@ -1,22 +1,22 @@
 const nodemailer = require('nodemailer');
 const Promise = require('bluebird');
-const config = require('./mailConfig');
+const config = require('./config');
 
 
 var MailService = function(data) {
     return new Promise(function(resolve, reject) {
         let transporter = nodemailer.createTransport({
-            host: config.host,
-            port: config.port,
+            host: config.nodemailer.host,
+            port: config.nodemailer.port,
             service: "Gmail",
             secure: false,
             auth: {
-                user: config.email,
-                pass: config.password
+                user: config.nodemailer.email,
+                pass: config.nodemailer.password
             }
         });
         let mailOptions = {
-            from: '"' + config.sender + '" <' + config.email + '>',
+            from: '"' + config.nodemailer.sender + '" <' + config.nodemailer.email + '>',
             to: data.to,
             subject: data.subject,
             text: data.text,
@@ -24,7 +24,6 @@ var MailService = function(data) {
         };
         transporter.sendMail(mailOptions, (error, info) => {
             if (error) {
-                console.log(error);
                 reject({
                     success: false,
                     error: error,

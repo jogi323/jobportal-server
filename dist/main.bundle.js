@@ -132,8 +132,14 @@ var _a, _b, _c, _d;
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_5__shared_components_contact_us_contact_us_component__ = __webpack_require__("../../../../../src/app/shared/components/contact-us/contact-us.component.ts");
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_6__register_register_component__ = __webpack_require__("../../../../../src/app/register/register.component.ts");
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_7__activate_user_activate_user_component__ = __webpack_require__("../../../../../src/app/activate-user/activate-user.component.ts");
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_8__shared_services_auth_guard_service__ = __webpack_require__("../../../../../src/app/shared/services/auth-guard.service.ts");
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_9__shared_services_no_auth_guard_service__ = __webpack_require__("../../../../../src/app/shared/services/no-auth-guard.service.ts");
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_8__offers_accept_offer_accept_offer_component__ = __webpack_require__("../../../../../src/app/offers/accept-offer/accept-offer.component.ts");
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_9__offers_decline_offer_decline_offer_component__ = __webpack_require__("../../../../../src/app/offers/decline-offer/decline-offer.component.ts");
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_10__offers_accept_jobseeker_accept_jobseeker_component__ = __webpack_require__("../../../../../src/app/offers/accept-jobseeker/accept-jobseeker.component.ts");
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_11__offers_reject_jobseeker_reject_jobseeker_component__ = __webpack_require__("../../../../../src/app/offers/reject-jobseeker/reject-jobseeker.component.ts");
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_12__offers_jobseeker_rtw_jobseeker_rtw_component__ = __webpack_require__("../../../../../src/app/offers/jobseeker-rtw/jobseeker-rtw.component.ts");
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_13__offers_jobseeker_nrtw_jobseeker_nrtw_component__ = __webpack_require__("../../../../../src/app/offers/jobseeker-nrtw/jobseeker-nrtw.component.ts");
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_14__shared_services_auth_guard_service__ = __webpack_require__("../../../../../src/app/shared/services/auth-guard.service.ts");
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_15__shared_services_no_auth_guard_service__ = __webpack_require__("../../../../../src/app/shared/services/no-auth-guard.service.ts");
 var __decorate = (this && this.__decorate) || function (decorators, target, key, desc) {
     var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
     if (typeof Reflect === "object" && typeof Reflect.decorate === "function") r = Reflect.decorate(decorators, target, key, desc);
@@ -148,20 +154,33 @@ var __decorate = (this && this.__decorate) || function (decorators, target, key,
 
 
 
+//offers related routes
+
+
+
+
+
+
 
 
 var routes = [
-    { path: '', component: __WEBPACK_IMPORTED_MODULE_2__home_home_component__["a" /* HomeComponent */], canActivate: [__WEBPACK_IMPORTED_MODULE_9__shared_services_no_auth_guard_service__["a" /* NoAuthGuardService */]] },
-    { path: 'confirm/:id', component: __WEBPACK_IMPORTED_MODULE_7__activate_user_activate_user_component__["a" /* ActivateUserComponent */], canActivate: [__WEBPACK_IMPORTED_MODULE_9__shared_services_no_auth_guard_service__["a" /* NoAuthGuardService */]] },
+    { path: '', component: __WEBPACK_IMPORTED_MODULE_2__home_home_component__["a" /* HomeComponent */], canActivate: [__WEBPACK_IMPORTED_MODULE_15__shared_services_no_auth_guard_service__["a" /* NoAuthGuardService */]] },
+    { path: 'confirm/:id', component: __WEBPACK_IMPORTED_MODULE_7__activate_user_activate_user_component__["a" /* ActivateUserComponent */], canActivate: [__WEBPACK_IMPORTED_MODULE_15__shared_services_no_auth_guard_service__["a" /* NoAuthGuardService */]] },
     { path: 'employer',
         loadChildren: './employer/employer.module#EmployerModule',
-        canActivate: [__WEBPACK_IMPORTED_MODULE_8__shared_services_auth_guard_service__["a" /* AuthGuardService */]]
+        canActivate: [__WEBPACK_IMPORTED_MODULE_14__shared_services_auth_guard_service__["a" /* AuthGuardService */]]
     },
-    { path: 'jobseeker', loadChildren: './job-seeker/job-seeker.module#JobSeekerModule', canActivate: [__WEBPACK_IMPORTED_MODULE_8__shared_services_auth_guard_service__["a" /* AuthGuardService */]] },
-    { path: 'changepassword', component: __WEBPACK_IMPORTED_MODULE_3__shared_components_change_password_change_password_component__["a" /* ChangePasswordComponent */], canActivate: [__WEBPACK_IMPORTED_MODULE_8__shared_services_auth_guard_service__["a" /* AuthGuardService */]] },
-    { path: 'forgotpassword/:id', component: __WEBPACK_IMPORTED_MODULE_4__shared_components_forgot_password_forgot_password_component__["a" /* ForgotPasswordComponent */], canActivate: [__WEBPACK_IMPORTED_MODULE_9__shared_services_no_auth_guard_service__["a" /* NoAuthGuardService */]] },
-    { path: 'register', component: __WEBPACK_IMPORTED_MODULE_6__register_register_component__["a" /* RegisterComponent */], canActivate: [__WEBPACK_IMPORTED_MODULE_9__shared_services_no_auth_guard_service__["a" /* NoAuthGuardService */]] },
-    { path: 'contactus', component: __WEBPACK_IMPORTED_MODULE_5__shared_components_contact_us_contact_us_component__["a" /* ContactUsComponent */], canActivate: [__WEBPACK_IMPORTED_MODULE_9__shared_services_no_auth_guard_service__["a" /* NoAuthGuardService */]] },
+    { path: 'jobseeker', loadChildren: './job-seeker/job-seeker.module#JobSeekerModule', canActivate: [__WEBPACK_IMPORTED_MODULE_14__shared_services_auth_guard_service__["a" /* AuthGuardService */]] },
+    { path: 'changepassword', component: __WEBPACK_IMPORTED_MODULE_3__shared_components_change_password_change_password_component__["a" /* ChangePasswordComponent */], canActivate: [__WEBPACK_IMPORTED_MODULE_14__shared_services_auth_guard_service__["a" /* AuthGuardService */]] },
+    { path: 'forgotpassword/:id', component: __WEBPACK_IMPORTED_MODULE_4__shared_components_forgot_password_forgot_password_component__["a" /* ForgotPasswordComponent */], canActivate: [__WEBPACK_IMPORTED_MODULE_15__shared_services_no_auth_guard_service__["a" /* NoAuthGuardService */]] },
+    { path: 'register', component: __WEBPACK_IMPORTED_MODULE_6__register_register_component__["a" /* RegisterComponent */], canActivate: [__WEBPACK_IMPORTED_MODULE_15__shared_services_no_auth_guard_service__["a" /* NoAuthGuardService */]] },
+    { path: 'contactus', component: __WEBPACK_IMPORTED_MODULE_5__shared_components_contact_us_contact_us_component__["a" /* ContactUsComponent */], canActivate: [__WEBPACK_IMPORTED_MODULE_15__shared_services_no_auth_guard_service__["a" /* NoAuthGuardService */]] },
+    { path: 'acceptoffer/:id', component: __WEBPACK_IMPORTED_MODULE_8__offers_accept_offer_accept_offer_component__["a" /* AcceptOfferComponent */] },
+    { path: 'rejectoffer/:id', component: __WEBPACK_IMPORTED_MODULE_9__offers_decline_offer_decline_offer_component__["a" /* DeclineOfferComponent */] },
+    { path: 'acceptjobseeker/:id', component: __WEBPACK_IMPORTED_MODULE_10__offers_accept_jobseeker_accept_jobseeker_component__["a" /* AcceptJobseekerComponent */] },
+    { path: 'rejectjobseeker/:id', component: __WEBPACK_IMPORTED_MODULE_11__offers_reject_jobseeker_reject_jobseeker_component__["a" /* RejectJobseekerComponent */] },
+    { path: 'jobseekerrtw/:id', component: __WEBPACK_IMPORTED_MODULE_12__offers_jobseeker_rtw_jobseeker_rtw_component__["a" /* JobseekerRtwComponent */] },
+    { path: 'jobseekernrtw/:id', component: __WEBPACK_IMPORTED_MODULE_13__offers_jobseeker_nrtw_jobseeker_nrtw_component__["a" /* JobseekerNrtwComponent */] },
     { path: '**', redirectTo: '' },
 ];
 var AppRoutingModule = (function () {
@@ -290,6 +309,12 @@ var _a, _b;
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_21__shared_services_no_auth_guard_service__ = __webpack_require__("../../../../../src/app/shared/services/no-auth-guard.service.ts");
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_22__shared_services_loader_service__ = __webpack_require__("../../../../../src/app/shared/services/loader.service.ts");
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_23__activate_user_activate_user_component__ = __webpack_require__("../../../../../src/app/activate-user/activate-user.component.ts");
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_24__offers_accept_offer_accept_offer_component__ = __webpack_require__("../../../../../src/app/offers/accept-offer/accept-offer.component.ts");
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_25__offers_decline_offer_decline_offer_component__ = __webpack_require__("../../../../../src/app/offers/decline-offer/decline-offer.component.ts");
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_26__offers_accept_jobseeker_accept_jobseeker_component__ = __webpack_require__("../../../../../src/app/offers/accept-jobseeker/accept-jobseeker.component.ts");
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_27__offers_reject_jobseeker_reject_jobseeker_component__ = __webpack_require__("../../../../../src/app/offers/reject-jobseeker/reject-jobseeker.component.ts");
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_28__offers_jobseeker_rtw_jobseeker_rtw_component__ = __webpack_require__("../../../../../src/app/offers/jobseeker-rtw/jobseeker-rtw.component.ts");
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_29__offers_jobseeker_nrtw_jobseeker_nrtw_component__ = __webpack_require__("../../../../../src/app/offers/jobseeker-nrtw/jobseeker-nrtw.component.ts");
 var __decorate = (this && this.__decorate) || function (decorators, target, key, desc) {
     var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
     if (typeof Reflect === "object" && typeof Reflect.decorate === "function") r = Reflect.decorate(decorators, target, key, desc);
@@ -323,6 +348,12 @@ var __decorate = (this && this.__decorate) || function (decorators, target, key,
 
 
 
+
+
+
+
+
+
 // import { SearchPipe } from './shared/pipes/search.pipe';
 var AppModule = (function () {
     function AppModule() {
@@ -336,7 +367,13 @@ AppModule = __decorate([
             __WEBPACK_IMPORTED_MODULE_13__login_login_component__["a" /* LoginComponent */],
             __WEBPACK_IMPORTED_MODULE_14__home_home_component__["a" /* HomeComponent */],
             __WEBPACK_IMPORTED_MODULE_15__register_register_component__["a" /* RegisterComponent */],
-            __WEBPACK_IMPORTED_MODULE_23__activate_user_activate_user_component__["a" /* ActivateUserComponent */]
+            __WEBPACK_IMPORTED_MODULE_23__activate_user_activate_user_component__["a" /* ActivateUserComponent */],
+            __WEBPACK_IMPORTED_MODULE_24__offers_accept_offer_accept_offer_component__["a" /* AcceptOfferComponent */],
+            __WEBPACK_IMPORTED_MODULE_25__offers_decline_offer_decline_offer_component__["a" /* DeclineOfferComponent */],
+            __WEBPACK_IMPORTED_MODULE_26__offers_accept_jobseeker_accept_jobseeker_component__["a" /* AcceptJobseekerComponent */],
+            __WEBPACK_IMPORTED_MODULE_27__offers_reject_jobseeker_reject_jobseeker_component__["a" /* RejectJobseekerComponent */],
+            __WEBPACK_IMPORTED_MODULE_28__offers_jobseeker_rtw_jobseeker_rtw_component__["a" /* JobseekerRtwComponent */],
+            __WEBPACK_IMPORTED_MODULE_29__offers_jobseeker_nrtw_jobseeker_nrtw_component__["a" /* JobseekerNrtwComponent */]
             // SearchPipe
         ],
         imports: [
@@ -589,6 +626,510 @@ LoginComponent = __decorate([
 
 var _a, _b, _c, _d, _e;
 //# sourceMappingURL=login.component.js.map
+
+/***/ }),
+
+/***/ "../../../../../src/app/offers/accept-jobseeker/accept-jobseeker.component.css":
+/***/ (function(module, exports, __webpack_require__) {
+
+exports = module.exports = __webpack_require__("../../../../css-loader/lib/css-base.js")(false);
+// imports
+
+
+// module
+exports.push([module.i, ".response {\r\n    position: relative;\r\n    width: 90%;\r\n    left: 5%;\r\n    margin-top: 5%;\r\n    background: #00394E;\r\n}\r\n.dummy{\r\n    height: 230px;\r\n}\r\n.content {\r\n    color: white;\r\n}\r\n.home-botton {\r\n    position: relative;\r\n    left: 48%;\r\n}\r\n.home-botton:hover span{\r\n    color: white;\r\n}\r\n", ""]);
+
+// exports
+
+
+/*** EXPORTS FROM exports-loader ***/
+module.exports = module.exports.toString();
+
+/***/ }),
+
+/***/ "../../../../../src/app/offers/accept-jobseeker/accept-jobseeker.component.html":
+/***/ (function(module, exports) {
+
+module.exports = "<div class=\"container\">\r\n    <div class=\"col-sm-12 mail-row\" *ngIf=\"success\">\r\n        <div class=\"col-sm-2 mail-icon\">\r\n            <i class=\"fa fa-smile-o\" aria-hidden=\"true\"></i>\r\n        </div>\r\n        <div class=\"col-sm-10 mail-btn\">\r\n            <h5>{{success}}</h5>\r\n\r\n            <a class=\"btn btn-md btn-color mt-10\" [routerLink]=\"['']\"><span>Go To Home</span></a>\r\n        </div>\r\n    </div>\r\n    <div class=\" col-sm-12 mail-fail-row \" *ngIf=\"error \">\r\n        <div class=\"col-sm-2 mail-icon-sad \">\r\n            <i class=\"fa fa-frown-o \" aria-hidden=\"true \"></i>\r\n        </div>\r\n        <div class=\"col-sm-10 mail-btn \">\r\n            <h5>{{error.title}}</h5>\r\n            <a class=\"btn btn-md btn-color mt-10 \" [routerLink]=\"[ '']\"><span>Go To Home</span></a>\r\n        </div>\r\n    </div>\r\n</div>\r\n<div class=\"dummy\">\r\n\r\n</div>"
+
+/***/ }),
+
+/***/ "../../../../../src/app/offers/accept-jobseeker/accept-jobseeker.component.ts":
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "a", function() { return AcceptJobseekerComponent; });
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__angular_core__ = __webpack_require__("../../../core/@angular/core.es5.js");
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__shared_services_user_service__ = __webpack_require__("../../../../../src/app/shared/services/user.service.ts");
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__angular_router__ = __webpack_require__("../../../router/@angular/router.es5.js");
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_3__shared_services_loader_service__ = __webpack_require__("../../../../../src/app/shared/services/loader.service.ts");
+var __decorate = (this && this.__decorate) || function (decorators, target, key, desc) {
+    var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
+    if (typeof Reflect === "object" && typeof Reflect.decorate === "function") r = Reflect.decorate(decorators, target, key, desc);
+    else for (var i = decorators.length - 1; i >= 0; i--) if (d = decorators[i]) r = (c < 3 ? d(r) : c > 3 ? d(target, key, r) : d(target, key)) || r;
+    return c > 3 && r && Object.defineProperty(target, key, r), r;
+};
+var __metadata = (this && this.__metadata) || function (k, v) {
+    if (typeof Reflect === "object" && typeof Reflect.metadata === "function") return Reflect.metadata(k, v);
+};
+
+
+
+
+var AcceptJobseekerComponent = (function () {
+    function AcceptJobseekerComponent(userService, router, activatedRoute, loader) {
+        var _this = this;
+        this.userService = userService;
+        this.router = router;
+        this.activatedRoute = activatedRoute;
+        this.loader = loader;
+        this.loader.display(true);
+        this.activatedRoute.params.subscribe(function (params) {
+            _this.id = params['id'];
+        });
+        this.userService.acceptJobseeker(this.id).subscribe(function (res) {
+            _this.loader.display(false);
+            _this.success = res.message;
+        }, function (err) {
+            _this.loader.display(false);
+            _this.error = err;
+        });
+    }
+    AcceptJobseekerComponent.prototype.ngOnInit = function () {
+    };
+    return AcceptJobseekerComponent;
+}());
+AcceptJobseekerComponent = __decorate([
+    Object(__WEBPACK_IMPORTED_MODULE_0__angular_core__["Component"])({
+        selector: 'app-accept-jobseeker',
+        template: __webpack_require__("../../../../../src/app/offers/accept-jobseeker/accept-jobseeker.component.html"),
+        styles: [__webpack_require__("../../../../../src/app/offers/accept-jobseeker/accept-jobseeker.component.css")]
+    }),
+    __metadata("design:paramtypes", [typeof (_a = typeof __WEBPACK_IMPORTED_MODULE_1__shared_services_user_service__["a" /* UserService */] !== "undefined" && __WEBPACK_IMPORTED_MODULE_1__shared_services_user_service__["a" /* UserService */]) === "function" && _a || Object, typeof (_b = typeof __WEBPACK_IMPORTED_MODULE_2__angular_router__["Router"] !== "undefined" && __WEBPACK_IMPORTED_MODULE_2__angular_router__["Router"]) === "function" && _b || Object, typeof (_c = typeof __WEBPACK_IMPORTED_MODULE_2__angular_router__["ActivatedRoute"] !== "undefined" && __WEBPACK_IMPORTED_MODULE_2__angular_router__["ActivatedRoute"]) === "function" && _c || Object, typeof (_d = typeof __WEBPACK_IMPORTED_MODULE_3__shared_services_loader_service__["a" /* LoaderService */] !== "undefined" && __WEBPACK_IMPORTED_MODULE_3__shared_services_loader_service__["a" /* LoaderService */]) === "function" && _d || Object])
+], AcceptJobseekerComponent);
+
+var _a, _b, _c, _d;
+//# sourceMappingURL=accept-jobseeker.component.js.map
+
+/***/ }),
+
+/***/ "../../../../../src/app/offers/accept-offer/accept-offer.component.css":
+/***/ (function(module, exports, __webpack_require__) {
+
+exports = module.exports = __webpack_require__("../../../../css-loader/lib/css-base.js")(false);
+// imports
+
+
+// module
+exports.push([module.i, ".dummy {\r\n    height: 230px;\r\n}", ""]);
+
+// exports
+
+
+/*** EXPORTS FROM exports-loader ***/
+module.exports = module.exports.toString();
+
+/***/ }),
+
+/***/ "../../../../../src/app/offers/accept-offer/accept-offer.component.html":
+/***/ (function(module, exports) {
+
+module.exports = "<div class=\"container\">\r\n    <div class=\"col-sm-12 mail-row\" *ngIf=\"success\">\r\n        <div class=\"col-sm-2 mail-icon\">\r\n            <i class=\"fa fa-smile-o\" aria-hidden=\"true\"></i>\r\n        </div>\r\n        <div class=\"col-sm-10 mail-btn\">\r\n            <h5>{{success}}</h5>\r\n\r\n            <a class=\"btn btn-md btn-color mt-10\" [routerLink]=\"['']\"><span>Go To Home</span></a>\r\n        </div>\r\n    </div>\r\n    <div class=\" col-sm-12 mail-fail-row \" *ngIf=\"error \">\r\n        <div class=\"col-sm-2 mail-icon-sad \">\r\n            <i class=\"fa fa-frown-o \" aria-hidden=\"true \"></i>\r\n        </div>\r\n        <div class=\"col-sm-10 mail-btn \">\r\n            <h5>{{error.title}}</h5>\r\n            <a class=\"btn btn-md btn-color mt-10 \" [routerLink]=\"[ '']\"><span>Go To Home</span></a>\r\n        </div>\r\n    </div>\r\n</div>\r\n<div class=\"dummy\">\r\n\r\n</div>"
+
+/***/ }),
+
+/***/ "../../../../../src/app/offers/accept-offer/accept-offer.component.ts":
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "a", function() { return AcceptOfferComponent; });
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__angular_core__ = __webpack_require__("../../../core/@angular/core.es5.js");
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__shared_services_user_service__ = __webpack_require__("../../../../../src/app/shared/services/user.service.ts");
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__angular_router__ = __webpack_require__("../../../router/@angular/router.es5.js");
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_3__shared_services_loader_service__ = __webpack_require__("../../../../../src/app/shared/services/loader.service.ts");
+var __decorate = (this && this.__decorate) || function (decorators, target, key, desc) {
+    var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
+    if (typeof Reflect === "object" && typeof Reflect.decorate === "function") r = Reflect.decorate(decorators, target, key, desc);
+    else for (var i = decorators.length - 1; i >= 0; i--) if (d = decorators[i]) r = (c < 3 ? d(r) : c > 3 ? d(target, key, r) : d(target, key)) || r;
+    return c > 3 && r && Object.defineProperty(target, key, r), r;
+};
+var __metadata = (this && this.__metadata) || function (k, v) {
+    if (typeof Reflect === "object" && typeof Reflect.metadata === "function") return Reflect.metadata(k, v);
+};
+
+
+
+
+var AcceptOfferComponent = (function () {
+    function AcceptOfferComponent(userService, router, activatedRoute, loader) {
+        var _this = this;
+        this.userService = userService;
+        this.router = router;
+        this.activatedRoute = activatedRoute;
+        this.loader = loader;
+        this.loader.display(true);
+        this.activatedRoute.params.subscribe(function (params) {
+            _this.id = params['id'];
+        });
+        this.userService.acceptOffer(this.id).subscribe(function (res) {
+            _this.loader.display(false);
+            _this.success = res.message;
+        }, function (err) {
+            _this.loader.display(false);
+            _this.error = err;
+        });
+    }
+    AcceptOfferComponent.prototype.ngOnInit = function () {
+    };
+    return AcceptOfferComponent;
+}());
+AcceptOfferComponent = __decorate([
+    Object(__WEBPACK_IMPORTED_MODULE_0__angular_core__["Component"])({
+        selector: 'app-accept-offer',
+        template: __webpack_require__("../../../../../src/app/offers/accept-offer/accept-offer.component.html"),
+        styles: [__webpack_require__("../../../../../src/app/offers/accept-offer/accept-offer.component.css")],
+    }),
+    __metadata("design:paramtypes", [typeof (_a = typeof __WEBPACK_IMPORTED_MODULE_1__shared_services_user_service__["a" /* UserService */] !== "undefined" && __WEBPACK_IMPORTED_MODULE_1__shared_services_user_service__["a" /* UserService */]) === "function" && _a || Object, typeof (_b = typeof __WEBPACK_IMPORTED_MODULE_2__angular_router__["Router"] !== "undefined" && __WEBPACK_IMPORTED_MODULE_2__angular_router__["Router"]) === "function" && _b || Object, typeof (_c = typeof __WEBPACK_IMPORTED_MODULE_2__angular_router__["ActivatedRoute"] !== "undefined" && __WEBPACK_IMPORTED_MODULE_2__angular_router__["ActivatedRoute"]) === "function" && _c || Object, typeof (_d = typeof __WEBPACK_IMPORTED_MODULE_3__shared_services_loader_service__["a" /* LoaderService */] !== "undefined" && __WEBPACK_IMPORTED_MODULE_3__shared_services_loader_service__["a" /* LoaderService */]) === "function" && _d || Object])
+], AcceptOfferComponent);
+
+var _a, _b, _c, _d;
+//# sourceMappingURL=accept-offer.component.js.map
+
+/***/ }),
+
+/***/ "../../../../../src/app/offers/decline-offer/decline-offer.component.css":
+/***/ (function(module, exports, __webpack_require__) {
+
+exports = module.exports = __webpack_require__("../../../../css-loader/lib/css-base.js")(false);
+// imports
+
+
+// module
+exports.push([module.i, ".dummy {\r\n    height: 230px;\r\n}\r\n\r\n.mail-row {\r\n    border: 2px solid green;\r\n    padding: 30px;\r\n    margin-top: 20px;\r\n    background-color: #e6ffe6;\r\n}\r\n\r\n.mail-icon i {\r\n    font-size: 100px;\r\n    line-height: 100px;\r\n    margin: 0px auto;\r\n    display: table;\r\n    color: green;\r\n}\r\n\r\n.mail-btn button {\r\n    margin: 0px auto;\r\n    display: table;\r\n    margin-top: 20px\r\n}\r\n\r\n.mail-btn h5 {\r\n    padding-top: 15px;\r\n}\r\n\r\n.mail-fail-row {\r\n    border: 2px solid red;\r\n    padding: 30px;\r\n    margin-top: 20px;\r\n    background-color: #fff0e6\r\n}\r\n\r\n.mail-icon-sad i {\r\n    font-size: 100px;\r\n    line-height: 100px;\r\n    margin: 0px auto;\r\n    display: table;\r\n    color: #F35C00;\r\n}", ""]);
+
+// exports
+
+
+/*** EXPORTS FROM exports-loader ***/
+module.exports = module.exports.toString();
+
+/***/ }),
+
+/***/ "../../../../../src/app/offers/decline-offer/decline-offer.component.html":
+/***/ (function(module, exports) {
+
+module.exports = "<div class=\"container\">\r\n    <div class=\"col-sm-12 mail-reject-row\" *ngIf=\"success\">\r\n        <div class=\"col-sm-2 mail-icon-meh\">\r\n            <i class=\"fa fa-meh-o\" aria-hidden=\"true\"></i>\r\n        </div>\r\n        <div class=\"col-sm-10 mail-btn\">\r\n            <h5>{{success}}</h5>\r\n\r\n            <a class=\"btn btn-md btn-color mt-10\" [routerLink]=\"['']\"><span>Go To Home</span></a>\r\n        </div>\r\n    </div>\r\n    <div class=\" col-sm-12 mail-fail-row \" *ngIf=\"error \">\r\n        <div class=\"col-sm-2 mail-icon-sad \">\r\n            <i class=\"fa fa-frown-o \" aria-hidden=\"true \"></i>\r\n        </div>\r\n        <div class=\"col-sm-10 mail-btn \">\r\n            <h5>{{error.title}}</h5>\r\n            <a class=\"btn btn-md btn-color mt-10 \" [routerLink]=\"[ '']\"><span>Go To Home</span></a>\r\n        </div>\r\n    </div>\r\n</div>\r\n\r\n<div class=\"dummy\">\r\n\r\n</div>"
+
+/***/ }),
+
+/***/ "../../../../../src/app/offers/decline-offer/decline-offer.component.ts":
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "a", function() { return DeclineOfferComponent; });
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__angular_core__ = __webpack_require__("../../../core/@angular/core.es5.js");
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__shared_services_user_service__ = __webpack_require__("../../../../../src/app/shared/services/user.service.ts");
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__angular_router__ = __webpack_require__("../../../router/@angular/router.es5.js");
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_3__shared_services_loader_service__ = __webpack_require__("../../../../../src/app/shared/services/loader.service.ts");
+var __decorate = (this && this.__decorate) || function (decorators, target, key, desc) {
+    var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
+    if (typeof Reflect === "object" && typeof Reflect.decorate === "function") r = Reflect.decorate(decorators, target, key, desc);
+    else for (var i = decorators.length - 1; i >= 0; i--) if (d = decorators[i]) r = (c < 3 ? d(r) : c > 3 ? d(target, key, r) : d(target, key)) || r;
+    return c > 3 && r && Object.defineProperty(target, key, r), r;
+};
+var __metadata = (this && this.__metadata) || function (k, v) {
+    if (typeof Reflect === "object" && typeof Reflect.metadata === "function") return Reflect.metadata(k, v);
+};
+
+
+
+
+var DeclineOfferComponent = (function () {
+    function DeclineOfferComponent(userService, router, activatedRoute, loader) {
+        var _this = this;
+        this.userService = userService;
+        this.router = router;
+        this.activatedRoute = activatedRoute;
+        this.loader = loader;
+        this.loader.display(true);
+        this.activatedRoute.params.subscribe(function (params) {
+            _this.id = params['id'];
+        });
+        this.userService.rejectOffer(this.id).subscribe(function (res) {
+            _this.loader.display(false);
+            _this.success = res.message;
+        }, function (err) {
+            _this.loader.display(false);
+            _this.error = err;
+        });
+    }
+    DeclineOfferComponent.prototype.ngOnInit = function () {
+    };
+    return DeclineOfferComponent;
+}());
+DeclineOfferComponent = __decorate([
+    Object(__WEBPACK_IMPORTED_MODULE_0__angular_core__["Component"])({
+        selector: 'app-decline-offer',
+        template: __webpack_require__("../../../../../src/app/offers/decline-offer/decline-offer.component.html"),
+        styles: [__webpack_require__("../../../../../src/app/offers/decline-offer/decline-offer.component.css")]
+    }),
+    __metadata("design:paramtypes", [typeof (_a = typeof __WEBPACK_IMPORTED_MODULE_1__shared_services_user_service__["a" /* UserService */] !== "undefined" && __WEBPACK_IMPORTED_MODULE_1__shared_services_user_service__["a" /* UserService */]) === "function" && _a || Object, typeof (_b = typeof __WEBPACK_IMPORTED_MODULE_2__angular_router__["Router"] !== "undefined" && __WEBPACK_IMPORTED_MODULE_2__angular_router__["Router"]) === "function" && _b || Object, typeof (_c = typeof __WEBPACK_IMPORTED_MODULE_2__angular_router__["ActivatedRoute"] !== "undefined" && __WEBPACK_IMPORTED_MODULE_2__angular_router__["ActivatedRoute"]) === "function" && _c || Object, typeof (_d = typeof __WEBPACK_IMPORTED_MODULE_3__shared_services_loader_service__["a" /* LoaderService */] !== "undefined" && __WEBPACK_IMPORTED_MODULE_3__shared_services_loader_service__["a" /* LoaderService */]) === "function" && _d || Object])
+], DeclineOfferComponent);
+
+var _a, _b, _c, _d;
+//# sourceMappingURL=decline-offer.component.js.map
+
+/***/ }),
+
+/***/ "../../../../../src/app/offers/jobseeker-nrtw/jobseeker-nrtw.component.css":
+/***/ (function(module, exports, __webpack_require__) {
+
+exports = module.exports = __webpack_require__("../../../../css-loader/lib/css-base.js")(false);
+// imports
+
+
+// module
+exports.push([module.i, ".response {\r\n    position: relative;\r\n    width: 90%;\r\n    left: 5%;\r\n    margin-top: 5%;\r\n    background: #00394E;\r\n}\r\n.dummy{\r\n    height: 230px;\r\n}\r\n.content {\r\n    color: white;\r\n}\r\n.home-botton {\r\n    position: relative;\r\n    left: 48%;\r\n}\r\n.home-botton:hover span{\r\n    color: white;\r\n}", ""]);
+
+// exports
+
+
+/*** EXPORTS FROM exports-loader ***/
+module.exports = module.exports.toString();
+
+/***/ }),
+
+/***/ "../../../../../src/app/offers/jobseeker-nrtw/jobseeker-nrtw.component.html":
+/***/ (function(module, exports) {
+
+module.exports = "<div class=\"container\">\r\n    <div class=\"col-sm-12 mail-reject-row\" *ngIf=\"success\">\r\n        <div class=\"col-sm-2 mail-icon-meh\">\r\n            <i class=\"fa fa-meh-o\" aria-hidden=\"true\"></i>\r\n        </div>\r\n        <div class=\"col-sm-10 mail-btn\">\r\n            <h5>{{success}}</h5>\r\n\r\n            <a class=\"btn btn-md btn-color mt-10\" [routerLink]=\"['']\"><span>Go To Home</span></a>\r\n        </div>\r\n    </div>\r\n    <div class=\" col-sm-12 mail-fail-row \" *ngIf=\"error \">\r\n        <div class=\"col-sm-2 mail-icon-sad \">\r\n            <i class=\"fa fa-frown-o \" aria-hidden=\"true \"></i>\r\n        </div>\r\n        <div class=\"col-sm-10 mail-btn \">\r\n            <h5>{{error.title}}</h5>\r\n            <a class=\"btn btn-md btn-color mt-10 \" [routerLink]=\"[ '']\"><span>Go To Home</span></a>\r\n        </div>\r\n    </div>\r\n</div>\r\n<div class=\"dummy\">\r\n\r\n</div>"
+
+/***/ }),
+
+/***/ "../../../../../src/app/offers/jobseeker-nrtw/jobseeker-nrtw.component.ts":
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "a", function() { return JobseekerNrtwComponent; });
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__angular_core__ = __webpack_require__("../../../core/@angular/core.es5.js");
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__shared_services_user_service__ = __webpack_require__("../../../../../src/app/shared/services/user.service.ts");
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__angular_router__ = __webpack_require__("../../../router/@angular/router.es5.js");
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_3__shared_services_loader_service__ = __webpack_require__("../../../../../src/app/shared/services/loader.service.ts");
+var __decorate = (this && this.__decorate) || function (decorators, target, key, desc) {
+    var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
+    if (typeof Reflect === "object" && typeof Reflect.decorate === "function") r = Reflect.decorate(decorators, target, key, desc);
+    else for (var i = decorators.length - 1; i >= 0; i--) if (d = decorators[i]) r = (c < 3 ? d(r) : c > 3 ? d(target, key, r) : d(target, key)) || r;
+    return c > 3 && r && Object.defineProperty(target, key, r), r;
+};
+var __metadata = (this && this.__metadata) || function (k, v) {
+    if (typeof Reflect === "object" && typeof Reflect.metadata === "function") return Reflect.metadata(k, v);
+};
+
+
+
+
+var JobseekerNrtwComponent = (function () {
+    function JobseekerNrtwComponent(userService, router, activatedRoute, loader) {
+        var _this = this;
+        this.userService = userService;
+        this.router = router;
+        this.activatedRoute = activatedRoute;
+        this.loader = loader;
+        this.loader.display(true);
+        this.activatedRoute.params.subscribe(function (params) {
+            _this.id = params['id'];
+        });
+        this.userService.notReadyToWork(this.id).subscribe(function (res) {
+            _this.loader.display(false);
+            _this.success = res.message;
+        }, function (err) {
+            _this.loader.display(false);
+            _this.error = err;
+        });
+    }
+    JobseekerNrtwComponent.prototype.ngOnInit = function () {
+    };
+    return JobseekerNrtwComponent;
+}());
+JobseekerNrtwComponent = __decorate([
+    Object(__WEBPACK_IMPORTED_MODULE_0__angular_core__["Component"])({
+        selector: 'app-jobseeker-nrtw',
+        template: __webpack_require__("../../../../../src/app/offers/jobseeker-nrtw/jobseeker-nrtw.component.html"),
+        styles: [__webpack_require__("../../../../../src/app/offers/jobseeker-nrtw/jobseeker-nrtw.component.css")]
+    }),
+    __metadata("design:paramtypes", [typeof (_a = typeof __WEBPACK_IMPORTED_MODULE_1__shared_services_user_service__["a" /* UserService */] !== "undefined" && __WEBPACK_IMPORTED_MODULE_1__shared_services_user_service__["a" /* UserService */]) === "function" && _a || Object, typeof (_b = typeof __WEBPACK_IMPORTED_MODULE_2__angular_router__["Router"] !== "undefined" && __WEBPACK_IMPORTED_MODULE_2__angular_router__["Router"]) === "function" && _b || Object, typeof (_c = typeof __WEBPACK_IMPORTED_MODULE_2__angular_router__["ActivatedRoute"] !== "undefined" && __WEBPACK_IMPORTED_MODULE_2__angular_router__["ActivatedRoute"]) === "function" && _c || Object, typeof (_d = typeof __WEBPACK_IMPORTED_MODULE_3__shared_services_loader_service__["a" /* LoaderService */] !== "undefined" && __WEBPACK_IMPORTED_MODULE_3__shared_services_loader_service__["a" /* LoaderService */]) === "function" && _d || Object])
+], JobseekerNrtwComponent);
+
+var _a, _b, _c, _d;
+//# sourceMappingURL=jobseeker-nrtw.component.js.map
+
+/***/ }),
+
+/***/ "../../../../../src/app/offers/jobseeker-rtw/jobseeker-rtw.component.css":
+/***/ (function(module, exports, __webpack_require__) {
+
+exports = module.exports = __webpack_require__("../../../../css-loader/lib/css-base.js")(false);
+// imports
+
+
+// module
+exports.push([module.i, ".response {\r\n    position: relative;\r\n    width: 90%;\r\n    left: 5%;\r\n    margin-top: 5%;\r\n    background: #00394E;\r\n}\r\n.dummy{\r\n    height: 230px;\r\n}\r\n.content {\r\n    color: white;\r\n}\r\n.home-botton {\r\n    position: relative;\r\n    left: 48%;\r\n}\r\n.home-botton:hover span{\r\n    color: white;\r\n}", ""]);
+
+// exports
+
+
+/*** EXPORTS FROM exports-loader ***/
+module.exports = module.exports.toString();
+
+/***/ }),
+
+/***/ "../../../../../src/app/offers/jobseeker-rtw/jobseeker-rtw.component.html":
+/***/ (function(module, exports) {
+
+module.exports = "<div class=\"container\">\r\n    <div class=\"col-sm-12 mail-row\" *ngIf=\"success\">\r\n        <div class=\"col-sm-2 mail-icon\">\r\n            <i class=\"fa fa-smile-o\" aria-hidden=\"true\"></i>\r\n        </div>\r\n        <div class=\"col-sm-10 mail-btn\">\r\n            <h5>{{success}}</h5>\r\n\r\n            <a class=\"btn btn-md btn-color mt-10\" [routerLink]=\"['']\"><span>Go To Home</span></a>\r\n        </div>\r\n    </div>\r\n    <div class=\" col-sm-12 mail-fail-row \" *ngIf=\"error \">\r\n        <div class=\"col-sm-2 mail-icon-sad \">\r\n            <i class=\"fa fa-frown-o \" aria-hidden=\"true \"></i>\r\n        </div>\r\n        <div class=\"col-sm-10 mail-btn \">\r\n            <h5>{{error.title}}</h5>\r\n            <a class=\"btn btn-md btn-color mt-10 \" [routerLink]=\"[ '']\"><span>Go To Home</span></a>\r\n        </div>\r\n    </div>\r\n</div>\r\n<div class=\"dummy\">\r\n\r\n</div>"
+
+/***/ }),
+
+/***/ "../../../../../src/app/offers/jobseeker-rtw/jobseeker-rtw.component.ts":
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "a", function() { return JobseekerRtwComponent; });
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__angular_core__ = __webpack_require__("../../../core/@angular/core.es5.js");
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__shared_services_user_service__ = __webpack_require__("../../../../../src/app/shared/services/user.service.ts");
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__angular_router__ = __webpack_require__("../../../router/@angular/router.es5.js");
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_3__shared_services_loader_service__ = __webpack_require__("../../../../../src/app/shared/services/loader.service.ts");
+var __decorate = (this && this.__decorate) || function (decorators, target, key, desc) {
+    var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
+    if (typeof Reflect === "object" && typeof Reflect.decorate === "function") r = Reflect.decorate(decorators, target, key, desc);
+    else for (var i = decorators.length - 1; i >= 0; i--) if (d = decorators[i]) r = (c < 3 ? d(r) : c > 3 ? d(target, key, r) : d(target, key)) || r;
+    return c > 3 && r && Object.defineProperty(target, key, r), r;
+};
+var __metadata = (this && this.__metadata) || function (k, v) {
+    if (typeof Reflect === "object" && typeof Reflect.metadata === "function") return Reflect.metadata(k, v);
+};
+
+
+
+
+var JobseekerRtwComponent = (function () {
+    function JobseekerRtwComponent(userService, router, activatedRoute, loader) {
+        var _this = this;
+        this.userService = userService;
+        this.router = router;
+        this.activatedRoute = activatedRoute;
+        this.loader = loader;
+        this.loader.display(true);
+        this.activatedRoute.params.subscribe(function (params) {
+            _this.id = params['id'];
+        });
+        this.userService.readyToWork(this.id).subscribe(function (res) {
+            _this.loader.display(false);
+            _this.success = res.message;
+        }, function (err) {
+            _this.loader.display(false);
+            _this.error = err;
+        });
+    }
+    JobseekerRtwComponent.prototype.ngOnInit = function () {
+    };
+    return JobseekerRtwComponent;
+}());
+JobseekerRtwComponent = __decorate([
+    Object(__WEBPACK_IMPORTED_MODULE_0__angular_core__["Component"])({
+        selector: 'app-jobseeker-rtw',
+        template: __webpack_require__("../../../../../src/app/offers/jobseeker-rtw/jobseeker-rtw.component.html"),
+        styles: [__webpack_require__("../../../../../src/app/offers/jobseeker-rtw/jobseeker-rtw.component.css")]
+    }),
+    __metadata("design:paramtypes", [typeof (_a = typeof __WEBPACK_IMPORTED_MODULE_1__shared_services_user_service__["a" /* UserService */] !== "undefined" && __WEBPACK_IMPORTED_MODULE_1__shared_services_user_service__["a" /* UserService */]) === "function" && _a || Object, typeof (_b = typeof __WEBPACK_IMPORTED_MODULE_2__angular_router__["Router"] !== "undefined" && __WEBPACK_IMPORTED_MODULE_2__angular_router__["Router"]) === "function" && _b || Object, typeof (_c = typeof __WEBPACK_IMPORTED_MODULE_2__angular_router__["ActivatedRoute"] !== "undefined" && __WEBPACK_IMPORTED_MODULE_2__angular_router__["ActivatedRoute"]) === "function" && _c || Object, typeof (_d = typeof __WEBPACK_IMPORTED_MODULE_3__shared_services_loader_service__["a" /* LoaderService */] !== "undefined" && __WEBPACK_IMPORTED_MODULE_3__shared_services_loader_service__["a" /* LoaderService */]) === "function" && _d || Object])
+], JobseekerRtwComponent);
+
+var _a, _b, _c, _d;
+//# sourceMappingURL=jobseeker-rtw.component.js.map
+
+/***/ }),
+
+/***/ "../../../../../src/app/offers/reject-jobseeker/reject-jobseeker.component.css":
+/***/ (function(module, exports, __webpack_require__) {
+
+exports = module.exports = __webpack_require__("../../../../css-loader/lib/css-base.js")(false);
+// imports
+
+
+// module
+exports.push([module.i, ".response {\r\n    position: relative;\r\n    width: 90%;\r\n    left: 5%;\r\n    margin-top: 5%;\r\n    background: #00394E;\r\n}\r\n.dummy{\r\n    height: 230px;\r\n}\r\n.content {\r\n    color: white;\r\n}\r\n.home-botton {\r\n    position: relative;\r\n    left: 48%;\r\n}\r\n.home-botton:hover span{\r\n    color: white;\r\n}", ""]);
+
+// exports
+
+
+/*** EXPORTS FROM exports-loader ***/
+module.exports = module.exports.toString();
+
+/***/ }),
+
+/***/ "../../../../../src/app/offers/reject-jobseeker/reject-jobseeker.component.html":
+/***/ (function(module, exports) {
+
+module.exports = "<div class=\"container\">\r\n    <div class=\"col-sm-12 mail-reject-row\" *ngIf=\"success\">\r\n        <div class=\"col-sm-2 mail-icon-meh\">\r\n            <i class=\"fa fa-meh-o\" aria-hidden=\"true\"></i>\r\n        </div>\r\n        <div class=\"col-sm-10 mail-btn\">\r\n            <h5>{{success}}</h5>\r\n\r\n            <a class=\"btn btn-md btn-color mt-10\" [routerLink]=\"['']\"><span>Go To Home</span></a>\r\n        </div>\r\n    </div>\r\n    <div class=\" col-sm-12 mail-fail-row \" *ngIf=\"error \">\r\n        <div class=\"col-sm-2 mail-icon-sad \">\r\n            <i class=\"fa fa-frown-o \" aria-hidden=\"true \"></i>\r\n        </div>\r\n        <div class=\"col-sm-10 mail-btn \">\r\n            <h5>{{error.title}}</h5>\r\n            <a class=\"btn btn-md btn-color mt-10 \" [routerLink]=\"[ '']\"><span>Go To Home</span></a>\r\n        </div>\r\n    </div>\r\n</div>\r\n<div class=\"dummy\">\r\n\r\n</div>"
+
+/***/ }),
+
+/***/ "../../../../../src/app/offers/reject-jobseeker/reject-jobseeker.component.ts":
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "a", function() { return RejectJobseekerComponent; });
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__angular_core__ = __webpack_require__("../../../core/@angular/core.es5.js");
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__shared_services_user_service__ = __webpack_require__("../../../../../src/app/shared/services/user.service.ts");
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__angular_router__ = __webpack_require__("../../../router/@angular/router.es5.js");
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_3__shared_services_loader_service__ = __webpack_require__("../../../../../src/app/shared/services/loader.service.ts");
+var __decorate = (this && this.__decorate) || function (decorators, target, key, desc) {
+    var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
+    if (typeof Reflect === "object" && typeof Reflect.decorate === "function") r = Reflect.decorate(decorators, target, key, desc);
+    else for (var i = decorators.length - 1; i >= 0; i--) if (d = decorators[i]) r = (c < 3 ? d(r) : c > 3 ? d(target, key, r) : d(target, key)) || r;
+    return c > 3 && r && Object.defineProperty(target, key, r), r;
+};
+var __metadata = (this && this.__metadata) || function (k, v) {
+    if (typeof Reflect === "object" && typeof Reflect.metadata === "function") return Reflect.metadata(k, v);
+};
+
+
+
+
+var RejectJobseekerComponent = (function () {
+    function RejectJobseekerComponent(userService, router, activatedRoute, loader) {
+        var _this = this;
+        this.userService = userService;
+        this.router = router;
+        this.activatedRoute = activatedRoute;
+        this.loader = loader;
+        this.loader.display(true);
+        this.activatedRoute.params.subscribe(function (params) {
+            _this.id = params['id'];
+        });
+        this.userService.rejectJobseeker(this.id).subscribe(function (res) {
+            _this.loader.display(false);
+            _this.success = res.message;
+        }, function (err) {
+            _this.loader.display(false);
+            _this.error = err;
+        });
+    }
+    RejectJobseekerComponent.prototype.ngOnInit = function () {
+    };
+    return RejectJobseekerComponent;
+}());
+RejectJobseekerComponent = __decorate([
+    Object(__WEBPACK_IMPORTED_MODULE_0__angular_core__["Component"])({
+        selector: 'app-reject-jobseeker',
+        template: __webpack_require__("../../../../../src/app/offers/reject-jobseeker/reject-jobseeker.component.html"),
+        styles: [__webpack_require__("../../../../../src/app/offers/reject-jobseeker/reject-jobseeker.component.css")]
+    }),
+    __metadata("design:paramtypes", [typeof (_a = typeof __WEBPACK_IMPORTED_MODULE_1__shared_services_user_service__["a" /* UserService */] !== "undefined" && __WEBPACK_IMPORTED_MODULE_1__shared_services_user_service__["a" /* UserService */]) === "function" && _a || Object, typeof (_b = typeof __WEBPACK_IMPORTED_MODULE_2__angular_router__["Router"] !== "undefined" && __WEBPACK_IMPORTED_MODULE_2__angular_router__["Router"]) === "function" && _b || Object, typeof (_c = typeof __WEBPACK_IMPORTED_MODULE_2__angular_router__["ActivatedRoute"] !== "undefined" && __WEBPACK_IMPORTED_MODULE_2__angular_router__["ActivatedRoute"]) === "function" && _c || Object, typeof (_d = typeof __WEBPACK_IMPORTED_MODULE_3__shared_services_loader_service__["a" /* LoaderService */] !== "undefined" && __WEBPACK_IMPORTED_MODULE_3__shared_services_loader_service__["a" /* LoaderService */]) === "function" && _d || Object])
+], RejectJobseekerComponent);
+
+var _a, _b, _c, _d;
+//# sourceMappingURL=reject-jobseeker.component.js.map
 
 /***/ }),
 
@@ -1805,6 +2346,44 @@ var UserService = (function () {
     UserService.prototype.resetPassword = function (data) {
         var url = "user/changepassword";
         return this.apiService.put(url, data).map(function (res) {
+            return res;
+        }, function (err) {
+            return err;
+        });
+    };
+    UserService.prototype.acceptOffer = function (id) {
+        var url = 'offers/accept/' + id;
+        return this.apiService.get(url).map(function (res) {
+            return res;
+        });
+    };
+    UserService.prototype.rejectOffer = function (id) {
+        var url = 'offers/reject/' + id;
+        return this.apiService.get(url).map(function (res) {
+            return res;
+        });
+    };
+    UserService.prototype.acceptJobseeker = function (id) {
+        var url = 'offers/acceptjs/' + id;
+        return this.apiService.get(url).map(function (res) {
+            return res;
+        });
+    };
+    UserService.prototype.rejectJobseeker = function (id) {
+        var url = 'offers/rejectjs/' + id;
+        return this.apiService.get(url).map(function (res) {
+            return res;
+        });
+    };
+    UserService.prototype.readyToWork = function (id) {
+        var url = 'offers/rtw/' + id;
+        return this.apiService.get(url).map(function (res) {
+            return res;
+        });
+    };
+    UserService.prototype.notReadyToWork = function (id) {
+        var url = 'offers/nrtw/' + id;
+        return this.apiService.get(url).map(function (res) {
             return res;
         });
     };

@@ -19,7 +19,6 @@ var client = require('twilio')(accountSid, authToken);
 router.get('/auth', auth.required, function(req, res, next) {
     User.findById(req.payload.id, function(err, user) {
         if (err) {
-            console.log(err);
             return res.status(500).json({
                 title: 'An error occurred',
                 error: err
@@ -44,7 +43,6 @@ router.get('/auth', auth.required, function(req, res, next) {
 router.post('/auth', function(req, res, next) {
     User.findOne({ Email_Address: req.body.Email_Address }, function(err, user) {
         if (err) {
-            console.log('err');
             return res.status(500).json({
                 title: 'An error occurred',
                 error: err
@@ -68,8 +66,6 @@ router.post('/auth', function(req, res, next) {
             token.token = crypto.randomBytes(16).toString('hex')
             token.save(function(err) {
                 if (err) {
-                    console.log('err1');
-
                     return res.status(500).json({
                         title: 'An error occurred',
                         error: err
@@ -187,8 +183,6 @@ router.post('/save', function(req, res, next) {
 });
 
 router.get('/confirmation/:id', function(req, res, next) {
-    // Find a matching token
-    console.log(req.params.id);
     VerifyToken.findOne({ token: req.params.id }, function(err, token) {
         if (!token) return res.status(400).send({ type: 'not-verified', msg: 'We were unable to find a valid token. Your token my have expired.' });
 
@@ -211,7 +205,6 @@ router.get('/confirmation/:id', function(req, res, next) {
 router.get('/resendconfirmation/:id', auth.required, function(req, res, next) {
     User.findOne({ Email_Address: req.params.id }, function(err, user) {
         if (err) {
-            console.log(err);
             return res.status(500).json({
                 title: 'An error occurred',
                 error: err
@@ -234,8 +227,6 @@ router.get('/resendconfirmation/:id', auth.required, function(req, res, next) {
             token.token = crypto.randomBytes(16).toString('hex')
             token.save(function(err) {
                 if (err) {
-                    console.log('err1');
-
                     return res.status(500).json({
                         title: 'An error occurred',
                         error: err
@@ -280,8 +271,6 @@ router.get('/resendconfirmation/:id', auth.required, function(req, res, next) {
 });
 
 router.get('/confirmation/:id', function(req, res, next) {
-    // Find a matching token
-    console.log(req.params.id);
     VerifyToken.findOne({ token: req.params.id }, function(err, token) {
         if (!token) return res.status(400).send({ type: 'not-verified', msg: 'We were unable to find a valid token. Your token my have expired.' });
 
@@ -294,7 +283,13 @@ router.get('/confirmation/:id', function(req, res, next) {
             user.Email_Verified = true;
             //user.setPassword(req.body.Password);
             user.save(function(err) {
-                if (err) { return res.status(500).send({ msg: err.message }); }
+                if (err) {
+                    return res.status(500).json({
+                        title: 'An error occurred',
+                        error: err
+                    });
+
+                }
                 res.status(200).send({ message: "Account has been verified. Please login." });
             });
         });
@@ -304,7 +299,6 @@ router.get('/confirmation/:id', function(req, res, next) {
 router.get('/getProfile/:id', auth.required, function(req, res, next) {
     User.findById(req.payload.id, function(err, user) {
         if (err) {
-            console.log(err);
             return res.status(500).json({
                 title: 'An error occurred',
                 error: err
@@ -334,7 +328,6 @@ router.get('/getProfile/:id', auth.required, function(req, res, next) {
 router.put('/changepassword', auth.required, function(req, res, next) {
     User.findById(req.payload.id, function(err, user) {
         if (err) {
-            console.log(err);
             return res.status(500).json({
                 title: 'An error occurred',
                 error: err
@@ -364,7 +357,6 @@ router.put('/changepassword', auth.required, function(req, res, next) {
 router.put('/update/personal', auth.required, function(req, res, next) {
     User.findById(req.payload.id, function(err, user) {
         if (err) {
-            console.log(err);
             return res.status(500).json({
                 title: 'An error occurred',
                 error: err
@@ -425,7 +417,6 @@ router.put('/update/personal', auth.required, function(req, res, next) {
 router.put('/update/work', auth.required, function(req, res, next) {
     User.findById(req.payload.id, function(err, user) {
         if (err) {
-            console.log(err);
             return res.status(500).json({
                 title: 'An error occurred',
                 error: err
@@ -605,7 +596,7 @@ router.post('/sendOtp/:id', auth.required, function(req, res) {
         } else {
             var otp = Math.floor(1000 + Math.random() * 9000);
             client.messages.create({
-                to: "+91"+req.body.number,
+                to: "+91" + req.body.number,
                 from: "+16364892045",
                 body: "Hi, " + user.Firstname + " " + user.Lastname + "," + "your OTP to verify mobile number is :" + otp,
             }, function(err, message) {
@@ -648,7 +639,6 @@ router.post('/verifyOtp/:id', auth.required, function(req, res) {
             });
         } else {
             User.find({ otp: req.body.otp }, function(err, data) {
-                console.log(data);
                 if (err) {
                     return res.status(500).json({
                         title: 'An error occurred',
@@ -656,13 +646,11 @@ router.post('/verifyOtp/:id', auth.required, function(req, res) {
                     });
                 }
                 if (data.length === 0) {
-                    console.log('mismatched')
                     return res.status(401).json({
                         title: 'Failed',
                         error: { message: 'Invalid OTP' }
                     });
                 } else {
-                    console.log('success')
                     return res.status(200).json({
                         message: 'Mobile number verified successfully'
                     });
