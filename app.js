@@ -17,6 +17,7 @@ require('./models/Availabilities');
 require('./models/Payments');
 require('./models/Offers');
 require('./models/Contactus');
+require('./models/OffersToken');
 
 var index = require('./routes/index');
 var users = require('./routes/users');
@@ -56,7 +57,7 @@ app.use('/user', users);
 app.use('/availability', availabilities);
 app.use('/payments', payments);
 app.use('/offers', offers);
-app.get('/*',function(req,res){
+app.get('/',function(req,res){
     res.sendFile(__dirname+'/dist/index.html');
 });
 // catch 404 and forward to error handler
