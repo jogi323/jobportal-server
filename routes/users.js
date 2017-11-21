@@ -72,7 +72,7 @@ router.post('/auth', function(req, res, next) {
                     });
                 }
 
-                var confirmationLink = serverUrl + token.token;
+                var confirmationLink = serverUrl + 'confirm/' + token.token;
                 var mailOptions = {
                     from: 'ashokona@gmail.com',
                     to: user.Email_Address,
@@ -94,7 +94,7 @@ router.post('/auth', function(req, res, next) {
                 MailService(mailOptions)
                     .then(result => {
                         res.status(200).json({
-                            message: 'A verification email has been sent to ' + user.Email_Address + '.',
+                            message: 'Email not yet verified, verify email sent to ' + user.Email_Address + ' to login.',
                         });
                     })
                     .catch(err => {
@@ -165,7 +165,7 @@ router.post('/save', function(req, res, next) {
                 };
 
                 MailService(mailOptions)
-                    .then(result => {
+                    .then(data => {
                         res.status(200).json({
                             message: 'A verification email has been sent to ' + result.Email_Address + '.',
                         });
@@ -533,6 +533,7 @@ router.post('/resetpasswordlink', function(req, res, next) {
                         });
                     })
                     .catch(err => {
+                        console.log(err)
                         return res.status(500).json({
                             title: 'An error occurred',
                             error: err

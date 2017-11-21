@@ -1,10 +1,10 @@
 {
     "nodemailer": {
-        "email": "ashokona@gmail.com",
-        "password": "F!ghtClub",
+        "email": "anyday@acmesoftware.net",
+        "password": "Reset123!",
         "sender": "noreply@yourcompany.com",
-        "host": "smtp.mail.com",
-        "port": 465
+        "host": "mx1.hostinger.in",
+        "port": 587
     },
     "twilio": {
         "accountSid": "ACe59061ce19c17d5d22f24f4030077216",

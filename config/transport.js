@@ -8,7 +8,7 @@ var MailService = function(data) {
         let transporter = nodemailer.createTransport({
             host: config.nodemailer.host,
             port: config.nodemailer.port,
-            service: "Gmail",
+            service: "SMTP",
             secure: false,
             auth: {
                 user: config.nodemailer.email,
