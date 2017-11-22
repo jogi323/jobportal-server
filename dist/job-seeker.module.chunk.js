@@ -727,7 +727,7 @@ var WorkScheduleComponent = (function () {
             var lastDay = (new Date(startDate.getFullYear(), startDate.getMonth() + 1, 0, 23, 59, 59)).getDate();
             var diff = startDay + (lastDay - startDay);
             var b = 0;
-            for (var i = startDay; (i < diff); i += 7) {
+            for (var i = startDay; (i <= diff); i += 7) {
                 if (b == 0) {
                     var eventToSave = {
                         Date: new Date(startDate.setDate(startDate.getDate() + 0)),

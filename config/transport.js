@@ -33,7 +33,7 @@ var MailService = function(data) {
             resolve({
                 success: true,
                 error: null,
-                data: mailOptions
+                data: info
             });
         });
     });

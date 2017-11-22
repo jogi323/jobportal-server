@@ -1,7 +1,7 @@
 const config = require('./config');
 var client = require('twilio')(config.twilio.accountSid, config.twilio.authToken);
 
-var fromNumber = "+16364892045"
+var fromNumber = "+18448223442"
 
 var TwilioService = function(data) {
     return new Promise(function(resolve, reject) {
@@ -10,17 +10,17 @@ var TwilioService = function(data) {
             from: fromNumber,
             body: data.body,
         }, function(err, message) {
-            if (error) {
+            if (err) {
                 reject({
                     success: false,
-                    error: error,
+                    error: err,
                     data: null
                 });
             }
             resolve({
                 success: true,
                 error: null,
-                data: mailOptions
+                data: message
             });
         });
     });

@@ -644,6 +644,8 @@ var ProfileComponent = (function () {
         this.notificationsService = notificationsService;
         this.ngzone = ngzone;
         this.loaderService = loaderService;
+        this.userInfoUpdated = true;
+        this.workInfoUpdated = true;
         this.isUserDataEdit = false;
         this.isWorkDataEdit = false;
         this.newImageUploaded = false;
@@ -712,6 +714,8 @@ var ProfileComponent = (function () {
             this.userService.getData(user.Email_Address).subscribe(function (res) {
                 _this.user = res.data;
                 _this.loaderService.display(false);
+                _this.userInfoUpdated = res.data.personalInfo;
+                _this.workInfoUpdated = res.data.workInfo;
             }, function (err) {
                 _this.loaderService.display(false);
                 _this.notificationsService.error(err.title, err.error.message, __WEBPACK_IMPORTED_MODULE_4__environments_environment__["a" /* environment */].options);
@@ -732,6 +736,8 @@ var ProfileComponent = (function () {
             _this.loaderService.display(false);
             _this.notificationsService.success('Success', res.message, __WEBPACK_IMPORTED_MODULE_4__environments_environment__["a" /* environment */].options);
             _this.isUserDataEdit = !_this.isUserDataEdit;
+            _this.userInfoUpdated = false;
+            _this.removeNotification();
         }, function (err) {
             _this.loaderService.display(false);
             _this.notificationsService.error(err.title, err.error.message, __WEBPACK_IMPORTED_MODULE_4__environments_environment__["a" /* environment */].options);
@@ -751,12 +757,22 @@ var ProfileComponent = (function () {
             _this.loaderService.display(false);
             _this.notificationsService.success('Success', res.message, __WEBPACK_IMPORTED_MODULE_4__environments_environment__["a" /* environment */].options);
             _this.isWorkDataEdit = !_this.isWorkDataEdit;
+            _this.workInfoUpdated = false;
+            _this.removeNotification();
         }, function (err) {
             _this.loaderService.display(false);
             _this.notificationsService.error(err.title, err.error.message, __WEBPACK_IMPORTED_MODULE_4__environments_environment__["a" /* environment */].options);
         });
     };
     ProfileComponent.prototype.onLanguageChange = function ($event) {
+    };
+    ProfileComponent.prototype.removeNotification = function () {
+        var _this = this;
+        if (!this.userInfoUpdated && !this.workInfoUpdated) {
+            setTimeout(function () {
+                _this.notificationsService.remove();
+            }, 5000);
+        }
     };
     ProfileComponent.prototype.ngOnInit = function () {
         var _this = this;
