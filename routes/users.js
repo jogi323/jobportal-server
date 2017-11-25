@@ -16,6 +16,8 @@ var authToken = 'c72ecbf92ae0157e39b97ace69aef668';
 //require the Twilio module and create a REST client 
 var client = require('twilio')(accountSid, authToken);
 /* GET users listing. */
+
+
 router.get('/auth', auth.required, function(req, res, next) {
     User.findById(req.payload.id, function(err, user) {
         if (err) {
@@ -60,6 +62,7 @@ router.post('/auth', function(req, res, next) {
                 error: { message: 'Invalid login credentials' }
             });
         }
+
         if (!user.Email_Verified) {
             var token = new VerifyToken();
             token.user = user._id;
@@ -103,6 +106,12 @@ router.post('/auth', function(req, res, next) {
                             error: err
                         });
                     })
+            });
+        }
+        if (!user.Status) {
+            return res.status(401).json({
+                title: 'User Blocked',
+                error: { message: 'Contact Administrator' }
             });
         } else {
             var token = user.generateJWT();
@@ -193,9 +202,15 @@ router.get('/confirmation/:id', function(req, res, next) {
 
             // Verify and save the user
             user.Email_Verified = true;
+            user.Stauts = true;
             //user.setPassword(req.body.Password);
             user.save(function(err) {
-                if (err) { return res.status(500).send({ msg: err.message }); }
+                if (err) {
+                    return res.status(500).json({
+                        title: 'An error occurred',
+                        error: err
+                    });
+                }
                 res.status(200).send({ message: "Account has been verified. Please login." });
             });
         });
@@ -281,6 +296,7 @@ router.get('/confirmation/:id', function(req, res, next) {
 
             // Verify and save the user
             user.Email_Verified = true;
+            user.Status = true;
             //user.setPassword(req.body.Password);
             user.save(function(err) {
                 if (err) {
@@ -310,16 +326,67 @@ router.get('/getProfile/:id', auth.required, function(req, res, next) {
                 error: { message: 'Login Again' }
             });
         } else {
-            User.findOne({ Email_Address: req.params.id }, function(err, user) {
-                if (err) {
-                    return res.status(500).json({
-                        title: 'An error occurred',
-                        error: err
-                    });
-                } else {
-                    res.status(200).json({ data: user })
-                }
+            User.findOne({ Email_Address: req.params.id })
+                .populate('Position', 'Position_Name')
+                .exec(function(err, user) {
+                    if (err) {
+                        return res.status(500).json({
+                            title: 'An error occurred',
+                            error: err
+                        });
+                    } else {
+                        res.status(200).json({ data: user })
+                    }
+                });
+        }
+
+    })
+});
+
+router.get('/getalldetails/:id', auth.required, function(req, res, next) {
+    User.findById(req.payload.id, function(err, user) {
+        if (err) {
+            return res.status(500).json({
+                title: 'An error occurred',
+                error: err
             });
+        }
+        if (!user) {
+            return res.status(401).json({
+                title: 'Not Authorised',
+                error: { message: 'Login Again' }
+            });
+        } else {
+            User.findById(req.params.id)
+                .populate('Position', 'Position_Name')
+                .populate('Offers_id')
+                .populate({
+                    path: 'Offers_id',
+                    populate: {
+                        path: 'Position_id',
+                        model: 'Positions',
+                        select: ['Position_Namme'],
+                    }
+                })
+                .populate({
+                    path: 'Offers_id',
+                    populate: {
+                        path: 'Availability_id',
+                        model: 'Availabilities',
+                        select: ['Date'],
+                    }
+                })
+                .populate('Payments_id')
+                .exec(function(err, user) {
+                    if (err) {
+                        return res.status(500).json({
+                            title: 'An error occurred',
+                            error: err
+                        });
+                    } else {
+                        res.status(200).json({ data: user })
+                    }
+                });
         }
 
     })
@@ -404,7 +471,7 @@ router.put('/update/personal', auth.required, function(req, res, next) {
             if (typeof req.body.locationLng !== 'undefined') {
                 user.locationLng = req.body.locationLng;
             }
-            user.personalInfo = false;
+            user.personalInfo = true;
             user.save(function(err) {
                 if (err) { return res.status(500).json({ title: 'Personal Information Not Updated', error: err }); }
                 res.status(200).json({ message: 'Personal information updated sucessfully' });
@@ -479,7 +546,7 @@ router.put('/update/work', auth.required, function(req, res, next) {
             if (typeof req.body.Contact_Phone_Nr !== 'undefined') {
                 user.Contact_Phone_Nr = req.body.Contact_Phone_Nr;
             }
-            user.workInfo = false;
+            user.workInfo = true;
             user.save(function(err) {
                 if (err) { return res.status(500).json({ title: 'Work Information Not Updaed', error: err }); }
                 res.status(200).json({ message: 'Work information updated sucessfully' });
@@ -559,7 +626,12 @@ router.post('/resetpassword', function(req, res, next) {
 
             user.setPassword(req.body.newPassword);
             user.save(function(err) {
-                if (err) { return res.status(500).send({ msg: err.message }); }
+                if (err) {
+                    return res.status(500).json({
+                        title: 'An error occurred',
+                        error: err
+                    });
+                }
                 res.status(200).send({ message: "Your password has been changed successfully" });
             });
         });
@@ -658,6 +730,92 @@ router.post('/verifyOtp/:id', auth.required, function(req, res) {
                 }
             });
         }
+    })
+});
+
+router.get('/getall', auth.required, function(req, res, next) {
+    User.findById(req.payload.id, function(err, user) {
+        if (err) {
+            return res.status(500).json({
+                title: 'An error occurred',
+                error: err
+            });
+        }
+        if (!user) {
+            return res.status(401).json({
+                title: 'Not Authorised',
+                error: { message: 'Login Again' }
+            });
+        } else {
+            User.find({})
+                .populate('Position', 'Position_Name')
+                .exec(function(err, user) {
+                    if (err) {
+                        return res.status(500).json({
+                            title: 'An error occurred',
+                            error: err
+                        });
+                    } else {
+                        res.status(200).json({ data: user })
+                    }
+                });
+        }
+
+    })
+});
+
+router.put('/changestatus/:id', auth.required, function(req, res, next) {
+    User.findById(req.payload.id, function(err, user) {
+        if (err) {
+            return res.status(500).json({
+                title: 'An error occurred',
+                error: err
+            });
+        }
+        if (!user) {
+            return res.status(401).json({
+                title: 'Not Authorised',
+                error: { message: 'Login Again' }
+            });
+        } else {
+            User.findById(req.params.id, function(err, result) {
+                if (err) {
+                    return res.status(500).json({
+                        title: 'An error occurred',
+                        error: err
+                    });
+                }
+                if (!result) {
+                    return res.status(401).json({
+                        title: 'User Not found',
+                        error: { message: 'Check Back' }
+                    });
+                } else if (result.Status === false) {
+                    result.Status = true;
+                    result.save(function(err) {
+                        if (err) {
+                            return res.status(500).json({
+                                title: 'An error occurred',
+                                error: err
+                            });
+                        }
+                        res.status(200).send({ message: "User had been Activated Sucessfully" });
+                    });
+                } else if (result.Status === true) {
+                    result.Status = false;
+                    result.save(function(err) {
+                        if (err) {
+                            return res.status(500).json({
+                                title: 'An error occurred',
+                                error: err
+                            });
+                        }
+                        res.status(200).send({ message: "User had been Deactivated Sucessfully" });
+                    });
+                }
+            });
+        }
+
     })
 });
 

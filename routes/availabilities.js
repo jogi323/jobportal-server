@@ -24,13 +24,20 @@ router.post('/query', auth.required, function(req, res, next) {
     User.findById(req.payload.id, function(err, user) {
         if (err) { return res.status(500).json({ title: 'An error occurred', error: err }); }
         if (!user) { return res.status(401).json({ title: 'Not Authorised', error: { message: 'Login Again' } }) } else {
-            if (typeof req.body.Date !== 'undefined' && req.body.Hours_Guaranteed == null) {
+            if (typeof req.body.Date !== 'undefined' && (req.body.Hours_Guaranteed == null || req.body.Hours_Guaranteed == '')) {
                 Availabilities.find({ Date: req.body.Date })
                     .where('Hired').eq('false')
                     .populate({
                         path: 'JS_id',
                         // match: { Position: { $eq: 'Dental Assistant' }, Hourly_Pay: { $eq: 5 }},
-                        select: ['Position', 'Lastname', 'Hourly_Pay', 'Experience', 'Zip_Code', 'locationLat', 'locationLng'],
+                        select: ['Position', 'Lastname', 'Hourly_Pay', 'Experience', 'Zip_Code', 'locationLat', 'locationLng', 'Travel_Distance'],
+                    })
+                    .populate({
+                        path: 'JS_id',
+                        populate: {
+                            path: 'Position',
+                            model: 'Positions',
+                        }
                     })
                     .exec(function(err, result) {
                         if (err) { return res.status(500).json({ title: 'An error occurred', error: err }); }
@@ -46,7 +53,14 @@ router.post('/query', auth.required, function(req, res, next) {
                     // .populate('JS_id')
                     .populate({
                         path: 'JS_id',
-                        select: ['Position', 'Lastname', 'Hourly_Pay', 'Experience', 'Zip_Code', 'locationLat', 'locationLng'],
+                        select: ['Position', 'Lastname', 'Hourly_Pay', 'Experience', 'Zip_Code', 'locationLat', 'locationLng', 'Travel_Distance'],
+                    })
+                    .populate({
+                        path: 'JS_id',
+                        populate: {
+                            path: 'Position',
+                            model: 'Positions',
+                        }
                     })
                     .exec(function(err, result) {
                         if (err) { return res.status(500).json({ title: 'An error occurred', error: err }); }
@@ -62,7 +76,14 @@ router.post('/query', auth.required, function(req, res, next) {
                     .populate({
                         path: 'JS_id',
                         match: { Position: { $eq: req.body.Position } },
-                        select: ['Position', 'Lastname', 'Hourly_Pay', 'Experience', 'Zip_Code', 'locationLat', 'locationLng'],
+                        select: ['Position', 'Lastname', 'Hourly_Pay', 'Experience', 'Zip_Code', 'locationLat', 'locationLng', 'Travel_Distance'],
+                    })
+                    .populate({
+                        path: 'JS_id',
+                        populate: {
+                            path: 'Position',
+                            model: 'Positions',
+                        }
                     })
                     .exec(function(err, result) {
                         if (err) { return res.status(500).json({ title: 'An error occurred', error: err }); }
@@ -78,7 +99,14 @@ router.post('/query', auth.required, function(req, res, next) {
                     .populate({
                         path: 'JS_id',
                         match: { Position: { $eq: req.body.Position }, Hourly_Pay: { $eq: req.body.Hourly_Pay } },
-                        select: ['Position', 'Lastname', 'Hourly_Pay', 'Experience', 'Zip_Code', 'locationLat', 'locationLng'],
+                        select: ['Position', 'Lastname', 'Hourly_Pay', 'Experience', 'Zip_Code', 'locationLat', 'locationLng', 'Travel_Distance'],
+                    })
+                    .populate({
+                        path: 'JS_id',
+                        populate: {
+                            path: 'Position',
+                            model: 'Positions',
+                        }
                     })
                     .exec(function(err, result) {
                         if (err) { return res.status(500).json({ title: 'An error occurred', error: err }); }

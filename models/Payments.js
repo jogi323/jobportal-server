@@ -4,7 +4,8 @@ var mongooseUniqueValidator = require('mongoose-unique-validator');
 
 var PaymentsSchema = new Schema({
     Employer_id: { type: Schema.Types.ObjectId, ref: 'User' },
-    Position_id: String,
+    Offers_id: [{ type: Schema.Types.ObjectId, ref: 'Offers' }],
+    JS_id: [{ type: Schema.Types.ObjectId, ref: 'User' }],
     Card_Nr: Number,
     Billing_Name: String,
     Expiration_Month: Number,

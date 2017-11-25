@@ -18,12 +18,14 @@ require('./models/Payments');
 require('./models/Offers');
 require('./models/Contactus');
 require('./models/OffersToken');
+require('./models/Positions');
 
 var index = require('./routes/index');
 var users = require('./routes/users');
 var availabilities = require('./routes/availabilities');
 var payments = require('./routes/payments');
 var offers = require('./routes/offers');
+var positions = require('./routes/positions');
 
 var app = express();
 
@@ -57,6 +59,7 @@ app.use('/user', users);
 app.use('/availability', availabilities);
 app.use('/payments', payments);
 app.use('/offers', offers);
+app.use('/positions', positions);
 app.get('/*',function(req,res){
     res.sendFile(__dirname+'/dist/index.html');
 });

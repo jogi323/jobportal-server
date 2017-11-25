@@ -14,6 +14,14 @@ router.get('/history', auth.required, function(req, res, next) {
         if (!user) { return res.status(401).json({ title: 'Not Authorised', error: { message: 'Login Again' } }) } else {
             Payments.find({ Employer_id: user._id })
                 .populate('Employer_id', 'Firstname')
+                .populate({
+                    path: 'JS_id',
+                    populate: {
+                        path: 'Position',
+                        model: 'Positions',
+                        select: ['Position_Name'],
+                    }
+                })
                 .exec(function(err, result) {
                     if (err) { return res.status(500).json({ title: 'An error occurred', error: err }); }
                     res.status(200).json({
@@ -52,6 +60,7 @@ router.post('/pay', auth.required, function(req, res, next) {
                     user.save();
                     res.status(200).json({
                         message: 'Payment Sucessfull',
+                        data: result
                     });
                 }
             });
