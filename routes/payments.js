@@ -16,11 +16,10 @@ router.get('/history', auth.required, function(req, res, next) {
                 .populate('Employer_id', 'Firstname')
                 .populate({
                     path: 'JS_id',
-                    populate: {
-                        path: 'Position',
-                        model: 'Positions',
-                        select: ['Position_Name'],
-                    }
+                    select: ['Hourly_Pay'],
+                })
+                .populate({
+                    path: 'Offers_id',
                 })
                 .exec(function(err, result) {
                     if (err) { return res.status(500).json({ title: 'An error occurred', error: err }); }

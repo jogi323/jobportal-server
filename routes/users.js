@@ -363,14 +363,6 @@ router.get('/getalldetails/:id', auth.required, function(req, res, next) {
                 .populate({
                     path: 'Offers_id',
                     populate: {
-                        path: 'Position_id',
-                        model: 'Positions',
-                        select: ['Position_Namme'],
-                    }
-                })
-                .populate({
-                    path: 'Offers_id',
-                    populate: {
                         path: 'Availability_id',
                         model: 'Availabilities',
                         select: ['Date'],
