@@ -219,7 +219,7 @@ router.get('/confirmation/:id', function(req, res, next) {
 
             // Verify and save the user
             user.Email_Verified = true;
-            user.Stauts = true;
+            user.Status = true;
             //user.setPassword(req.body.Password);
             user.save(function(err) {
                 if (err) {
@@ -300,33 +300,6 @@ router.get('/resendconfirmation/:id', auth.required, function(req, res, next) {
         }
 
     })
-});
-
-router.get('/confirmation/:id', function(req, res, next) {
-    VerifyToken.findOne({ token: req.params.id }, function(err, token) {
-        if (!token) return res.status(400).send({ type: 'not-verified', msg: 'We were unable to find a valid token. Your token my have expired.' });
-
-        // If we found a token, find a matching user
-        User.findOne({ _id: token.user }, function(err, user) {
-            if (!user) return res.status(400).send({ msg: 'We were unable to find a user for this token.' });
-            if (user.Email_Verified) return res.status(400).send({ type: 'already-verified', msg: 'This user has already been verified.' });
-
-            // Verify and save the user
-            user.Email_Verified = true;
-            user.Status = true;
-            //user.setPassword(req.body.Password);
-            user.save(function(err) {
-                if (err) {
-                    return res.status(500).json({
-                        title: 'An error occurred',
-                        error: err
-                    });
-
-                }
-                res.status(200).send({ message: "Account has been verified. Please login." });
-            });
-        });
-    });
 });
 
 router.get('/getProfile/:id', auth.required, function(req, res, next) {
