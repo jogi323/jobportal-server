@@ -155,7 +155,7 @@ router.post('/save', auth.required, function(req, res, next) {
 
                                                                             js.save();
                                                                             var data = {
-                                                                                to: "+91" + js.Phone1,
+                                                                                to: js.Phone1,
                                                                                 body: "Hi " + js.Firstname + ", " + user.Firstname + " " + user.Lastname + " has offered a job for positon " + offer.JS_id.Position + " on " + offerDate + " to aceept send " + "'ACCEPT " + token.smsToken + "'" + ", to decline send " + "'DECLINE " + token.smsToken + "'" + " to +18448223442"
                                                                             }
                                                                             TwilioService(data)

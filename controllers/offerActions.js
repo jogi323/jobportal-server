@@ -69,7 +69,7 @@ exports.accept = function(offerDetails, res) {
                             } else {
                                 offerDetails.remove();
                                 var data = {
-                                    to: "+91" + empPhone,
+                                    to: empPhone,
                                     body: "Hi " + empFirstName + ", " + jsFirstName + " " + jsLastName + " has accepted your offer for position " + jsPosition + " on " + offerDate + " to select this jobseeker send " + "'SELECT " + token.smsToken + "'" + ", to reject send " + "'REJECT " + token.smsToken + "'" + " to +18448223442"
                                 }
                                 TwilioService(data)
@@ -133,7 +133,7 @@ exports.reject = function(offerDetails, res) {
                     } else {
                         offerDetails.remove();
                         var data = {
-                            to: "+91" + empPhone,
+                            to: empPhone,
                             body: "Hi " + empFirstName + ", " + jsFirstName + " " + jsLastName + " has declined your offer for position " + jsPosition + " on " + offerDate + ". There are more Job Seeker ready to work, To select any login to Any Day Employment"
                         }
                         TwilioService(data)
@@ -214,7 +214,7 @@ exports.acceptjs = function(offerDetails, res) {
                             } else {
                                 offerDetails.remove();
                                 var data = {
-                                    to: "+91" + jsPhone,
+                                    to: jsPhone,
                                     body: "Hi " + jsFirstName + ", " + empFirstName + " " + empLastName + " is expecting you to Report to Work for " + jsPosition + " on " + offerDate + " to Report to Work send " + "'RTW " + token.smsToken + "'" + ", to Decline(which we stronly dont recommend) send " + "'NRTW " + token.smsToken + "'" + " to +18448223442"
                                 }
                                 TwilioService(data)
@@ -281,7 +281,7 @@ exports.rejectjs = function(offerDetails, res) {
                     } else {
                         offerDetails.remove();
                         var data = {
-                            to: "+91" + jsPhone,
+                            to: jsPhone,
                             body: "Hi " + jsFirstName + ", " + empFirstName + " " + empLastName + " has declined your job offer for " + jsPosition + " on " + offerDate + ". Any time to check the status of you job offers login to Any Day Employment"
                         }
                         TwilioService(data)
@@ -364,7 +364,7 @@ exports.rtw = function(offerDetails, res) {
                                     } else {
                                         offerDetails.remove();
                                         var data = {
-                                            to: "+91" + empPhone,
+                                            to: empPhone,
                                             body: "Hi " + empFirstName + ", " + jsFirstName + " " + jsLastName + " is Ready to Work for position " + jsPosition + " on " + offerDate + ". Any time to check the status of your job offer, login to Any Day Employment"
                                         }
                                         TwilioService(data)
@@ -432,7 +432,7 @@ exports.nrtw = function(offerDetails, res) {
                     } else {
                         offerDetails.remove();
                         var data = {
-                            to: "+91" + empPhone,
+                            to: empPhone,
                             body: "Hi " + empFirstName + ", " + jsFirstName + " " + jsLastName + " has declined your job offer for " + jsPosition + " on " + offerDate + ". Any time to check the status of you job offers login to Any Day Employment"
                         }
                         TwilioService(data)

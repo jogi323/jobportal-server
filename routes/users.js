@@ -7,6 +7,7 @@ var VerifyToken = mongoose.model('VerifyToken');
 var crypto = require('crypto');
 var auth = require('./auth');
 var nodemailer = require("nodemailer");
+var TwilioService = require('../config/twilio');
 
 var MailService = require('../config/transport')
 var serverUrl = require('../config').serverUrl;
@@ -317,7 +318,7 @@ router.get('/getProfile/:id', auth.required, function(req, res, next) {
             });
         } else {
             User.findOne({ Email_Address: req.params.id })
-                .populate('Position', 'Position_Name')
+                .populate('Position')
                 .exec(function(err, user) {
                     if (err) {
                         return res.status(500).json({
@@ -478,7 +479,7 @@ router.put('/update/work', auth.required, function(req, res, next) {
             });
         } else {
             if (typeof req.body.Position !== 'undefined') {
-                user.Position = req.body.Position;
+                user.Position = req.body.PositionId;
             }
             if (typeof req.body.Experience !== 'undefined') {
                 user.Experience = req.body.Experience;
@@ -650,14 +651,13 @@ router.post('/sendOtp/:id', auth.required, function(req, res) {
             });
         } else {
             var otp = Math.floor(1000 + Math.random() * 9000);
-            client.messages.create({
-                to: "+91" + req.body.number,
-                from: "+16364892045",
+
+            var data = {
+                to: req.body.number,
                 body: "Hi, " + user.Firstname + " " + user.Lastname + "," + "your OTP to verify mobile number is :" + otp,
-            }, function(err, message) {
-                if (err) {
-                    return res.status(500).json({ title: 'Unable To Send Request', error: err });
-                } else {
+            }
+            TwilioService(data)
+                .then(result => {
                     User.update({ Email_Address: req.params.id }, { $set: { otp: otp } }, function(err, data) {
                         if (err) {
                             return res.status(500).json({
@@ -670,10 +670,11 @@ router.post('/sendOtp/:id', auth.required, function(req, res) {
                             })
                         }
                     });
+                })
+                .catch(err => {
+                    return res.status(500).json({ title: 'Unable To Send Request', error: err });
 
-                }
-
-            });
+                })
         }
 
     });
