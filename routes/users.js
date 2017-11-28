@@ -128,67 +128,84 @@ router.post('/auth', function(req, res, next) {
 
 router.post('/save', function(req, res, next) {
 
-    var user = new User();
-
-    user.Firstname = req.body.Firstname;
-    user.Lastname = req.body.Lastname;
-    user.Referred_By = req.body.Referred_By;
-    user.setPassword(req.body.Password);
-    user.Email_Address = req.body.Email_Address;
-    user.userType = req.body.userType;
-
-    user.save(function(err, result) {
+    User.findOne({ Email_Address: req.body.Email_Verified }, function(err, user) {
+        console.log(user)
         if (err) {
             return res.status(500).json({
                 title: 'An error occurred',
                 error: err
             });
+        }
+        if (user) {
+            return res.status(401).json({
+                title: 'This email address is already registered with us. Please use the login page to login to your account',
+                error: { message: 'please login' }
+            });
         } else {
-            var token = new VerifyToken();
-            token.user = result._id;
-            token.token = crypto.randomBytes(16).toString('hex')
-            token.save(function(err) {
+            var user = new User();
+
+            user.Firstname = req.body.Firstname;
+            user.Lastname = req.body.Lastname;
+            user.Referred_By = req.body.Referred_By;
+            user.setPassword(req.body.Password);
+            user.Email_Address = req.body.Email_Address;
+            user.userType = req.body.userType;
+
+            user.save(function(err, result) {
                 if (err) {
                     return res.status(500).json({
                         title: 'An error occurred',
                         error: err
                     });
+                } else {
+                    var token = new VerifyToken();
+                    token.user = result._id;
+                    token.token = crypto.randomBytes(16).toString('hex')
+                    token.save(function(err) {
+                        if (err) {
+                            return res.status(500).json({
+                                title: 'An error occurred',
+                                error: err
+                            });
+                        }
+                        var confirmationLink = serverUrl + 'confirm/' + token.token;
+                        var mailOptions = {
+                            from: 'noreply@anydayemployment.com',
+                            to: result.Email_Address,
+                            subject: 'Congratulations ' + result.Firstname + ', Welcome to Any Day Employment - Dental Connections',
+                            // text: 'eaders.host + '\/user' + '\/confirmation\/' + token.token + '.\n'
+                            html: '<b>Welcome <strong>' + result.Firstname + '</strong>,</b><br>' +
+                                ' <p>Congratulation on Signing up with Any Day Employment – Dental Connections. Your next step is to complete your profile and then you are ready to join the growing community of Dental Professionals ready to Get Help or Get Hired, Right Now, Today, AnyDay you want….</p>' +
+                                ' <p>What exactly does that mean? We are a real-time portal using Text/Email messaging to allow connections between Dental Office Employers and the Immediate Staff or Specialists they need. If an employee calls in sick, has an emergency, is on vacation or away from the office for any reason, the Dental Office can login and immediately search for individuals who have indicated in their work schedule they are available to work Right Now, Today. Text/Email connections are made privately through the Communication System. As a Job Seeker, your name and contact information is kept secure until you accept the job offer from the dental office. It’s fast, simple, easy and FREE!  As an employer, it is FREE to search for available team members before posting your job offer to them in real time, Right Now, Today, AnyDay.</p>' +
+                                ' <p>Click the link below to Login with your Email and Password and Complete your Profile Information. As a Job Seeker, enter your availability on the scheduling calendar with one day a week, one day a month, or AnyDay you like………..Employers are looking for you.</p>' +
+                                ' <p>Login here and Complete your Profile:</p>' +
+                                ' <a href="' + confirmationLink + '">click here</a>' +
+                                ' <p>Thank you, now you’re on your way to Get Help or Get Hired to Work AnyDay you want.</p>' +
+                                ' <p><b>The Community is adding new members everyday however the growth depends COMPLETELY on your involvement to help everyone be productive. Tell your friends, co-workers, office managers, dental specialists and dental employers about this service. Please keep your contact information updated as well as you work schedule. The Community is Building and if you do not get a job or find a team member with your initial attempts, as more offices and team members join, you will. Keep Checking as we grow.</b></p><br>' +
+                                ' <p>Thank you Again and Welcome,</p>' +
+                                ' <p>Administrator</p>' +
+                                ' <p>Any Day Employment</p>'
+                        };
+
+                        MailService(mailOptions)
+                            .then(data => {
+                                res.status(200).json({
+                                    message: 'A verification email has been sent to ' + result.Email_Address + '.',
+                                });
+                            })
+                            .catch(err => {
+                                return res.status(500).json({
+                                    title: 'An error occurred',
+                                    error: err
+                                });
+                            })
+
+                    });
                 }
-                var confirmationLink = serverUrl + 'confirm/' + token.token;
-                var mailOptions = {
-                    from: 'noreply@anydayemployment.com',
-                    to: result.Email_Address,
-                    subject: 'Congratulations ' + result.Firstname + ', Welcome to Any Day Employment - Dental Connections',
-                    // text: 'eaders.host + '\/user' + '\/confirmation\/' + token.token + '.\n'
-                    html: '<b>Welcome <strong>' + result.Firstname + '</strong>,</b><br>' +
-                        ' <p>Congratulation on Signing up with Any Day Employment – Dental Connections. Your next step is to complete your profile and then you are ready to join the growing community of Dental Professionals ready to Get Help or Get Hired, Right Now, Today, AnyDay you want….</p>' +
-                        ' <p>What exactly does that mean? We are a real-time portal using Text/Email messaging to allow connections between Dental Office Employers and the Immediate Staff or Specialists they need. If an employee calls in sick, has an emergency, is on vacation or away from the office for any reason, the Dental Office can login and immediately search for individuals who have indicated in their work schedule they are available to work Right Now, Today. Text/Email connections are made privately through the Communication System. As a Job Seeker, your name and contact information is kept secure until you accept the job offer from the dental office. It’s fast, simple, easy and FREE!  As an employer, it is FREE to search for available team members before posting your job offer to them in real time, Right Now, Today, AnyDay.</p>' +
-                        ' <p>Click the link below to Login with your Email and Password and Complete your Profile Information. As a Job Seeker, enter your availability on the scheduling calendar with one day a week, one day a month, or AnyDay you like………..Employers are looking for you.</p>' +
-                        ' <p>Login here and Complete your Profile:</p>' +
-                        ' <a href="' + confirmationLink + '">click here</a>' +
-                        ' <p>Thank you, now you’re on your way to Get Help or Get Hired to Work AnyDay you want.</p>' +
-                        ' <p><b>The Community is adding new members everyday however the growth depends COMPLETELY on your involvement to help everyone be productive. Tell your friends, co-workers, office managers, dental specialists and dental employers about this service. Please keep your contact information updated as well as you work schedule. The Community is Building and if you do not get a job or find a team member with your initial attempts, as more offices and team members join, you will. Keep Checking as we grow.</b></p><br>' +
-                        ' <p>Thank you Again and Welcome,</p>' +
-                        ' <p>Administrator</p>' +
-                        ' <p>Any Day Employment</p>'
-                };
-
-                MailService(mailOptions)
-                    .then(data => {
-                        res.status(200).json({
-                            message: 'A verification email has been sent to ' + result.Email_Address + '.',
-                        });
-                    })
-                    .catch(err => {
-                        return res.status(500).json({
-                            title: 'An error occurred',
-                            error: err
-                        });
-                    })
-
             });
         }
-    });
+    })
+
 });
 
 router.get('/confirmation/:id', function(req, res, next) {
