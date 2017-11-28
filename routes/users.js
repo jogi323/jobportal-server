@@ -478,7 +478,7 @@ router.put('/update/work', auth.required, function(req, res, next) {
                 error: { message: 'Login Again' }
             });
         } else {
-            if (typeof req.body.Position !== 'undefined') {
+            if (typeof req.body.PositionId !== 'undefined') {
                 user.Position = req.body.PositionId;
             }
             if (typeof req.body.Experience !== 'undefined') {

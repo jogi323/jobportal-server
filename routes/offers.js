@@ -55,7 +55,8 @@ router.get('/employer', auth.required, function(req, res, next) {
                     path: 'Availability_id',
                     select: ['Date'],
                 })
-                .where('Status').eq('HIRED')
+                .where('Status').in(['HIRED', 'ACCEPTED'])
+                // .where('Status').eq('ACCEPTED')
                 .exec(function(err, result) {
                     if (err) { return res.status(500).json({ title: 'An error occurred', error: err }); }
                     res.status(200).json({
@@ -133,16 +134,16 @@ router.post('/save', auth.required, function(req, res, next) {
                                                                     var mailOptions = {
                                                                         from: 'noreply@anydayemployment.com',
                                                                         to: js.Email_Address,
-                                                                        subject: 'Congratulations! ' + js.Firstname + ' Has a job offer for you',
+                                                                        subject: 'Congratulations ' + js.Firstname + '! We have a job offer for you',
                                                                         // text: 'eaders.host + '\/user' + '\/confirmation\/' + token.token + '.\n'
                                                                         html: '<b>Hi <strong>' + js.Firstname + ',</strong></b><br>' +
-                                                                            ' <p><b>' + user.Firstname + ' ' + user.Lastname + '</b>' + ' has offered you a job for position ' + '<b>' + offer.JS_id.Position + '</b>' + ' on ' + offerDate + '</p>' +
+                                                                            ' <p><b>' + user.Firstname + ' ' + user.Lastname + '</b>' + ' has offered you a job for position ' + '<b>' + positionDetails.Position_Name + '</b>' + ' on ' + offerDate + '</p>' +
                                                                             ' <p>' + 'If you are interested in this offer, accept the offer by accepting the link below' + '</p>' +
                                                                             ' <a href="' + acceptOfferLink + '">Accept Offer</a>' +
                                                                             ' <p>' + 'To decline the job offer follow the link below' + '</p>' +
                                                                             ' <a href="' + rejectOfferLink + '">Reject Offer</a>' +
                                                                             ' <p>Administrator</p>' +
-                                                                            ' <p>At AnyDay Employment</p>'
+                                                                            ' <p>AnyDay Employment</p>'
                                                                     };
                                                                     MailService(mailOptions)
                                                                         .then(response => {

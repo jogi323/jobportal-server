@@ -39,7 +39,7 @@ exports.accept = function(offerDetails, res) {
             var empFirstName = offerDetails.offerId.Employer_id.Firstname;
             var empLastName = offerDetails.offerId.Employer_id.Lastname;
             var empPhone = offerDetails.offerId.Employer_id.Contact_Phone_Nr;
-            var jsPosition = offerDetails.offerId.JS_id.Position;
+            var jsPosition = offerDetails.offerId.Position_id;
 
             var mailOptions = {
                 from: 'noreply@anydayemployment.com',
@@ -53,7 +53,7 @@ exports.accept = function(offerDetails, res) {
                     ' <p>' + ' if you prefer to choose other jobseeker cancel the current job seekers offer by clicking the below link' + '</p>' +
                     ' <a href="' + rejectJSLink + '">Reject Jobseeker</a>' +
                     ' <p>Administrator</p>' +
-                    ' <p>At Any Day Employment</p>'
+                    ' <p>Any Day Employment</p>'
             };
 
             MailService(mailOptions)
@@ -104,7 +104,7 @@ exports.reject = function(offerDetails, res) {
     var empFirstName = offerDetails.offerId.Employer_id.Firstname;
     var empLastName = offerDetails.offerId.Employer_id.Lastname;
     var empPhone = offerDetails.offerId.Employer_id.Contact_Phone_Nr;
-    var jsPosition = offerDetails.offerId.JS_id.Position;
+    var jsPosition = offerDetails.offerId.Position_id;
     var offerDate = offerDetails.offerId.Availability_id.Date.toISOString().slice(0, 10);
 
     var mailOptions = {
@@ -114,9 +114,9 @@ exports.reject = function(offerDetails, res) {
         // text: 'eaders.host + '\/user' + '\/confirmation\/' + token.token + '.\n'
         html: '<b>Hi <strong>' + empFirstName + ',</strong></b><br>' +
             ' <p>' + '<strong>' + jsFirstName + ' ' + jsLastName + '</strong>' + ' has declined your job offer for position ' + '<b>' + jsPosition + '</b>' + ' on ' + offerDate + '</p>' +
-            ' <p>' + 'Do not worry! There are few other jobseekers ready to work, Search for other jobseekers at Any Day Employment' + '</p>' +
+            ' <p>' + 'Do not worry! There are few other jobseekers ready to work, Search for other jobseekers Any Day Employment' + '</p>' +
             ' <p>Administrator</p>' +
-            ' <p>At Any Day Employment</p>'
+            ' <p>Any Day Employment</p>'
     };
 
     MailService(mailOptions)
@@ -138,11 +138,11 @@ exports.reject = function(offerDetails, res) {
                         }
                         TwilioService(data)
                             .then(result => {
-                                res.status(200).send({ message: "You have rejected job offer by " + empFirstName + ' ' + empLastName + ", for the position " + jsPosition + " on " + offerDate + ". You can check the status of your job offers at Any Day Employment" });
+                                res.status(200).send({ message: "You have rejected job offer by " + empFirstName + ' ' + empLastName + ", for the position " + jsPosition + " on " + offerDate + ". You can check the status of your job offers Any Day Employment" });
 
                             })
                             .catch(err => {
-                                res.status(200).send({ message: "You have rejected job offer by " + empFirstName + ' ' + empLastName + ", for the position " + jsPosition + " on " + offerDate + ". You can check the status of your job offers at Any Day Employment" });
+                                res.status(200).send({ message: "You have rejected job offer by " + empFirstName + ' ' + empLastName + ", for the position " + jsPosition + " on " + offerDate + ". You can check the status of your job offers Any Day Employment" });
                             })
                     }
                 });
@@ -157,6 +157,7 @@ exports.reject = function(offerDetails, res) {
 }
 
 exports.acceptjs = function(offerDetails, res) {
+    console.log(offerDetails);
     var token = new OffersToken();
     token.offerId = offerDetails.offerId._id;
     token.token = crypto.randomBytes(16).toString('hex');
@@ -169,7 +170,7 @@ exports.acceptjs = function(offerDetails, res) {
     var empFirstName = offerDetails.offerId.Employer_id.Firstname;
     var empLastName = offerDetails.offerId.Employer_id.Lastname;
     var empPhone = offerDetails.offerId.Employer_id.Contact_Phone_Nr;
-    var jsPosition = offerDetails.offerId.JS_id.Position;
+    var jsPosition = offerDetails.offerId.Position_id;
     var offerDate = offerDetails.offerId.Availability_id.Date.toISOString().slice(0, 10);
 
     token.save(function(err, result) {
@@ -197,7 +198,7 @@ exports.acceptjs = function(offerDetails, res) {
                     ' <p>' + ' We dont recommend this, but if you choose not to Report to work, Click the link below' + '</p>' +
                     ' <a href="' + declineNrtwLink + '">Not Reporting to Work</a>' +
                     ' <p>Administrator</p>' +
-                    ' <p>At Any Day Employment</p>'
+                    ' <p>Any Day Employment</p>'
             };
 
             MailService(mailOptions)
@@ -253,7 +254,7 @@ exports.rejectjs = function(offerDetails, res) {
     var empFirstName = offerDetails.offerId.Employer_id.Firstname;
     var empLastName = offerDetails.offerId.Employer_id.Lastname;
     var empPhone = offerDetails.offerId.Employer_id.Contact_Phone_Nr;
-    var jsPosition = offerDetails.offerId.JS_id.Position;
+    var jsPosition = offerDetails.offerId.Position_id;
     var offerDate = offerDetails.offerId.Availability_id.Date.toISOString().slice(0, 10);
 
     var mailOptions = {
@@ -265,7 +266,7 @@ exports.rejectjs = function(offerDetails, res) {
             ' <p>' + '<strong>' + empLastName + ' ' + empLastName + '</strong>' + ' has declined your job offer for position ' + offerDetails.offerId.JS_id.Position + ' on ' + offerDate + '</p>' +
             ' <p>' + 'There are more job offers waiting for you, Anyt time to check the status of your job offers Login to Any Day Employment' + '</p>' +
             ' <p>Administrator</p>' +
-            ' <p>At Any Day Employment</p>'
+            ' <p>Any Day Employment</p>'
     };
 
     MailService(mailOptions)
@@ -319,7 +320,7 @@ exports.rtw = function(offerDetails, res) {
     var empFirstName = offerDetails.offerId.Employer_id.Firstname;
     var empLastName = offerDetails.offerId.Employer_id.Lastname;
     var empPhone = offerDetails.offerId.Employer_id.Contact_Phone_Nr;
-    var jsPosition = offerDetails.offerId.JS_id.Position;
+    var jsPosition = offerDetails.offerId.Position_id;
     var offerDate = offerDetails.offerId.Availability_id.Date.toISOString().slice(0, 10);
 
     token.save(function(err, result) {
@@ -342,7 +343,7 @@ exports.rtw = function(offerDetails, res) {
                 html: '<b>Hi <strong>' + empFirstName + ',</strong></b><br>' +
                     ' <p>' + '<strong>' + jsFirstName + ' ' + jsLastName + '</strong>' + ' is ready to work for your job offer for position ' + offerDetails.offerId.JS_id.Position + ' on ' + offerDate + '</p>' +
                     ' <p>Administrator</p>' +
-                    ' <p>At Any Day Employment</p>'
+                    ' <p>Any Day Employment</p>'
             };
 
             MailService(mailOptions)
@@ -403,7 +404,7 @@ exports.nrtw = function(offerDetails, res) {
     var empFirstName = offerDetails.offerId.Employer_id.Firstname;
     var empLastName = offerDetails.offerId.Employer_id.Lastname;
     var empPhone = offerDetails.offerId.Employer_id.Contact_Phone_Nr;
-    var jsPosition = offerDetails.offerId.JS_id.Position;
+    var jsPosition = offerDetails.offerId.Position_id;
     var offerDate = offerDetails.offerId.Availability_id.Date.toISOString().slice(0, 10);
 
     var mailOptions = {
@@ -414,7 +415,7 @@ exports.nrtw = function(offerDetails, res) {
             ' <p>' + '<strong>' + jsFirstName + ' ' + jsLastName + '</strong>' + ' has declined your job offer for position ' + jsPosition + ' on ' + offerDate + '</p>' +
             ' <p>' + ' There are few other jobseekers ready to work, to search the available job seekers go to Any Day Employment' + '</p>' +
             ' <p>Administrator</p>' +
-            ' <p>At Any Day Employment</p>'
+            ' <p>Any Day Employment</p>'
     };
 
 
