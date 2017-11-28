@@ -220,11 +220,11 @@ exports.acceptjs = function(offerDetails, res) {
                                 }
                                 TwilioService(data)
                                     .then(result => {
-                                        res.status(200).send({ message: "You have selected jobseeker, " + jsFirstName + ' ' + jsLastName + " for position " + jsPosition + " on " + offerDate + ". Any time to check the Status of your offred jobs go to Any Day Employment" });
+                                        res.status(200).send({ message: "You have selected jobseeker, " + jsFirstName + ' ' + jsLastName + " for position " + jsPosition + " on " + offerDate + "." });
 
                                     })
                                     .catch(err => {
-                                        res.status(200).send({ message: "You have selected jobseeker, " + jsFirstName + ' ' + jsLastName + " for position " + jsPosition + " on " + offerDate + ". Any time to check the Status of your offred jobs go to Any Day Employment" });
+                                        res.status(200).send({ message: "You have selected jobseeker, " + jsFirstName + ' ' + jsLastName + " for position " + jsPosition + " on " + offerDate + "." });
 
                                     })
                             }
