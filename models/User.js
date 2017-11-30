@@ -46,6 +46,7 @@ var UserSchema = new Schema({
     Date_Submitted: Date,
     Email_Verified: { type: Boolean, default: false },
     Status: { type: Boolean, default: false },
+    otpVerified: { type: Boolean, default: false },
     Payments_id: [{ type: Schema.Types.ObjectId, ref: 'Payments' }],
     Offers_id: [{ type: Schema.Types.ObjectId, ref: 'Offers' }],
     otp: { type: Number, expires: 300 }

@@ -141,6 +141,12 @@ router.post('/save', auth.required, function(req, res, next) {
                             if (typeof availabilities.Time_Finish !== 'undefined') {
                                 avail[0].Time_Finish = availabilities.Time_Finish
                             }
+                            if (typeof availabilities.Time_Start1 !== 'undefined') {
+                                avail[0].Time_Start1 = availabilities.Time_Start1
+                            }
+                            if (typeof availabilities.Time_Finish1 !== 'undefined') {
+                                avail[0].Time_Finish1 = availabilities.Time_Finish1
+                            }
                             if (typeof availabilities.Hours_Guaranteed !== 'undefined') {
                                 avail[0].Hours_Guaranteed = availabilities.Hours_Guaranteed
                             }
@@ -163,6 +169,12 @@ router.post('/save', auth.required, function(req, res, next) {
                             availability.Date = availabilities.Date;
                             availability.Time_Start = availabilities.Time_Start;
                             availability.Time_Finish = availabilities.Time_Finish;
+                            if (typeof availabilities.Time_Start1 !== 'undefined') {
+                                availability.Time_Start1 = availabilities.Time_Start1
+                            }
+                            if (typeof availabilities.Time_Finish1 !== 'undefined') {
+                                availability.Time_Finish1 = availabilities.Time_Finish1
+                            }
                             availability.Hours_Guaranteed = availabilities.Hours_Guaranteed;
                             availability.Date_Submitted = availabilities.Date_Submitted;
                             availability.save(function(err, result) {
@@ -196,5 +208,27 @@ router.delete('/purge/:id', auth.required, function(req, res, next) {
         }
     })
 });
+
+//delete availability
+router.delete('/delete/:id', auth.required, function( req, res, next){
+    Availabilities.findById(req.params.id, function(error, result){
+        if(error){
+            return res.status(500).json({ title: 'An error occured', error: error});
+        }
+        if(!result){
+            return res.status(401).json({ title: 'No record', error:{ message : 'Schedule Not Found'}});
+        }
+        else{
+            Availabilities.findByIdAndRemove(req.params.id, function(err, response){
+                if(err){
+                    return res.status(500).json({ title: 'Unable to delete', error: err});
+                }
+                else{
+                    return res.status(200).json({message:"Deleted Successfully", status:true});
+                }
+            })
+        }
+    })
+})
 
 module.exports = router;

@@ -694,22 +694,33 @@ router.post('/verifyOtp/:id', auth.required, function(req, res) {
                 error: { message: 'please register' }
             });
         } else {
-            User.find({ otp: req.body.otp }, function(err, data) {
+            User.find({ otp: req.body.otp }, function(err, user) {
                 if (err) {
                     return res.status(500).json({
                         title: 'An error occurred',
                         error: err
                     });
                 }
-                if (data.length === 0) {
+                if (user.length === 0) {
                     return res.status(401).json({
                         title: 'Failed',
                         error: { message: 'Invalid OTP' }
                     });
                 } else {
-                    return res.status(200).json({
-                        message: 'Mobile number verified successfully'
+                    user.otpVerified = true;
+
+                    user.save(function(err) {
+                        if (err) {
+                            return res.status(500).json({
+                                title: 'An error occurred',
+                                error: err
+                            });
+                        }
+                        return res.status(200).json({
+                            message: 'Mobile number verified successfully'
+                        });
                     });
+
                 }
             });
         }
