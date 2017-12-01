@@ -1,4 +1,4 @@
-angular-2-dropdown-multiselect@1.6.1
+angular-2-dropdown-multiselect@1.6.3
 MIT
 The MIT License (MIT)
 
@@ -70,7 +70,7 @@ LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
 OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
 THE SOFTWARE.
 
-moment@2.19.2
+moment@2.19.3
 MIT
 Copyright (c) JS Foundation and other contributors
 

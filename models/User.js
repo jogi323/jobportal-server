@@ -46,6 +46,7 @@ var UserSchema = new Schema({
     Date_Submitted: Date,
     Email_Verified: { type: Boolean, default: false },
     Status: { type: Boolean, default: false },
+    otpVerified: { type: Boolean, default: false },
     Payments_id: [{ type: Schema.Types.ObjectId, ref: 'Payments' }],
     Offers_id: [{ type: Schema.Types.ObjectId, ref: 'Offers' }],
     otp: { type: Number, expires: 300 }
@@ -66,8 +67,7 @@ UserSchema.methods.setPassword = function(Password) {
 UserSchema.methods.generateJWT = function() {
     var today = new Date();
     var exp = new Date(today);
-    exp.setDate(today.getDate() + 60);
-
+    exp.setDate(today.getDate() + 0.1);
     return jwt.sign({
         id: this._id,
         Email_Address: this.Email_Address,
