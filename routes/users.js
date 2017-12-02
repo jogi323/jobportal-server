@@ -50,20 +50,17 @@
                     title: 'An error occurred',
                     error: err
                 });
-            }
-            if (!user) {
+            } else if (!user) {
                 return res.status(401).json({
                     title: 'Not registered',
                     error: { message: 'Please register to login' }
                 });
-            }
-            if (!user.validPassword(req.body.Password)) {
+            } else if (!user.validPassword(req.body.Password)) {
                 return res.status(401).json({
                     title: 'Login failed',
                     error: { message: 'Invalid login credentials' }
                 });
-            }
-            if (!user.Email_Verified) {
+            } else if (!user.Email_Verified) {
                 var token = new VerifyToken();
                 token.user = user._id;
                 token.token = crypto.randomBytes(16).toString('hex')
@@ -107,8 +104,7 @@
                             });
                         })
                 });
-            }
-            if (user.Email_Verified && !user.Status) {
+            } else if (user.Email_Verified && !user.Status) {
                 return res.status(401).json({
                     title: 'User Blocked',
                     error: { message: 'Contact Administrator' }
