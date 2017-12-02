@@ -108,7 +108,7 @@
                         })
                 });
             }
-            if (!user.Email_Verified && !user.Status) {
+            if (user.Email_Verified && !user.Status) {
                 return res.status(401).json({
                     title: 'User Blocked',
                     error: { message: 'Contact Administrator' }
