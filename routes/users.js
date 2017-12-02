@@ -63,7 +63,6 @@
                     error: { message: 'Invalid login credentials' }
                 });
             }
-
             if (!user.Email_Verified) {
                 var token = new VerifyToken();
                 token.user = user._id;
@@ -109,7 +108,7 @@
                         })
                 });
             }
-            if (!user.Status) {
+            if (!user.Email_Verified && !user.Status) {
                 return res.status(401).json({
                     title: 'User Blocked',
                     error: { message: 'Contact Administrator' }
