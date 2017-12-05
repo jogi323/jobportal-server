@@ -809,4 +809,29 @@
         })
     });
 
+    router.post('/testmail', function(req, res, next) {
+        var mailOptions = {
+            from: 'noreply@anydayemployment.com',
+            to: 'ashokona@gmail.com',
+            subject: req.body.subject,
+            // text: 'eaders.host + '\/user' + '\/confirmation\/' + token.token + '.\n'
+            html: '<b>Message from <strong>' + req.body.name + ' ' + req.body.email + '</strong>,</b><br>' +
+                '<p> ' + req.body.message + ' </p>'
+        };
+
+        MailService(mailOptions)
+            .then(result => {
+                res.status(200).json({
+                    message: 'mail sucessfully sent',
+                });
+            })
+            .catch(err => {
+                return res.status(500).json({
+                    title: 'An error occurred',
+                    error: err
+                });
+            })
+    });
+
+
     module.exports = router;
