@@ -49,7 +49,7 @@ router.post('/query', auth.required, function(req, res, next) {
 
                 Availabilities.find({ Date: req.body.Date })
                     .where('Hired').eq('false')
-                    .where('Hours_Guaranteed').eq(req.body.Hours_Guaranteed)
+                    .where('Hours_Guaranteed').gte(req.body.Hours_Guaranteed)
                     // .populate('JS_id')
                     .populate({
                         path: 'JS_id',
@@ -71,7 +71,7 @@ router.post('/query', auth.required, function(req, res, next) {
             } else if (req.body.Position != 'undefined') {
                 Availabilities.find({ Date: req.body.Date })
                     .where('Hired').eq('false')
-                    .where('Hours_Guaranteed').eq(req.body.Hours_Guaranteed)
+                    .where('Hours_Guaranteed').gte(req.body.Hours_Guaranteed)
                     // .populate('JS_id')
                     .populate({
                         path: 'JS_id',
@@ -94,7 +94,7 @@ router.post('/query', auth.required, function(req, res, next) {
             } else if (req.body.Hourly_Pay != 'undefined') {
                 Availabilities.find({ Date: req.body.Date })
                     .where('Hired').eq('false')
-                    .where('Hours_Guaranteed').eq(req.body.Hours_Guaranteed)
+                    .where('Hours_Guaranteed').gte(req.body.Hours_Guaranteed)
                     // .populate('JS_id')
                     .populate({
                         path: 'JS_id',
@@ -210,21 +210,19 @@ router.delete('/purge/:id', auth.required, function(req, res, next) {
 });
 
 //delete availability
-router.delete('/delete/:id', auth.required, function( req, res, next){
-    Availabilities.findById(req.params.id, function(error, result){
-        if(error){
-            return res.status(500).json({ title: 'An error occured', error: error});
+router.delete('/delete/:id', auth.required, function(req, res, next) {
+    Availabilities.findById(req.params.id, function(error, result) {
+        if (error) {
+            return res.status(500).json({ title: 'An error occured', error: error });
         }
-        if(!result){
-            return res.status(401).json({ title: 'No record', error:{ message : 'Schedule Not Found'}});
-        }
-        else{
-            Availabilities.findByIdAndRemove(req.params.id, function(err, response){
-                if(err){
-                    return res.status(500).json({ title: 'Unable to delete', error: err});
-                }
-                else{
-                    return res.status(200).json({message:"Deleted Successfully", status:true});
+        if (!result) {
+            return res.status(401).json({ title: 'No record', error: { message: 'Schedule Not Found' } });
+        } else {
+            Availabilities.findByIdAndRemove(req.params.id, function(err, response) {
+                if (err) {
+                    return res.status(500).json({ title: 'Unable to delete', error: err });
+                } else {
+                    return res.status(200).json({ message: "Deleted Successfully", status: true });
                 }
             })
         }
